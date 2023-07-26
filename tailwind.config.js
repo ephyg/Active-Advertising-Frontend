@@ -2,30 +2,30 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    fontFamily: {
-      roboto: ["Roboto", "sans-serif"],
-    },
-    width: {
-      full: "100%",
-    },
     extend: {
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+      },
+      width: {
+        full: "100%",
+      },
       backgroundImage: (theme) => ({
         login: "url('./src/assets/image/loginBackground.png')",
       }),
       colors: {
         red: "#E92035",
         blue: "#23499A",
-        blue_hover:"#052873",
+        blue_hover: "#052873",
         white_blue: "#FAFAFA",
         green: "#008000",
       },
-    },
-    width: {
-      562: "562px",
-      400: "300px",
-    },
-    height: {
-      562: "562px",
+      width: {
+        562: "500px",
+        400: "300px",
+      },
+      height: {
+        562: "562px",
+      },
     },
 
     screens: {

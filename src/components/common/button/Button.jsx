@@ -4,7 +4,7 @@ const Button = ({ className, text }) => {
   return (
     <div className="flex items-stretch justify-center">
       <button
-        className={`py-2  font-roboto text-lg text-white  items-stretch ${className}`}
+        className={`py-2 font-roboto text-lg text-white items-stretch ${className}`}
       >
         {text}
       </button>

@@ -1,15 +1,12 @@
-import { useState } from 'react'
-import './App.css'
-import Login from './pages/common/login/Login'
-
+import "./App.css";
+import Login from "./pages/common/login/Login";
+import RouteList from "./Route/RouteList";
 function App() {
-
   return (
     <>
-      <Login />
-      
+      <RouteList />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
