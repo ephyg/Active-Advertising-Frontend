@@ -18,6 +18,7 @@ export default {
         blue_hover: "#052873",
         white_blue: "#FAFAFA",
         green: "#008000",
+        
       },
       width: {
         562: "500px",
