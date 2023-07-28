@@ -3,8 +3,8 @@ import NavBar from "../accountManager/navBar/NavBar";
 import SideBar from "../admin/sideBar/SideBar";
 
 function Layout({ children }) {
-  const roleType = "account-manager";
-//   const roleType = "admin";
+  // const roleType = "account-manager";
+  const roleType = "admin";
 
   return (
     <div>

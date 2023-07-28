@@ -25,7 +25,7 @@ const Login = () => {
           placeholder="******"
           className="mb-11"
         />
-        <Link to='/report'>
+        <Link to='/order'>
           <Button
             className="px-16 rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 mb-8"
             text="Login"
