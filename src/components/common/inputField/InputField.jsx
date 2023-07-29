@@ -1,8 +1,16 @@
 import React from "react";
 
-const InputField = ({ label, placeholder, type, className }) => {
+const InputField = ({
+  label,
+  placeholder,
+  type,
+  className,
+  value,
+  onChange,
+  
+}) => {
   return (
-    <div className={`flex flex-col ${className}`}>
+    <div className={`flex flex-col`}>
       <label
         htmlFor=""
         className="font-normal mb-1 text-blue font-roboto text-lg "
@@ -10,9 +18,11 @@ const InputField = ({ label, placeholder, type, className }) => {
         {label}
       </label>
       <input
+        value={value}
+        onChange={onChange}
         type={type}
         placeholder={placeholder}
-        className="font-roboto text-lg max-h-16 outline-none px-4 py-2 rounded border-2 border-blue"
+        className={`font-roboto max-h-16 outline-none px-4  rounded border-2 border-blue ${className}`}
       />
     </div>
   );

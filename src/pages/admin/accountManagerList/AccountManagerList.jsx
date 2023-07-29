@@ -1,5 +1,4 @@
 import React from "react";
-import AdminLayout from "../../../components/admin/adminLayout/AdminLayout";
 import Layout from "../../../components/Layout/Layout";
 
 function AccountManagerList() {

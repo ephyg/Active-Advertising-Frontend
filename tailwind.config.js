@@ -14,6 +14,7 @@ export default {
       }),
       colors: {
         red: "#E92035",
+        red_hover: "#CE0016",
         blue: "#23499A",
         blue_hover: "#052873",
         white_blue: "#FAFAFA",
@@ -26,6 +27,10 @@ export default {
       },
       height: {
         562: "562px",
+        "2px": "2px",
+      },
+      margin: {
+        "2px": "2px",
       },
     },
 

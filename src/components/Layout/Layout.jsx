@@ -7,11 +7,11 @@ function Layout({ children }) {
   const roleType = "admin";
 
   return (
-    <div>
+    <div className="bg-white_blue min-h-screen">
       {roleType == "admin" && (
         <>
           <SideBar />
-          <div className=" pl-80">{children}</div>
+          <div className=" pl-80 pt-8">{children}</div>
         </>
       )}
       {roleType == "account-manager" && (
