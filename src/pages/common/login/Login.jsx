@@ -13,21 +13,24 @@ const Login = () => {
         <h1 className="text-6xl font-bold text-red font-roboto min-w-full text-center mb-14">
           Login
         </h1>
-        <InputField
-          label="Email"
-          type="text"
-          placeholder="johndoe@gmail.com"
-          className="mb-6"
-        />
-        <InputField
-          label="Password"
-          type="password"
-          placeholder="******"
-          className="mb-11"
-        />
-        <Link to='/order'>
+        <div className="flex flex-col gap-6 mb-11">
+          <InputField
+            label="Email"
+            type="text"
+            placeholder="johndoe@gmail.com"
+            className="py-2 text-lg"
+          />
+          <InputField
+            label="Password"
+            type="password"
+            placeholder="******"
+            className="py-2 text-lg"
+
+          />
+        </div>
+        <Link to="/order">
           <Button
-            className="px-16 rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 mb-8"
+            className=" py-2 px-16 rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 mb-8"
             text="Login"
           />
         </Link>
