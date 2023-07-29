@@ -12,8 +12,8 @@ import InventoryList from "../pages/common/inventoryList/InventoryList";
 import NavBar from "../components/accountManager/navBar/NavBar";
 import AgreementForm from "../pages/common/agreementForm/AgreementForm";
 function RouteList() {
-  const roleType = "account-manager";
-  // const roleType = "admin";
+  //const roleType = "account-manager";
+  const roleType = "admin";
   return (
     <Routes>
       {roleType === "admin" && (
