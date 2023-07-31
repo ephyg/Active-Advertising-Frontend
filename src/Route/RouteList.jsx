@@ -15,7 +15,7 @@ import OrderDetail from "../pages/common/orderDetail/OrderDetail";
 import ProformaDetail from "../pages/common/proformaDetail/ProformaDetail";
 function RouteList() {
 
-  //const roleType = "account-manager";
+  // const roleType = "account-manager";
   const roleType = "admin";
 
   return (
