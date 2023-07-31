@@ -13,6 +13,7 @@ import NavBar from "../components/accountManager/navBar/NavBar";
 import AgreementForm from "../pages/common/agreementForm/AgreementForm";
 import OrderDetail from "../pages/common/orderDetail/OrderDetail";
 import ProformaDetail from "../pages/common/proformaDetail/ProformaDetail";
+import DeliveryForm from "../pages/common/deliveryForm/DeliveryForm";
 function RouteList() {
 
   //const roleType = "account-manager";
@@ -37,6 +38,7 @@ function RouteList() {
           <Route path="/designer" Component={DesignerList} />
           <Route path="/stock" Component={InventoryList} />
           <Route path="/agreement" Component={AgreementForm} />
+          <Route path="/delivery" Component={DeliveryForm} />
         </>
       )}
 
