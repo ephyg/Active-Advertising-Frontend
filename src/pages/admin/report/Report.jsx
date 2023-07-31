@@ -13,7 +13,7 @@ import{UserData} from './Data/Data'
 import { JobData } from "./Data/Data1";
 // import PieChart from "./components/PieChart";
 import { Revenue } from "./Data/Data3";
-import { BiBox } from "react-icons/bi";
+import { BiBox } from "react-icons/bi"; 
 
 
 
