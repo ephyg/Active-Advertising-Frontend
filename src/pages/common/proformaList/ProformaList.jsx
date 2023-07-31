@@ -57,7 +57,7 @@ function OrderList() {
     <Layout>
       <div className="pr-10">
         <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
-          <span className="mb-2px">Order List Table</span>
+          <span className="mb-2px">Proforma List</span>
           <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
         </div>
         <div className="flex justify-between mb-3">

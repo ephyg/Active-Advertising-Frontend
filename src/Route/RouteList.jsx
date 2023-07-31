@@ -12,7 +12,8 @@ import InventoryList from "../pages/common/inventoryList/InventoryList";
 import NavBar from "../components/accountManager/navBar/NavBar";
 import AgreementForm from "../pages/common/agreementForm/AgreementForm";
 import OrderDetail from "../pages/common/orderDetail/OrderDetail";
-import ProformaDetail from "../pages/common/proformaDetail/ProformaDetail";
+import AddProforma from "../pages/common/addProforma/AddProforma";
+import Downloadable from "../pages/common/addProforma/downloadableProforma";
 function RouteList() {
   // const roleType = "account-manager";
   const roleType = "admin";
@@ -28,7 +29,9 @@ function RouteList() {
       {(roleType === "account-manager" || roleType === "admin") && (
         <>
           <Route path="/proforma" Component={ProformaList} />
-          <Route path="/proforma/:id" Component={ProformaDetail} />
+          <Route path="/proforma/:id" Component={AddProforma} />
+          <Route path="/proforma/add" Component={AddProforma} />
+          <Route path="/proforma/download" Component={Downloadable} />
           <Route path="/order" Component={OrderList} />
           <Route path="/order/:id" Component={OrderDetail} />
           <Route path="/customer" Component={CustomerList} />

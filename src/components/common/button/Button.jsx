@@ -1,6 +1,6 @@
 import React from "react";
 
-const Button = ({ className, text, icon, onClick }) => {
+const Button = ({ className, text, icon, onClick,clr }) => {
   return (
     <div className="flex items-stretch justify-center">
       <button
@@ -11,6 +11,7 @@ const Button = ({ className, text, icon, onClick }) => {
           {icon != null &&
             React.createElement(icon, {
               size: 13,
+              color: `${clr}`
             })}
           {text}
         </div>
