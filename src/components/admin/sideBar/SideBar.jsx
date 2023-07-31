@@ -29,7 +29,6 @@ function SideBar() {
             >
               {React.createElement(icon, {
                 size: 20,
-                // color:red
               })}
               <h1
                 className={`text-base font-roboto font-bold   hover:text-red ${
