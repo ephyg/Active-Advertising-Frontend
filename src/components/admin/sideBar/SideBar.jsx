@@ -8,16 +8,18 @@ function SideBar() {
   const pathName = location.pathname;
   return (
     <div className="h-screen fixed w-72 bg-blue flex flex-col items-center pt-5 px-5">
-      <div className="flex flex-col w-full items-center  h-28 mb-16">
-        <img
-          src={ProfilePicture}
-          className="rounded-full w-28 mb-2 border-2 border-blue_hover"
-          alt=""
-        />
-        <h1 className="text-lg font-roboto font-bold text-white ">
-          Tsion Tesfaye
-        </h1>
-      </div>
+      <Link to="/admin/profile">
+        <div className="flex flex-col w-full items-center  h-28 mb-16">
+          <img
+            src={ProfilePicture}
+            className="rounded-full w-28 mb-2 border-2 border-blue_hover"
+            alt=""
+          />
+          <h1 className="text-lg font-roboto font-bold text-white ">
+            Tsion Tesfaye
+          </h1>
+        </div>
+      </Link>
       <div className="flex flex-col items-start w-full pl-6">
         {SideBarData.map(({ icon, title, path }, index) => (
           <Link to={path}>
@@ -40,6 +42,13 @@ function SideBar() {
             </div>
           </Link>
         ))}
+      </div>
+      <div className="h-full flex items-end w-full pl-10 cursor-pointer">
+        <Link to="/login">
+          <h1 className="text-base font-roboto font-bold   hover:text-red pb-7 text-white ">
+            Logout
+          </h1>
+        </Link>
       </div>
     </div>
   );

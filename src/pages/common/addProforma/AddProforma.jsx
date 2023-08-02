@@ -21,6 +21,12 @@ function ProformaDetail() {
   const [clienName, setClientName] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
   const [tinNumber, setTinNumber] = useState();
+  const [vendor, setVendor] = useState("None");
+
+  const [priceValidity, setPriceValidity] = useState();
+  const [payment, setPayment] = useState();
+  const [priceIncludingVat, setPriceIncludingVat] = useState();
+  const [delivery, setDelivery] = useState();
   const handleDelete = (itemId) => {
     setDataArray((prevData) => {
       return prevData.filter((order) => order.id !== itemId);
@@ -36,8 +42,9 @@ function ProformaDetail() {
   for (let index = 0; index < dataArray.length; index++) {
     subTotal += dataArray[index]["totalPrice"];
   }
-  let Tax = 15;
-  let grandtedTotal = (15 / 100) * subTotal + subTotal;
+  let tax = 15;
+  let Tax = (tax / 100) * subTotal;
+  let grandtedTotal = Tax + subTotal;
   const handleDownload = () => {
     const element = document.getElementById("download-pdf");
     const opt = {
@@ -47,9 +54,9 @@ function ProformaDetail() {
       html2canvas: { scale: 2 },
       jsPDF: {
         unit: "mm",
-        format: "a4", // You can try different formats like 'letter', 'legal', etc.
-        orientation: "portrait", // 'portrait' or 'landscape'
-        fontSize: 10, // Set the font size for the PDF content
+        format: "a4", 
+        orientation: "portrait", 
+        fontSize: 10, 
       },
     };
     html2pdf().from(element).set(opt).save();
@@ -73,7 +80,6 @@ function ProformaDetail() {
               data={dataArray}
               onClick={handleUpdateClick}
               id={idd}
-              // onClick={(e) => console.log(e.target.value)}
             />
           </div>
         )}
@@ -178,6 +184,17 @@ function ProformaDetail() {
               />
             </div>
           </div>
+          <div className="flex gap-1 items-end">
+            <h1 className="font-roboto text-sm text-blue ">Vendor :</h1>
+            <div className="">
+              <input
+                type="text"
+                className=" mb-1 outline-none border-b bg-white_blue border-black"
+                value={vendor}
+                onChange={(e) => setVendor(e.target.value)}
+              />
+            </div>
+          </div>
         </div>
         <div className="flex flex-col justify-center ">
           <table class="mb-3 ">
@@ -270,28 +287,15 @@ function ProformaDetail() {
             onClick={() => setIsAddOpen(!isAddOpen)}
           />
         </div>
-        <div className="flex justify-between mt-7">
-          <div className="">
-            <div className="flex gap-1 items-end">
-              <h1 className="font-roboto text-base text-blue ">
-                Payment Request No.:
-              </h1>
-              <div className="">
-                <input
-                  type="text"
-                  className="mb-1 outline-none border-b bg-white_blue border-black"
-                />
-              </div>
-            </div>
-          </div>
+        <div className="flex mt-7 justify-end">
           <div className="flex flex-col">
             <div className="flex gap-1 items-end">
               <h1 className="font-roboto text-base text-blue ">Sub Total:</h1>
               <div className="">{subTotal}</div>
             </div>
             <div className="flex gap-1 items-end">
-              <h1 className="font-roboto text-base text-blue ">Tax:</h1>
-              <div className="">{Tax}%</div>
+              <h1 className="font-roboto text-base text-blue ">Tax 15%:</h1>
+              <div className="">{Tax}</div>
             </div>
             <div className="flex gap-1 items-end">
               <h1 className="font-roboto text-base text-blue ">
@@ -313,6 +317,8 @@ function ProformaDetail() {
               <input
                 type="text"
                 className="mb-1 outline-none border-b bg-white_blue border-black"
+                value={priceValidity}
+                onChange={(e) => setPriceValidity(e.target.value)}
               />
             </div>
           </div>
@@ -322,6 +328,8 @@ function ProformaDetail() {
               <input
                 type="text"
                 className="mb-1 outline-none border-b bg-white_blue border-black"
+                value={payment}
+                onChange={(e) => setPayment(e.target.value)}
               />
             </div>
           </div>
@@ -333,6 +341,8 @@ function ProformaDetail() {
               <input
                 type="text"
                 className=" mb-1 outline-none border-b bg-white_blue border-black"
+                value={priceIncludingVat}
+                onChange={(e) => setPriceIncludingVat(e.target.value)}
               />
             </div>
           </div>
@@ -342,6 +352,8 @@ function ProformaDetail() {
               <input
                 type="text"
                 className=" mb-1 outline-none border-b bg-white_blue border-black"
+                value={delivery}
+                onChange={(e) => setDelivery(e.target.value)}
               />
             </div>
           </div>
@@ -415,31 +427,31 @@ function ProformaDetail() {
             PROFORMA INVOICE
           </div>
           <div className="flex flex-col mb-10">
-            <div className="flex gap-1 items-end">
+            <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue ">
                 Payment Request No.:
               </h1>
-              <div className="border-b border-black pl-1 pr-4 pb-1">
+              <div className="border-b border-black pl-1 pr-1 pb-1">
                 {paymentRequest}
               </div>
             </div>
-            <div className="flex gap-1 items-end">
+            <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue ">Client Name:</h1>
               <div className="">
-                <div className="border-b border-black pl-1 pr-4 pb-1">
+                <div className="border-b border-black pl-1 pr-1 pb-1">
                   {clienName}
                 </div>
               </div>
             </div>
-            <div className="flex gap-1 items-end">
+            <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue ">Phone Number:</h1>
-              <div className="border-b border-black pl-1 pr-4 pb-1">
+              <div className="border-b border-black pl-1 pr-1 pb-1">
                 {phoneNumber}
               </div>
             </div>
-            <div className="flex gap-1 items-end">
+            <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue ">Tin No.:</h1>
-              <div className="border-b border-black pl-1 pr-4 pb-1">
+              <div className="border-b border-black pl-1 pr-1 pb-1">
                 {tinNumber}
               </div>
             </div>
@@ -498,34 +510,21 @@ function ProformaDetail() {
             </table>
           </div>
 
-          <div className="flex justify-between mt-7">
-            <div className="">
-              <div className="flex gap-1 items-end">
-                <h1 className="font-roboto text-base text-blue ">
-                  Payment Request No.:
-                </h1>
-                <div className="">
-                  <input
-                    type="text"
-                    className="mb-1 outline-none border-b bg-transparent border-black"
-                  />
-                </div>
-              </div>
-            </div>
+          <div className="flex justify-end mt-7">
             <div className="flex flex-col">
               <div className="flex gap-1 items-end">
                 <h1 className="font-roboto text-base text-blue ">Sub Total:</h1>
-                <div className="">222</div>
+                <div className="">{subTotal}</div>
               </div>
               <div className="flex gap-1 items-end">
-                <h1 className="font-roboto text-base text-blue ">Tax:</h1>
-                <div className="">15%</div>
+                <h1 className="font-roboto text-base text-blue ">Tax 15%:</h1>
+                <div className="">{Tax}</div>
               </div>
               <div className="flex gap-1 items-end">
                 <h1 className="font-roboto text-base text-blue ">
                   Grandted Total:
                 </h1>
-                <div className="">423</div>
+                <div className="">{grandtedTotal}</div>
               </div>
             </div>
           </div>
@@ -533,44 +532,34 @@ function ProformaDetail() {
             <h1 className="font-roboto text-base text-blue font-bold">
               Terms and Conditions
             </h1>
-            <div className="flex gap-1 items-end">
+            <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue font-">
-                Price Validity
+                Price Validity:
               </h1>
-              <div className="">
-                <input
-                  type="text"
-                  className="mb-1 outline-none border-b bg-transparent border-black"
-                />
+              <div className="border-b border-black pl-1 pr-1 pb-1">
+                {priceValidity}
               </div>
             </div>
-            <div className="flex gap-1 items-end">
-              <h1 className="font-roboto text-sm text-blue font-">Payment</h1>
-              <div className="">
-                <input
-                  type="text"
-                  className="mb-1 outline-none border-b bg-transparent border-black"
-                />
+            <div className="flex gap-1 items-center">
+              <h1 className="font-roboto text-sm text-blue font-">Payment: </h1>
+              <div className="border-b border-black pl-1 pr-1 pb-1">
+                {payment}
               </div>
             </div>
-            <div className="flex gap-1 items-end">
+            <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue font-">
-                Price Including VAT
+                Price Including VAT:
               </h1>
-              <div className="">
-                <input
-                  type="text"
-                  className=" mb-1 outline-none border-b bg-transparent border-black"
-                />
+              <div className="border-b border-black pl-1 pr-1 pb-1">
+                {priceIncludingVat}
               </div>
             </div>
-            <div className="flex gap-1 items-end">
-              <h1 className="font-roboto text-sm text-blue font-">Delivery</h1>
-              <div className="">
-                <input
-                  type="text"
-                  className=" mb-1 outline-none border-b bg-transparent border-black"
-                />
+            <div className="flex gap-1 items-center">
+              <h1 className="font-roboto text-sm text-blue font-">
+                Delivery:{" "}
+              </h1>
+              <div className="border-b border-black pl-1 pr-1 pb-1">
+                {delivery}
               </div>
             </div>
           </div>

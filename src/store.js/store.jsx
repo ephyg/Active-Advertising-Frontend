@@ -1,6 +1,9 @@
 import { create } from "zustand";
-const useStore = create((set) => ({
-  count: 0,
+const useUserStore = create((set) => ({
+  user: "admin",
+  // user:"account-manager",
+  setUser: (state) => set(user),
+  clearUser: (state) => set({ user: null }),
 }));
 
-export default useStore;
+export default useUserStore;

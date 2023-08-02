@@ -9,13 +9,13 @@ function OrderDetail() {
   const filteredData = data.filter((item) => item.id == id);
   return (
     <Layout>
-      <div className="flex flex-col">
+      <div className="flex flex-col px-20">
         <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
           <span className="mb-2px">Order Detail</span>
           <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
         </div>
-        <div className="flex  gap-20 pr-8 mb-7">
-          <div className="flex flex-col gap-3 w-3/4">
+        <div className="flex  gap-10 pr-8 mb-7 items-center justify-center">
+          <div className="flex flex-col gap-3 w-562">
             <Card
               text="Item Description"
               information={filteredData[0]["Items-Description"]}
@@ -28,7 +28,7 @@ function OrderDetail() {
             />
             <Card text="Size" information={filteredData[0]["Size"]} />
           </div>
-          <div className="flex flex-col gap-3 w-3/4">
+          <div className="flex flex-col gap-3 w-562">
             <Card text="Status" information={filteredData[0]["Status"]} />
             <Card text="Company Name" information="Company Name" />
             <Card

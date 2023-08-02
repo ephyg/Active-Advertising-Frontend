@@ -8,7 +8,7 @@ import {
 } from "react-table";
 import DATA from "./DATA.json";
 import { Columns } from "./Columns";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaAngleUp, FaAngleDown, FaPlus } from "react-icons/fa";
 import {
   BiChevronLeft,
@@ -62,7 +62,7 @@ function OrderList() {
         </div>
         <div className="flex justify-between mb-3">
           <div className="hover:bg-blue_hover py-1 flex items-center justify-between gap-2 rounded-md cursor-pointer bg-blue px-6">
-            <Button text="Add Order" icon={FaPlus} />
+            <Link to='/proforma/add'><Button text="Add Order" icon={FaPlus} /></Link>
           </div>
           <InputField
             placeholder="Search"
