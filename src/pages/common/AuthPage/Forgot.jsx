@@ -4,7 +4,7 @@ import InputField from "../../../components/common/inputField/InputField";
 import Button from "../../../components/common/button/Button";
 import { Link } from "react-router-dom";
 import useUserStore from "../../../store.js/store";
-const Login = () => {
+const Forgot = () => {
   const user = useUserStore((state) => state.user);
   return (
     <div className="grid grid-cols-2 max-h-screen bg-white_blue md:grid-cols-1">
@@ -12,8 +12,8 @@ const Login = () => {
         <img src={Logo} alt="" className="w-562 mb-32" />
       </div>
       <div className="flex flex-col justify-center items-stretch px-32 md:px-5 md:min-h-screen">
-        <h1 className="text-6xl font-bold text-red font-roboto min-w-full text-center mb-14">
-          Login
+        <h1 className="text-5xl font-bold text-red font-roboto min-w-full text-left mb-14">
+          Forgot Password
         </h1>
         <div className="flex flex-col gap-6 mb-11">
           <InputField
@@ -22,17 +22,11 @@ const Login = () => {
             placeholder="johndoe@gmail.com"
             className="py-2 text-lg"
           />
-          <InputField
-            label="Password"
-            type="password"
-            placeholder="******"
-            className="py-2 text-lg"
-          />
         </div>
-        <Link to={user == "admin" ? "/report" : "/order"}>
+        <Link to="/verify">
           <Button
             className=" py-2 px-16 rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 mb-8"
-            text="Login"
+            text="Forgot"
           />
         </Link>
       </div>
@@ -40,4 +34,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Forgot;

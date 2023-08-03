@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Login from "../pages/common/login/Login";
+import Login from "../pages/common/AuthPage/Login";
+import Forgot from "../pages/common/AuthPage/Forgot";
 import OrderList from "../pages/common/orderList/OrderList";
 import Report from "../pages/admin/report/Report";
 import ProformaList from "../pages/common/proformaList/ProformaList";
@@ -20,6 +21,8 @@ import AddStaff from "../pages/admin/addStaff/AddStaff";
 import useUserStore from "../store.js/store";
 import AddItems from "../pages/common/inventoryRegistration/AddItems";
 import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
+import ConfirmCode from "../pages/common/AuthPage/ConfirmCode";
+import NewPassword from "../pages/common/AuthPage/NewPassword";
 function RouteList() {
   const roleType = useUserStore((state) => state.user);
   return (
@@ -59,6 +62,9 @@ function RouteList() {
       )}
 
       <Route path="/login" Component={Login} />
+      <Route path="/forgot" Component={Forgot} />
+      <Route path="/verify" Component={ConfirmCode} />
+      <Route path="/new-password" Component={NewPassword} />
       <Route path="/" Component={Login} />
     </Routes>
   );

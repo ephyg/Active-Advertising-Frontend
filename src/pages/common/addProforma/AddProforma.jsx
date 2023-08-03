@@ -265,8 +265,7 @@ function ProformaDetail() {
                       onClick={() => {
                         setIdd(index);
                         // setIdd(item[idd]["id"]);
-                        console.log(idd);
-                        console.log(dataArray);
+                       
                         setDataArray((prevData) => {
                           const newData = [...prevData];
                           newData.splice(index, 1);
