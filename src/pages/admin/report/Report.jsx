@@ -273,7 +273,7 @@ function Report() {
           </span>
         </div>
 
-        <div className=" h-16 flex border rounded-md p-4 bg-blue  shadow-md w-10/12">
+        <div className=" h-16 flex border rounded-md p-4 bg-blue  shadow-md w-10/12"> 
           {" "}
           {/* w-64 h-14 */}
           <div className="pt-2 -mt-2 pl-3">
