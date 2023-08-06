@@ -8,6 +8,7 @@ function AddPopUp({ Open, onClick, len }) {
   const [itemDescription, setitemDescription] = useState();
   const [size, setSize] = useState();
   const [quantity, setQuantity] = useState();
+  const [vendor, setVendor] = useState("None");
   const [price, setPrice] = useState();
   const [totalPrice, setTotalPrice] = useState();
   let index = len;
@@ -18,6 +19,7 @@ function AddPopUp({ Open, onClick, len }) {
       id: index + 1,
       itemDecription: itemDescription,
       size: size,
+      vendor: vendor,
       quantity: quantity,
       price: price,
       totalPrice: Number(quantity) * Number(price),
@@ -75,13 +77,15 @@ function AddPopUp({ Open, onClick, len }) {
             />
           </div>
           <div className="flex flex-row gap-5 justify-between mb-3">
-            {/* <InputField
-                label="Total Price"
-                placeholder="total price"
-                className="py-1"
-                value={totalPrice}
-                onChange={(e) => setTotalPrice(e.target.value)}
-              /> */}
+            <InputField
+              label="Vendor"
+              placeholder="Vendor Name"
+              className="py-1"
+              value={vendor}
+              onChange={(e) => setVendor(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-row gap-5 justify-between mb-3">
             {totalPrice}
           </div>
           <Button

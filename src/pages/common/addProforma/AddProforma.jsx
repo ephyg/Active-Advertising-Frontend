@@ -17,16 +17,15 @@ function ProformaDetail() {
   const [dataArray, setDataArray] = useState([]);
   const [idd, setIdd] = useState();
 
-  const [paymentRequest, setPaymentRequest] = useState();
-  const [clienName, setClientName] = useState();
-  const [phoneNumber, setPhoneNumber] = useState();
-  const [tinNumber, setTinNumber] = useState();
-  const [vendor, setVendor] = useState("None");
+  const [paymentRequest, setPaymentRequest] = useState("");
+  const [clienName, setClientName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [tinNumber, setTinNumber] = useState("");
 
-  const [priceValidity, setPriceValidity] = useState();
-  const [payment, setPayment] = useState();
-  const [priceIncludingVat, setPriceIncludingVat] = useState();
-  const [delivery, setDelivery] = useState();
+  const [priceValidity, setPriceValidity] = useState("");
+  const [payment, setPayment] = useState("");
+  const [priceIncludingVat, setPriceIncludingVat] = useState("");
+  const [delivery, setDelivery] = useState("");
   const handleDelete = (itemId) => {
     setDataArray((prevData) => {
       return prevData.filter((order) => order.id !== itemId);
@@ -54,9 +53,9 @@ function ProformaDetail() {
       html2canvas: { scale: 2 },
       jsPDF: {
         unit: "mm",
-        format: "a4", 
-        orientation: "portrait", 
-        fontSize: 10, 
+        format: "a4",
+        orientation: "portrait",
+        fontSize: 10,
       },
     };
     html2pdf().from(element).set(opt).save();
@@ -184,17 +183,6 @@ function ProformaDetail() {
               />
             </div>
           </div>
-          <div className="flex gap-1 items-end">
-            <h1 className="font-roboto text-sm text-blue ">Vendor :</h1>
-            <div className="">
-              <input
-                type="text"
-                className=" mb-1 outline-none border-b bg-white_blue border-black"
-                value={vendor}
-                onChange={(e) => setVendor(e.target.value)}
-              />
-            </div>
-          </div>
         </div>
         <div className="flex flex-col justify-center ">
           <table class="mb-3 ">
@@ -208,6 +196,9 @@ function ProformaDetail() {
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-sm text-left">
                   Size
+                </th>
+                <th class="py-1 border-slate-200 border-2 px-4 text-sm text-left">
+                  Vendor
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-sm text-left">
                   Quantity
@@ -234,6 +225,9 @@ function ProformaDetail() {
                   </td>
                   <td class="py-1 border-slate-200 border text-sm px-4">
                     {item["size"]}
+                  </td>
+                  <td class="py-1 border-slate-200 border text-sm px-4">
+                    {item["vendor"]}
                   </td>
                   <td class="py-1 border-slate-200 border text-sm px-4">
                     {item["quantity"]}
@@ -265,7 +259,7 @@ function ProformaDetail() {
                       onClick={() => {
                         setIdd(index);
                         // setIdd(item[idd]["id"]);
-                       
+
                         setDataArray((prevData) => {
                           const newData = [...prevData];
                           newData.splice(index, 1);
@@ -334,6 +328,20 @@ function ProformaDetail() {
           </div>
           <div className="flex gap-1 items-end">
             <h1 className="font-roboto text-sm text-blue font-">
+              Price Including VAT:
+            </h1>
+            <div className="text-sm border-b border-black pl-1 pr-1 pb-1">
+              The price is including V.A.T {tax}
+            </div>
+          </div>
+          <div className="flex gap-1 items-center">
+            <h1 className="font-roboto text-sm text-blue font-">Delivery:</h1>
+            <div className="text-sm border-b border-black pl-1 pr-1 pb-1">
+              Delivery: on time
+            </div>
+          </div>
+          {/* <div className="flex gap-1 items-end">
+            <h1 className="font-roboto text-sm text-blue font-">
               Price Including VAT
             </h1>
             <div className="">
@@ -355,7 +363,7 @@ function ProformaDetail() {
                 onChange={(e) => setDelivery(e.target.value)}
               />
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-end mb-10 gap-4">
           <Button
@@ -430,28 +438,44 @@ function ProformaDetail() {
               <h1 className="font-roboto text-sm text-blue ">
                 Payment Request No.:
               </h1>
-              <div className="border-b border-black pl-1 pr-1 pb-1">
-                {paymentRequest}
+              <div
+                className={`border-black text-sm align-text-bottom pl-1 pr-1 pb-1 ${
+                  paymentRequest === "" ? "w-48 border-b" : "border-b"
+                }`}
+              >
+                {paymentRequest === "" ? "\u00A0" : paymentRequest}
               </div>
             </div>
             <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue ">Client Name:</h1>
               <div className="">
-                <div className="border-b border-black pl-1 pr-1 pb-1">
-                  {clienName}
+                <div
+                  className={`border-black text-sm align-text-bottom pl-1 pr-1 pb-1 ${
+                    clienName === "" ? "w-48 border-b" : "border-b"
+                  }`}
+                >
+                  {clienName === "" ? "\u00A0" : clienName}
                 </div>
               </div>
             </div>
             <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue ">Phone Number:</h1>
-              <div className="border-b border-black pl-1 pr-1 pb-1">
-                {phoneNumber}
+              <div
+                className={`border-black text-sm align-text-bottom pl-1 pr-1 pb-1 ${
+                  phoneNumber === "" ? "w-48 border-b" : "border-b"
+                }`}
+              >
+                {phoneNumber === "" ? "\u00A0" : phoneNumber}
               </div>
             </div>
             <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue ">Tin No.:</h1>
-              <div className="border-b border-black pl-1 pr-1 pb-1">
-                {tinNumber}
+              <div
+                className={`border-black text-sm align-text-bottom pl-1 pr-1 pb-1 ${
+                  tinNumber === "" ? "w-48 border-b" : "border-b"
+                }`}
+              >
+                {tinNumber === "" ? "\u00A0" : tinNumber}
               </div>
             </div>
           </div>
@@ -535,30 +559,36 @@ function ProformaDetail() {
               <h1 className="font-roboto text-sm text-blue font-">
                 Price Validity:
               </h1>
-              <div className="border-b border-black pl-1 pr-1 pb-1">
-                {priceValidity}
+              <div
+                className={`border-black text-sm align-text-bottom pl-1 pr-1 pb-1 ${
+                  priceValidity === "" ? "w-48 border-b" : "border-b"
+                }`}
+              >
+                {priceValidity === "" ? "\u00A0" : priceValidity}
               </div>
             </div>
             <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue font-">Payment: </h1>
-              <div className="border-b border-black pl-1 pr-1 pb-1">
-                {payment}
+              <div
+                className={`border-black text-sm align-text-bottom pl-1 pr-1 pb-1 ${
+                  payment === "" ? "w-48 border-b" : "border-b"
+                }`}
+              >
+                {payment === "" ? "\u00A0" : payment}
               </div>
             </div>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-1 items-end">
               <h1 className="font-roboto text-sm text-blue font-">
                 Price Including VAT:
               </h1>
-              <div className="border-b border-black pl-1 pr-1 pb-1">
-                {priceIncludingVat}
+              <div className="text-sm border-black pl-1 pr-1">
+                The price is including V.A.T {tax}
               </div>
             </div>
             <div className="flex gap-1 items-center">
-              <h1 className="font-roboto text-sm text-blue font-">
-                Delivery:{" "}
-              </h1>
-              <div className="border-b border-black pl-1 pr-1 pb-1">
-                {delivery}
+              <h1 className="font-roboto text-sm text-blue font-">Delivery:</h1>
+              <div className="text-sm border-black pl-1 pr-1">
+                Delivery: on time
               </div>
             </div>
           </div>
