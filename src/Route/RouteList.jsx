@@ -23,8 +23,13 @@ import AddItems from "../pages/common/inventoryRegistration/AddItems";
 import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
 import ConfirmCode from "../pages/common/AuthPage/ConfirmCode";
 import NewPassword from "../pages/common/AuthPage/NewPassword";
+// import ProformaDetail from "../pages/common/proformaDetail/ProformaDetail";
+import DeliveryForm from "../pages/common/deliveryForm/DeliveryForm";
 function RouteList() {
   const roleType = useUserStore((state) => state.user);
+
+
+
   return (
     <Routes>
       {roleType === "admin" && (
@@ -58,6 +63,7 @@ function RouteList() {
           <Route path="/stock" Component={InventoryList} />
           <Route path="/stock/additem" Component={AddItems} />
           <Route path="/agreement" Component={AgreementForm} />
+          <Route path="/delivery" Component={DeliveryForm} />
         </>
       )}
 
