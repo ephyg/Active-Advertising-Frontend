@@ -32,7 +32,7 @@ function AgreementForm() {
     const element = document.getElementById("download-pdf");
     const opt = {
       margin: 10,
-      filename: "proforma.pdf",
+      filename: "agreement.pdf",
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: {
@@ -84,7 +84,7 @@ function AgreementForm() {
               <p className="leading-8">
                 This agreement is made on {formData.agreementDate} between active advertising and{" "}
                 <input
-                  className="border-b border-black outline-none"
+                  className="border-b border-black outline-none bg-transparent"
                   name="client"
                   value={formData.client}
                   onChange={handleInputChange}
@@ -94,7 +94,7 @@ function AgreementForm() {
               <p className="leading-8">
                 Key Terms of agreement:{" "}
                 <input
-                  className="border-b border-black outline-none"
+                  className="border-b border-black outline-none bg-transparent"
                   name="keyTerms"
                   value={formData.keyTerms}
                   onChange={handleInputChange}
@@ -103,25 +103,25 @@ function AgreementForm() {
               <p className="leading-8">
                 Delivery of service
                 <br />
-                • Service start date:{" "}
+                <span className="ml-16">• Service start date:{" "}
                 <input
-                  className="border-b border-black outline-none w-24"
+                  className="border-b border-black outline-none w-24 bg-transparent"
                   name="serviceStartDate"
                   value={formData.serviceStartDate}
                   onChange={handleInputChange}
-                />
+                /></span>
                 <br />
-                • Service end date:{" "}
+                <span className="ml-16">• Service end date:{" "}
                 <input
-                  className="border-b border-black outline-none w-24"
+                  className="border-b border-black outline-none w-24 bg-transparent"
                   name="serviceEndDate"
                   value={formData.serviceEndDate}
                   onChange={handleInputChange}
-                />
+                /></span>
                 <br />
                 Price:{" "}
                 <input
-                  className="border-b border-black outline-none w-20"
+                  className="border-b border-black outline-none w-20 bg-transparent"
                   name="price"
                   value={formData.price}
                   onChange={handleInputChange}
@@ -134,12 +134,12 @@ function AgreementForm() {
             <div className="flex justify-between mt-8">
               <div className="flex flex-col">
                 <label className="leading-8">Active Adverting</label>
-                <input className="border-b border-black outline-none w-24" name="activeAdvert" value={formData.activeAdvert} onChange={handleInputChange} />
+                <input className="border-b border-black outline-none w-24 bg-transparent" name="activeAdvert" value={formData.activeAdvert} onChange={handleInputChange} />
               </div>
               <div className="flex flex-col">
                 <label className="leading-8">Client Name</label>
                 <input
-                  className="border-b border-black outline-none w-24"
+                  className="border-b border-black outline-none w-24 bg-transparent"
                   name="clientName"
                   value={formData.clientName}
                   onChange={handleInputChange}
