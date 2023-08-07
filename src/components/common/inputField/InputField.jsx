@@ -7,7 +7,6 @@ const InputField = ({
   className,
   value,
   onChange,
-  
 }) => {
   return (
     <div className={`flex flex-col`}>
