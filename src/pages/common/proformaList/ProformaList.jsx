@@ -62,7 +62,9 @@ function OrderList() {
         </div>
         <div className="flex justify-between mb-3">
           <div className="hover:bg-blue_hover py-1 flex items-center justify-between gap-2 rounded-md cursor-pointer bg-blue px-6">
-            <Link to='/proforma/add'><Button text="Add Order" icon={FaPlus} /></Link>
+            <Link to="/proforma/add">
+              <Button text="Add Order" icon={FaPlus} />
+            </Link>
           </div>
           <InputField
             placeholder="Search"
@@ -112,8 +114,9 @@ function OrderList() {
                     className="hover:bg-slate-200 cursor-pointer group"
                     onClick={() => handleRowClick(row)}
                   >
-                    {row.cells.map((cell) => (
+                    {row.cells.map((cell, index) => (
                       <td
+                        key={index}
                         {...cell.getCellProps}
                         className="border py-1 text-sm px-2 group-hover:border-slate-200"
                       >

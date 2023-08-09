@@ -4,7 +4,6 @@ import InputField from "../../../components/common/inputField/InputField";
 import Button from "../../../components/common/button/Button";
 
 function UpdatePopUp({ Open, id, data, onClick }) {
-  console.log(id, "dfds", data[id]);
   const [itemDescription, setitemDescription] = useState(
     data[id]["itemDecription"]
   );
@@ -27,7 +26,6 @@ function UpdatePopUp({ Open, id, data, onClick }) {
       totalPrice: Number(quantity) * Number(price),
     };
     data[id] = updatedData;
-    console.log(data[id]);
     onClick(data);
     Open(false);
   };

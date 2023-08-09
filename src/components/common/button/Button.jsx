@@ -1,9 +1,10 @@
 import React from "react";
 
-const Button = ({ className, text, icon, onClick,clr }) => {
+const Button = ({ className, text, icon, onClick, clr }) => {
   return (
     <div className="flex items-stretch justify-center">
       <button
+        type="submit"
         className={`font-roboto font-bold text-lg text-white items-stretch flex ${className}`}
         onClick={onClick}
       >
@@ -11,7 +12,7 @@ const Button = ({ className, text, icon, onClick,clr }) => {
           {icon != null &&
             React.createElement(icon, {
               size: 13,
-              color: `${clr}`
+              color: `${clr}`,
             })}
           {text}
         </div>

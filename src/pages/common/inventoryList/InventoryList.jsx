@@ -20,16 +20,16 @@ import {
 import Button from "../../../components/common/button/Button";
 import InputField from "../../../components/common/inputField/InputField";
 import { TiDelete } from "react-icons/ti";
-function OrderList() {
+function InventoryList() {
   const navigate = useNavigate();
   const columns = useMemo(() => Columns, []);
   const [Data, setData] = useState([]);
-  useEffect(() => {
-    axios
-      .get("/DATA.json") // Replace this with your JSON file or API endpoint
-      .then((response) => setData(response.data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("/DATA.json") // Replace this with your JSON file or API endpoint
+  //     .then((response) => setData(response.data))
+  //     .catch((error) => console.error("Error fetching data:", error));
+  // }, []);
   const data = useMemo(() => DATA, []);
 
   const tableInstance = useTable(
@@ -112,15 +112,16 @@ function OrderList() {
               ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-              {page.map((row, index) => {
+              {page.map((row) => {
                 prepareRow(row);
                 return (
                   <tr
                     {...row.getRowProps()}
                     className="hover:bg-slate-200 cursor-pointer group"
                   >
-                    {row.cells.map((cell) => (
+                    {row.cells.map((cell, index) => (
                       <td
+                        key={index}
                         {...cell.getCellProps}
                         className="border py-1 text-sm px-2 group-hover:border-slate-200"
                       >
@@ -132,7 +133,6 @@ function OrderList() {
                         color="green"
                         className="hover:cursor-pointer hover:scale-125"
                         size={20}
-                        id={index}
                         onClick={() => {}}
                       />
                       <TiDelete
@@ -175,4 +175,4 @@ function OrderList() {
   );
 }
 
-export default OrderList;
+export default InventoryList;
