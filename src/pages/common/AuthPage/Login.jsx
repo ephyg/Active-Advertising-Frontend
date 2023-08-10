@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/image/logocopy.png";
 import InputField from "../../../components/common/inputField/InputField";
 import Button from "../../../components/common/button/Button";
@@ -8,33 +8,46 @@ import * as api from "../../../api/userApi";
 import { useMutation, useQuery } from "react-query";
 import { Formik, useFormik } from "formik";
 import LoginValidation from "./LoginValidation";
-
+import { ToastContainer, toast } from "react-toastify";
+import { FaSpinner } from "react-icons/fa";
+import useForgotStore from "../../../store/forgotStore";
 const Login = () => {
   const navigate = useNavigate();
   const [credentialError, setCredentialError] = useState("");
-  const { isAuthenticated, User, token, login, user_role } = useUserStore();
-  // console.log(user_role, User, token);
-
+  const { User, token, login, user_role } = useUserStore();
+  const { notification, setSentMessage, sentMessage, setNotification } =
+    useForgotStore();
+  useEffect(() => {
+    if (notification == 3) {
+      toast.success(sentMessage, {
+        position: "top-left",
+        toastId: "success3",
+      });
+    }
+    setNotification({
+      notification: null,
+    });
+  }, []);
+  const loginUser = async (data) => {
+    const response = await api.LoginUser(data);
+    return response;
+  };
+  const mutation = useMutation(loginUser, {
+    onSuccess: (userData) => {
+      login(userData);
+      user_role === "admin" ? navigate("/report") : navigate("/order");
+    },
+  });
   const onSubmit = async (values) => {
     const data = {
       user_email: values.email,
       user_password: values.password,
     };
     try {
-      const userData = await api.LoginUser(data);
-      login(userData);
-      user_role == "admin" ? navigate("/report") : navigate("/order");
+      await mutation.mutateAsync(data);
     } catch (error) {
       setCredentialError(error.response.data.message);
     }
-
-    // console.log(userData.json());
-    // if (userData["message"] == "Invalid Credential") {
-    //   setCredentialError(userData["message"]);
-    // } else {
-    //   login(userData);
-    //   user_role == "admin" ? navigate("/report") : navigate("/order");
-    // }
   };
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
@@ -86,18 +99,28 @@ const Login = () => {
             error={errors.password && touched.password ? errors.password : ""}
           />
         </div>
-        <Button
-          // onSubmit={handleSubmit}
-          // onClick={(e) => e.preventDefault}
-          className="mt-9 py-2 px-16 rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 "
-          text="Login"
-        />
+        {mutation.isLoading ? (
+          <Button
+            className="mt-9 py-2 px-14 w-full rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 "
+            text="Loading"
+            disabled={true}
+            iconSize={18}
+            icon={FaSpinner}
+            animation="animate-spin"
+          />
+        ) : (
+          <Button
+            className="mt-9 py-2 px-16 w-full rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 "
+            text="Login"
+          />
+        )}
         <Link to="/forgot" className=" mb-8 flex justify-center mt-2">
           <h1 className="text-sm text-gray-700 font-roboto  hover:text-red ">
             Forgot Password
           </h1>
         </Link>
       </form>
+      <ToastContainer />
     </div>
   );
 };

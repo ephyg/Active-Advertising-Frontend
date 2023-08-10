@@ -10,6 +10,13 @@ export const ForgotPassword = async (email) => {
 
 export const VerifyCode = async (code) => {
   const reset_code = await axios
-    .post(`${baseURL}/verify`, code)
+    .post(`${baseURL}/verifyCode`, code)
     .then((response) => response.data);
+  return reset_code;
+};
+export const NewPassword = async (password) => {
+  const newPassword = await axios
+    .post(`${baseURL}/changePassword`, password)
+    .then((response) => response.data);
+  return newPassword;
 };

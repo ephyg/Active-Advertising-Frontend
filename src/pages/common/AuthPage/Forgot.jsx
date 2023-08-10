@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/image/logocopy.png";
 import InputField from "../../../components/common/inputField/InputField";
 import Button from "../../../components/common/button/Button";
@@ -10,21 +10,50 @@ import ForgotValidation from "./ForgotValidation";
 import * as api from "../../../api/forgotApi";
 import { ForgotPassword } from "../../../api/forgotApi";
 import useForgotStore from "../../../store/forgotStore";
+import { useMutation } from "react-query";
+import { FaSpinner } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+
 const Forgot = () => {
   const navigate = useNavigate();
   const [forgotError, setForgotError] = useState("");
+  const {
+    setUser_email,
+    setNotification,
+    user_email,
+    setSentMessage,
+    sentMessage,
+  } = useForgotStore();
+  const forgotPassword = async (data) => {
+    const response = await api.ForgotPassword(data);
+    return response;
+  };
 
+  const mutation = useMutation(forgotPassword, {
+    onSuccess: (response) => {
+      const data = {
+        user_email: values.email,
+      };
+      setUser_email(data);
+      setSentMessage(response);
+      setNotification({
+        notification: 1,
+      });
+      navigate("/verify");
+    },
+  });
   const onSubmit = async (values) => {
     const data = {
       user_email: values.email,
     };
     try {
-      const forgotData = await api.ForgotPassword(data);
-      setUser_email(data);
-      console.log(data);
-      navigate("/verify");
+      await mutation.mutateAsync(data);
     } catch (error) {
-      setForgotError(error.response.data.message);
+      if (error.response.data.message == "User Not Exist") {
+        setForgotError(error.response.data.message);
+      } else {
+        setForgotError("");
+      }
     }
   };
 
@@ -66,11 +95,22 @@ const Forgot = () => {
             {forgotError}
           </h1>
         </div>
-        <Button
-          className=" py-2 px-16 rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 mb-8"
-          text="Forgot"
-        />
+        {mutation.isLoading ? (
+          <Button
+            className=" py-2 px-16 rounded-lg w-full bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 mb-8"
+            text="Sending Code"
+            disabled={true}
+            icon={FaSpinner}
+            animation="animate-spin"
+          />
+        ) : (
+          <Button
+            className=" py-2 px-16 w-full rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 mb-8"
+            text="Forgot"
+          />
+        )}
       </form>
+      <ToastContainer />
     </div>
   );
 };
