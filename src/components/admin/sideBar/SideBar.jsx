@@ -4,9 +4,10 @@ import { BsGraphUp } from "react-icons/bs";
 import ProfilePicture from "../../../assets/image/profile.jpeg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useUserStore from "../../../store/userStore";
+import { BiMenu } from "react-icons/bi";
 
-function SideBar() {
-  const navigate=useNavigate()
+function SideBar({ className, setIsOpen }) {
+  const navigate = useNavigate();
   const location = useLocation();
   const pathName = location.pathname;
   const handleLogout = () => {
@@ -14,7 +15,14 @@ function SideBar() {
     navigate("/login");
   };
   return (
-    <div className="h-screen fixed w-72 bg-blue flex flex-col items-center pt-5 px-5">
+    <div
+      className={`h-screen fixed w-72 bg-blue flex flex-col items-center pt-5 px-5 2xl: ${className}`}
+    >
+      <BiMenu
+        className="absolute top-2 right-2 cursor-pointer text-white hover:text-red 2xl:hidden md:flex"
+        size={30}
+        onClick={() => setIsOpen(false)}
+      />
       <Link to="/admin/profile">
         <div className="flex flex-col w-full items-center  h-28 mb-16">
           <img

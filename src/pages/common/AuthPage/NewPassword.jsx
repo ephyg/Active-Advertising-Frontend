@@ -88,9 +88,9 @@ const NewPassword = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col justify-center items-stretch px-32 md:px-5 md:min-h-screen"
+        className="flex flex-col justify-center items-stretch 2xl:px-36 xl:px-32 lg:px-5 sm:px-5 md:px-5 md:min-h-screen"
       >
-        <h1 className="text-5xl font-bold text-red font-roboto min-w-full text-center mb-14">
+        <h1 className="text-5xl font-bold text-red font-roboto min-w-full text-center mb-14 md:text-4xl">
           New Password
         </h1>
         <div className="flex flex-col gap-6 ">

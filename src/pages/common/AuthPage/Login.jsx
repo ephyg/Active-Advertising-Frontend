@@ -59,15 +59,15 @@ const Login = () => {
       onSubmit,
     });
   return (
-    <div className="grid grid-cols-2 max-h-screen bg-white_blue md:grid-cols-1">
+    <div className="grid grid-cols-2 min-h-screen bg-white_blue md:grid-cols-1">
       <div className="flex justify-end items-center max-h-screen bg-login bg-cover bg-no-repeat md:hidden">
-        <img src={Logo} alt="" className="w-562 mb-32" />
+        <img src={Logo} alt="" className="w-562 mb-32 md:w-400" />
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col justify-center items-stretch px-32 md:px-5 md:min-h-screen"
+        className="flex flex-col justify-center items-stretch 2xl:px-36 xl:px-32 lg:px-5 sm:px-5 md:px-5 md:min-h-screen"
       >
-        <h1 className="text-6xl font-bold text-red font-roboto min-w-full text-center ">
+        <h1 className="text-6xl font-bold text-red font-roboto min-w-full text-center md:text-4xl ">
           Login
         </h1>
         <h1 className="text-sm text-red font-roboto mb-8 text-center mt-7 ">
