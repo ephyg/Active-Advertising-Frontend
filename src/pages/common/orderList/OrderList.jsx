@@ -59,15 +59,22 @@ function OrderList() {
   };
   return (
     <Layout>
-      <div className="pr-10 w-screen, overflow-auto">
-        <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
-          <span className="mb-2px">Order List</span>
-          <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
+      <div className="pr-10 w-full">
+        <div className="w-full md:flex justify-center items-center">
+          <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
+            <span className="mb-2px">Order List</span>
+            <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
+          </div>
         </div>
-        <div className="flex justify-between mb-3">
-          <div className="hover:bg-blue_hover py-1 flex items-center justify-between gap-2 rounded-md cursor-pointer bg-blue px-6">
+        <div className="flex justify-between mb-3 md:grid md:grid-cols-2 md:gap-10 ">
+          <div className="hover:bg-blue_hover flex items-center justify-between gap-2 rounded-md cursor-pointer bg-blue px-6 md:px-3 md:py-0">
             <Link to="/proforma/add">
-              <Button text="Add Order" icon={FaPlus} />
+              <Button
+                text="Add Order"
+                className="md:text-sm"
+                icon={FaPlus}
+                iconSize={12}
+              />
             </Link>
           </div>
           <InputField
@@ -79,8 +86,8 @@ function OrderList() {
             }}
           />
         </div>
-        <div>
-          <table {...getTableProps()} className="w-full table-auto text-left ">
+        <div className="overflow-x-auto ">
+          <table {...getTableProps()} className="text-left min-w-full">
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()} className="">

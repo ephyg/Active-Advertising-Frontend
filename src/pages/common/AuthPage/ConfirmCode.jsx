@@ -108,15 +108,15 @@ const ConfirmCode = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col justify-center items-stretch px-32 md:px-5 md:min-h-screen"
+        className="flex flex-col justify-center items-stretch 2xl:px-36 xl:px-28 lg:px-5 sm:px-5 md:px-5 md:min-h-screen"
       >
-        <h1 className="text-5xl font-bold text-red font-roboto min-w-full text-left mb-14 ">
+        <h1 className="text-5xl font-bold text-red font-roboto min-w-full text-left mb-14 md:text-4xl">
           Verification
         </h1>
         {/* <h1 className="text-sm text-green font-roboto mb-14 text-left mt-3 ">
           {sentMessage}
         </h1> */}
-        <div className="flex flex-col gap-6 ">
+        <div className="flex flex-col gap-6 mb-1">
           <InputField
             label="Verification Code"
             type="number"
@@ -141,7 +141,7 @@ const ConfirmCode = () => {
           <div className="">
             <button
               type="submit"
-              className="text-sm text-center text-red mb-4 mt-1 bg-slate-200 font-roboto w-24 px-4 py-1 rounded-sm hover:bg-slate-300 cursor-pointer"
+              className="text-sm text-center text-red mb-12 mt-1 bg-slate-200 font-roboto w-24 px-4 py-1 rounded-sm hover:bg-slate-300 cursor-pointer"
               onClick={handleResend}
             >
               Resend

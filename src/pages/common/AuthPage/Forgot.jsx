@@ -66,15 +66,15 @@ const Forgot = () => {
       onSubmit,
     });
   return (
-    <div className="grid grid-cols-2 max-h-screen bg-white_blue md:grid-cols-1">
+    <div className="grid grid-cols-2 min-h-screen bg-white_blue md:grid-cols-1">
       <div className="flex justify-end items-center max-h-screen bg-login bg-cover bg-no-repeat md:hidden">
         <img src={Logo} alt="" className="w-562 mb-32" />
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col justify-center items-stretch px-32 md:px-5 md:min-h-screen"
+        className="flex flex-col justify-center items-stretch 2xl:px-36 xl:px-32 lg:px-5 sm:px-5 md:px-5 md:min-h-screen"
       >
-        <h1 className="text-5xl font-bold text-red font-roboto min-w-full text-left mb-14">
+        <h1 className="text-5xl font-bold text-red font-roboto min-w-full text-left mb-14 md:text-4xl">
           Forgot Password
         </h1>
 
