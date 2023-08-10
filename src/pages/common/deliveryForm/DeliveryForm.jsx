@@ -38,7 +38,6 @@ function DeliveryForm() {
         const dataFromBackend = await response.json();
         setData(dataFromBackend);
       } catch (error) {
-        console.error("Error fetching data from the backend:", error);
       }
     };
 

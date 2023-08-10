@@ -1,23 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/image/logocopy.png";
 import InputField from "../../../components/common/inputField/InputField";
 import Button from "../../../components/common/button/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useUserStore from "../../../store/userStore";
+import * as api from "../../../api/forgotApi";
 import Validation from "./LoginValidation";
 import { useFormik } from "formik";
 import NewPasswordValidation from "./NewPasswordConfirmation";
+import useForgotStore from "../../../store/forgotStore";
+import { useMutation } from "react-query";
+import { ToastContainer, toast } from "react-toastify";
+import { FaSpinner } from "react-icons/fa";
 const NewPassword = () => {
+  const [forgotError, setForgotError] = useState("");
+  const navigate = useNavigate();
   const user = useUserStore((state) => state.user);
-  const onSubmit = () => {
-    // useUserStore.getState().login(token);
-    // user === "admin" ? navigate("/report") : navigate("/order");
+  const {
+    setUser_email,
+    setVerification,
+    user_email,
+    setSentMessage,
+    sentMessage,
+    notification,
+    setNotification,
+    verification,
+  } = useForgotStore();
+  useEffect(() => {
+    if (!verification) {
+      navigate("/forgot");
+    }
+  }, []);
+  useEffect(() => {
+    if (notification == 2) {
+      toast.success(sentMessage, {
+        position: "top-left",
+        toastId: "success2",
+      });
+    }
+    setNotification({
+      notification: null,
+    });
+  }, []);
+  const newPassword = async (data) => {
+    const response = await api.NewPassword(data);
+    return response;
+  };
+  const mutation = useMutation(newPassword, {
+    onSuccess: (response) => {
+      const data = {
+        user_email: null,
+        verification: null,
+      };
+      setUser_email(data);
+      setVerification(data);
+      setSentMessage(response);
+      setNotification({
+        notification: 3,
+      });
+      navigate("/login");
+    },
+  });
+  const onSubmit = async (values) => {
+    const data = {
+      user_email: user_email,
+      user_password: values.user_password,
+    };
+    try {
+      await mutation.mutateAsync(data);
+    } catch (error) {
+      setForgotError("");
+    }
   };
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {
-        password: "",
-        confirm: "",
+        user_password: "",
+        user_confirm: "",
       },
       validationSchema: NewPasswordValidation,
       onSubmit,
@@ -38,39 +97,59 @@ const NewPassword = () => {
           <InputField
             label="Password"
             type="text"
-            id="password"
-            name="password"
+            id="user_password"
+            name="user_password"
             placeholder="password"
             className="py-2 text-lg"
-            value={values.password}
+            value={values.user_password}
             onBlur={handleBlur}
             onChange={handleChange}
-            error={errors.password && touched.password ? errors.password : ""}
+            error={
+              errors.user_password && touched.user_password
+                ? errors.user_password
+                : ""
+            }
           />
           <InputField
             label="confirm"
             type="text"
-            id="confirm"
-            name="confirm"
+            id="user_confirm"
+            name="user_confirm"
             placeholder="confirm"
             className="py-2 text-lg"
-            value={values.confirm}
+            value={values.user_confirm}
             onBlur={handleBlur}
             onChange={handleChange}
-            error={errors.confirm && touched.confirm ? errors.confirm : ""}
+            error={
+              errors.user_confirm && touched.user_confirm
+                ? errors.user_confirm
+                : ""
+            }
           />
         </div>
+        {mutation.isLoading ? (
+          <Button
+            className=" py-2 w-full px-16 mt-7 rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 "
+            text="Changing Password"
+            disabled={true}
+            iconSize={18}
+            icon={FaSpinner}
+            animation="animate-spin"
+          />
+        ) : (
+          <Button
+            className=" py-2 w-full px-16 mt-7 rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 "
+            text="Change Password"
+          />
+        )}
 
-        <Button
-          className=" py-2 px-16 mt-7 rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 "
-          text="Change Password"
-        />
         <div className="flex justify-center mb-8">
           <Link to="/Login" className="mt-2">
             <h1 className="text-gray-700 font-roboto  hover:text-red">Login</h1>
           </Link>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 };

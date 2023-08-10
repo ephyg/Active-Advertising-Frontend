@@ -1,5 +1,5 @@
 import React from "react";
-
+import "../../../../custom.scss";
 const InputField = ({
   label,
   placeholder,
@@ -10,7 +10,7 @@ const InputField = ({
   error,
   handleBlur,
   id,
-  name
+  name,
 }) => {
   return (
     <div className={`flex flex-col`}>
