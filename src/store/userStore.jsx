@@ -5,10 +5,6 @@ const useUserStore = create(
     (set) => ({
       user_role: {},
       User: localStorage.getItem("User"),
-      // setUserRole: (newRole) => set((state) => ({ user_role: newRole })),
-      // setUser: (newUser) => set((state) => ({ ...state, User: newUser })),
-      // clearUser: (state) => set({ user: null }),
-
       token: localStorage.getItem("token") || null,
 
       login: (userData) => {

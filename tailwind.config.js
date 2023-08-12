@@ -7,6 +7,9 @@ export default {
             fontFamily: {
                 roboto: ["Roboto", "sans-serif"],
             },
+            fontSize:{
+                xxs:"11px"
+            },
             width: {
                 full: "100%",
             },

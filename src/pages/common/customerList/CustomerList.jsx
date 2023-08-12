@@ -55,7 +55,7 @@ function OrderList() {
   };
   return (
     <Layout>
-      <div className="pr-10 w-screen, overflow-auto">
+      <div className="w-screen, overflow-auto">
         <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
           <span className="mb-2px">Order List</span>
           <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>

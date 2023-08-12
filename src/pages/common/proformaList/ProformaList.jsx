@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Layout from "../../../components/Layout/Layout";
 import {
   useTable,
@@ -18,10 +18,30 @@ import {
 } from "react-icons/bi";
 import Button from "../../../components/common/button/Button";
 import InputField from "../../../components/common/inputField/InputField";
+import * as api from "../../../api/proformaApi";
+import useProformaStore from "../../../store/proformaStore";
+import { useMutation } from "react-query";
 function OrderList() {
   const navigate = useNavigate();
+
+  const { allProforma, setAllProforma } = useProformaStore();
   const columns = useMemo(() => Columns, []);
-  const data = useMemo(() => DATA, []);
+  const data = useMemo(() => allProforma, []);
+  const getAllProforma = async () => {
+    const response = await api.GetAllProforma();
+    return response;
+  };
+  const mutation = useMutation(getAllProforma, {
+    onSuccess: (response) => {
+      setAllProforma(response);
+      console.log(allProforma);
+    },
+  });
+  useEffect(() => {
+    try {
+      mutation.mutateAsync();
+    } catch (error) {}
+  }, []);
 
   const tableInstance = useTable(
     {
@@ -55,15 +75,22 @@ function OrderList() {
   };
   return (
     <Layout>
-      <div className="pr-10">
-        <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
-          <span className="mb-2px">Proforma List</span>
-          <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
+      <div className=" w-full md:pr-0 mb-8">
+        <div className="w-full md:flex justify-center items-center">
+          <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
+            <span className="mb-2px">Proforma List</span>
+            <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
+          </div>
         </div>
-        <div className="flex justify-between mb-3">
-          <div className="hover:bg-blue_hover py-1 flex items-center justify-between gap-2 rounded-md cursor-pointer bg-blue px-6">
+        <div className="flex justify-between mb-3 md:grid md:grid-cols-2 md:gap-10 ">
+          <div className="hover:bg-blue_hover flex items-center justify-between gap-2 rounded-md cursor-pointer bg-blue px-6 md:px-3 md:py-0">
             <Link to="/proforma/add">
-              <Button text="Add Order" icon={FaPlus} />
+              <Button
+                text="Add Order"
+                className="md:text-sm"
+                icon={FaPlus}
+                iconSize={12}
+              />
             </Link>
           </div>
           <InputField
@@ -75,11 +102,8 @@ function OrderList() {
             }}
           />
         </div>
-        <div>
-          <table
-            {...getTableProps()}
-            className="w-full min-w-max table-auto text-left"
-          >
+        <div className="overflow-x-auto">
+          <table {...getTableProps()} className="min-w-full text-left">
             <thead>
               {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()} className="">
@@ -128,29 +152,29 @@ function OrderList() {
               })}
             </tbody>
           </table>
-          <div className="flex gap-2 justify-center mt-4">
-            <span className="mr-5">
-              Page{" "}
-              <strong>
-                {pageIndex + 1} of {pageOptions.length}
-              </strong>
-            </span>
-            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-              <BiChevronsLeft size={24} />
-            </button>
-            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-              <BiChevronLeft size={24} />
-            </button>
-            <button onClick={() => nextPage()} disabled={!canNextPage}>
-              <BiChevronRight size={24} />
-            </button>
-            <button
-              onClick={() => gotoPage(pageCount - 1)}
-              disabled={!canNextPage}
-            >
-              <BiChevronsRight size={24} />
-            </button>
-          </div>
+        </div>
+        <div className="flex gap-2 justify-center mt-4">
+          <span className="mr-5">
+            Page{" "}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>
+          </span>
+          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            <BiChevronsLeft size={24} />
+          </button>
+          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            <BiChevronLeft size={24} />
+          </button>
+          <button onClick={() => nextPage()} disabled={!canNextPage}>
+            <BiChevronRight size={24} />
+          </button>
+          <button
+            onClick={() => gotoPage(pageCount - 1)}
+            disabled={!canNextPage}
+          >
+            <BiChevronsRight size={24} />
+          </button>
         </div>
       </div>
     </Layout>
