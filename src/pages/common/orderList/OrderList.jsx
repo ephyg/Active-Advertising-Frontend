@@ -59,7 +59,7 @@ function OrderList() {
   };
   return (
     <Layout>
-      <div className="pr-10 w-full">
+      <div className="w-full md:pr-0">
         <div className="w-full md:flex justify-center items-center">
           <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
             <span className="mb-2px">Order List</span>
@@ -136,29 +136,29 @@ function OrderList() {
               })}
             </tbody>
           </table>
-          <div className="flex gap-2 justify-center mt-4">
-            <span className="mr-5">
-              Page{" "}
-              <strong>
-                {pageIndex + 1} of {pageOptions.length}
-              </strong>
-            </span>
-            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-              <BiChevronsLeft size={24} />
-            </button>
-            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-              <BiChevronLeft size={24} />
-            </button>
-            <button onClick={() => nextPage()} disabled={!canNextPage}>
-              <BiChevronRight size={24} />
-            </button>
-            <button
-              onClick={() => gotoPage(pageCount - 1)}
-              disabled={!canNextPage}
-            >
-              <BiChevronsRight size={24} />
-            </button>
-          </div>
+        </div>
+        <div className="flex gap-2 justify-center mt-4">
+          <span className="mr-5">
+            Page{" "}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>
+          </span>
+          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            <BiChevronsLeft size={24} />
+          </button>
+          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            <BiChevronLeft size={24} />
+          </button>
+          <button onClick={() => nextPage()} disabled={!canNextPage}>
+            <BiChevronRight size={24} />
+          </button>
+          <button
+            onClick={() => gotoPage(pageCount - 1)}
+            disabled={!canNextPage}
+          >
+            <BiChevronsRight size={24} />
+          </button>
         </div>
       </div>
     </Layout>

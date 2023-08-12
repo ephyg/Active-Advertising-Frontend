@@ -13,7 +13,6 @@ import InventoryList from "../pages/common/inventoryList/InventoryList";
 import AgreementForm from "../pages/common/agreementForm/AgreementForm";
 import OrderDetail from "../pages/common/orderDetail/OrderDetail";
 import AddProforma from "../pages/common/addProforma/AddProforma";
-import Downloadable from "../pages/common/addProforma/downloadableProforma";
 import CustomerDetails from "../pages/common/customerDetail/CustomerDetails";
 import AdminProfile from "../pages/admin/adminProfile/AdminProfile";
 import AddStaff from "../pages/admin/addStaff/AddStaff";
@@ -25,6 +24,7 @@ import NewPassword from "../pages/common/AuthPage/NewPassword";
 import DeliveryForm from "../pages/common/deliveryForm/DeliveryForm";
 import PrivateRoutes from "./PrivateRoutes";
 import PrivateRouteAuth from "./PrivateRouteAuth";
+import ProformaDetail from "../pages/common/ProformaDetail/ProformaDetail";
 
 function RouteList() {
   const { User, token, login } = useUserStore();
@@ -63,9 +63,8 @@ function RouteList() {
           <>
             <Route path="/order" element={<OrderList />} />
             <Route path="/proforma" element={<ProformaList />} />
-            <Route path="/proforma/:id" element={<AddProforma />} />
+            <Route path="/proforma/:id" element={<ProformaDetail />} />
             <Route path="/proforma/add" element={<AddProforma />} />
-            <Route path="/proforma/download" element={<Downloadable />} />
             <Route path="/order/:id" element={<OrderDetail />} />
             <Route path="/customer" element={<CustomerList />} />
             <Route path="/customer/:id" element={<CustomerDetails />} />

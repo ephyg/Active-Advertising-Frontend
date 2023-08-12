@@ -62,7 +62,7 @@ function ProformaDetail() {
   };
   return (
     <Layout>
-      <div className="flex relative flex-col mr-24 ml-20 px-9 py-6">
+      <div className="flex relative flex-col mr-24 ml-20 px-9 py-6 md:mr-0 md:ml-0 md:px-0">
         {isAddOpen && (
           <div className="fixed inset-0 flex items-center justify-center">
             <AddPopUp
@@ -84,129 +84,135 @@ function ProformaDetail() {
         )}
 
         <div className="flex w-full justify-center items-center mb-5">
-          <img src={Logo} className="w-28" alt="" />
+          <img src={Logo} className="w-28 md:w-20" alt="" />
         </div>
         <div className="flex flex-col items-end">
           <div className="flex flex-col">
             <div className="flex gap-2">
-              <h1 className="font-roboto text-sm text-blue font-bold">
+              <h1 className="font-roboto text-sm md:text-xxs text-blue ">
                 Contact:
               </h1>
               <div className="flex flex-col">
-                <h1 className="text-sm font-roboto">+251909901092</h1>
-                <h1 className="text-sm font-roboto">+251909901092</h1>
+                <h1 className="text-sm md:text-xxs ">+251909901092</h1>
+                <h1 className="text-sm md:text-xxs ">+251909901092</h1>
               </div>
             </div>
             <div className="flex gap-2">
-              <h1 className="font-roboto text-sm text-blue font-bold">
+              <h1 className="font-roboto text-sm md:text-xxs text-blue ">
                 Email:
               </h1>
               <div className="flex flex-col">
-                <h1 className="text-sm font-roboto">active@gmail.com</h1>
+                <h1 className="text-sm md:text-xxs">active@gmail.com</h1>
               </div>
             </div>
             <div className="flex gap-2">
-              <h1 className="font-roboto text-sm text-blue font-bold">
+              <h1 className="font-roboto text-sm md:text-xxs text-blue ">
                 Tin Number:
               </h1>
               <div className="flex flex-col">
-                <h1 className="text-sm font-roboto">0011036929</h1>
+                <h1 className="text-sm md:text-xxs ">0011036929</h1>
               </div>
             </div>
             <div className="flex gap-2">
-              <h1 className="font-roboto text-sm text-blue font-bold">
+              <h1 className="font-roboto text-sm md:text-xxs text-blue ">
                 Invoice Date :
               </h1>
               <div className="flex flex-col">
-                <h1 className="text-sm font-roboto">01/01/2022</h1>
+                <h1 className="text-sm md:text-xxs ">01/01/2022</h1>
               </div>
             </div>
             <div className="flex gap-2">
-              <h1 className="font-roboto text-sm text-blue font-bold">
+              <h1 className="font-roboto text-sm md:text-xxs text-blue ">
                 Account No.:
               </h1>
               <div className="flex flex-col">
-                <h1 className="text-sm font-roboto">CBE 1000015487562</h1>
-                <h1 className="text-sm font-roboto">CBE 1000015487562</h1>
-                <h1 className="text-sm font-roboto">CBE 1000015487562</h1>
+                <h1 className="text-sm md:text-xxs ">CBE 1000015487562</h1>
+                <h1 className="text-sm md:text-xxs ">CBE 1000015487562</h1>
+                <h1 className="text-sm md:text-xxs ">CBE 1000015487562</h1>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex justify-center mt-5 text-xl text-blue font-bold mb-10">
+        <div className="flex justify-center mt-5 text-xl text-blue font-bold mb-10 md:text-base md:mb-5">
           PROFORMA INVOICE
         </div>
         <div className="flex flex-col mb-10">
-          <div className="flex gap-1 items-end">
-            <h1 className="font-roboto text-sm text-blue ">
+          <div className="flex gap-1 items-center">
+            <h1 className="font-roboto text-sm md:text-xxs text-blue ">
               Payment Request No.:
             </h1>
             <div className="">
               <input
                 type="text"
-                className="mb-1 outline-none border-b bg-white_blue border-black"
+                className="mb-1 outline-none leading-3 border-b  bg-white_blue border-black md:h-3 md:text-xxs md:w-24"
                 value={paymentRequest}
                 onChange={(e) => setPaymentRequest(e.target.value)}
               />
             </div>
           </div>
-          <div className="flex gap-1 items-end">
-            <h1 className="font-roboto text-sm text-blue ">Client Name:</h1>
+          <div className="flex gap-1 items-center">
+            <h1 className="font-roboto text-sm md:text-xxs text-blue ">
+              Client Name:
+            </h1>
             <div className="">
               <input
                 type="text"
-                className="mb-1 outline-none border-b bg-white_blue border-black"
+                className="mb-1 outline-none leading-3 border-b bg-white_blue border-black md:h-3 md:text-xxs md:w-24"
                 value={clienName}
                 onChange={(e) => setClientName(e.target.value)}
               />
             </div>
           </div>
-          <div className="flex gap-1 items-end">
-            <h1 className="font-roboto text-sm text-blue ">Phone Number:</h1>
+          <div className="flex gap-1 items-center">
+            <h1 className="font-roboto text-sm md:text-xxs text-blue ">
+              Phone Number:
+            </h1>
             <div className="">
               <input
                 type="text"
-                className=" mb-1 outline-none border-b bg-white_blue border-black"
+                className=" mb-1 outline-none leading-3 border-b bg-white_blue border-black md:h-3 md:text-xxs md:w-24"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
           </div>
-          <div className="flex gap-1 items-end">
-            <h1 className="font-roboto text-sm text-blue ">Tin No.:</h1>
+          <div className="flex gap-1 items-center">
+            <h1 className="font-roboto text-sm md:text-xxs text-blue ">
+              Tin No.:
+            </h1>
             <div className="">
               <input
                 type="text"
-                className=" mb-1 outline-none border-b bg-white_blue border-black"
+                className=" mb-1 outline-none leading-3 border-b bg-white_blue border-black md:h-3 md:text-xxs md:w-24"
                 value={tinNumber}
                 onChange={(e) => setTinNumber(e.target.value)}
               />
             </div>
           </div>
         </div>
-        <div className="flex flex-col justify-center ">
-          <table class="mb-3 ">
+        <div className="overflow-x-auto">
+          <table class="mb-3 min-w-full">
             <thead class="text-blue">
               <tr className="">
-                <th class="py-1 border-slate-200 border-2  px-4 text-sm text-left">
+                <th class="py-1 border-slate-200 border-2  px-4 text-sm md:text-xxs text-left">
                   No.
                 </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-sm text-left">
+                <th class="py-1 border-slate-200 border-2 px-4 text-sm md:text-xxs text-left">
                   Items Description
                 </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-sm text-left">
+                <th class="py-1 border-slate-200 border-2 px-4 text-sm md:text-xxs text-left">
                   Size
                 </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-sm text-left">
+                <th class="py-1 border-slate-200 border-2 px-4 text-sm md:text-xxs text-left">
                   Vendor
                 </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-sm text-left">
+                <th class="py-1 border-slate-200 border-2 px-4 text-sm md:text-xxs text-left">
                   Quantity
                 </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-sm text-left">
+                <th class="py-1 border-slate-200 border-2 px-4 text-sm md:text-xxs text-left">
                   Price
                 </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-sm text-left">
+                <th class="py-1 border-slate-200 border-2 px-4 text-sm md:text-xxs text-left">
                   Total Price
                 </th>
               </tr>
@@ -215,27 +221,27 @@ function ProformaDetail() {
             <tbody class="divide-y divide-gray-300">
               {dataArray.map((item, index) => (
                 <tr>
-                  <td class="py-1 border-slate-200 border  text-sm px-4">
+                  <td class="py-1 border-slate-200 border  text-sm md:text-xxs px-4">
                     <li key={index} className="list-none">
                       {index + 1}
                     </li>
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm px-4">
+                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
                     {item["itemDecription"]}
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm px-4">
+                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
                     {item["size"]}
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm px-4">
+                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
                     {item["vendor"]}
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm px-4">
+                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
                     {item["quantity"]}
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm px-4">
+                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
                     {item["price"]}
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm px-4">
+                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
                     {item["totalPrice"]}
                   </td>
                   <td class="py-1 flex gap-2 px-4">
@@ -283,18 +289,22 @@ function ProformaDetail() {
         <div className="flex mt-7 justify-end">
           <div className="flex flex-col">
             <div className="flex gap-1 items-end">
-              <h1 className="font-roboto text-base text-blue ">Sub Total:</h1>
-              <div className="">{subTotal}</div>
+              <h1 className="font-roboto text-base text-blue md:text-xs">
+                Sub Total:
+              </h1>
+              <div className="md:text-xxs">{subTotal}</div>
             </div>
             <div className="flex gap-1 items-end">
-              <h1 className="font-roboto text-base text-blue ">Tax 15%:</h1>
-              <div className="">{Tax}</div>
+              <h1 className="font-roboto text-base text-blue md:text-xs">
+                Tax {tax}%:
+              </h1>
+              <div className="md:text-xxs">{Tax}</div>
             </div>
             <div className="flex gap-1 items-end">
-              <h1 className="font-roboto text-base text-blue ">
+              <h1 className="font-roboto text-base text-blue md:text-xs">
                 Grandted Total:
               </h1>
-              <div className="">{grandtedTotal}</div>
+              <div className="md:text-xxs">{grandtedTotal}</div>
             </div>
           </div>
         </div>
@@ -303,40 +313,44 @@ function ProformaDetail() {
             Terms and Conditions
           </h1>
           <div className="flex gap-1 items-end">
-            <h1 className="font-roboto text-sm text-blue font-">
+            <h1 className="font-roboto text-sm md:text-xxs text-blue font-">
               Price Validity
             </h1>
             <div className="">
               <input
                 type="text"
-                className="mb-1 outline-none border-b bg-white_blue border-black"
+                className="mb-1 outline-none leading-3 border-b bg-white_blue border-black"
                 value={priceValidity}
                 onChange={(e) => setPriceValidity(e.target.value)}
               />
             </div>
           </div>
           <div className="flex gap-1 items-end">
-            <h1 className="font-roboto text-sm text-blue font-">Payment</h1>
+            <h1 className="font-roboto text-sm md:text-xxs text-blue font-">
+              Payment
+            </h1>
             <div className="">
               <input
                 type="text"
-                className="mb-1 outline-none border-b bg-white_blue border-black"
+                className="mb-1 outline-none leading-3 border-b bg-white_blue border-black"
                 value={payment}
                 onChange={(e) => setPayment(e.target.value)}
               />
             </div>
           </div>
-          <div className="flex gap-1 items-end">
-            <h1 className="font-roboto text-sm text-blue font-">
+          <div className="flex gap-1 items-end mb-1">
+            <h1 className="font-roboto leading-3 text-sm md:text-xxs text-blue ">
               Price Including VAT:
             </h1>
-            <div className="text-sm border-b border-black pl-1 pr-1 pb-1">
+            <div className="text-sm leading-3 md:text-xxs border-b border-black pl-1 pr-1 pb-1">
               The price is including V.A.T {tax}
             </div>
           </div>
           <div className="flex gap-1 items-center">
-            <h1 className="font-roboto text-sm text-blue font-">Delivery:</h1>
-            <div className="text-sm border-b border-black pl-1 pr-1 pb-1">
+            <h1 className="font-roboto text-sm md:text-xxs text-blue font-">
+              Delivery:
+            </h1>
+            <div className="text-sm md:text-xxs border-b border-black pl-1 pr-1 pb-1">
               Delivery: on time
             </div>
           </div>
