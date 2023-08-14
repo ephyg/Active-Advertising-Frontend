@@ -26,10 +26,8 @@ import NewPassword from "../pages/common/AuthPage/NewPassword";
 // import ProformaDetail from "../pages/common/proformaDetail/ProformaDetail";
 import DeliveryForm from "../pages/common/deliveryForm/DeliveryForm";
 function RouteList() {
+
   const roleType = useUserStore((state) => state.user);
-
-
-
   return (
     <Routes>
       {roleType === "admin" && (
