@@ -8,11 +8,10 @@ import { Chart } from "chart.js/auto";
 
 // import BarChart from "./components/BarChart";
 // import LineChart from "C:/Users/almax/active-advertising-frontend/src/components/LineChart.js";
-import { UserData } from "./Data/Data";
-import { JobData } from "./Data/Data1";
+
 // import PieChart from "./components/PieChart";
 import { Revenue } from "./Data/Data3";
-import { BiBox } from "react-icons/bi";
+
 
 function Report() {
   const [revenue, setRevenue] = useState({
@@ -39,8 +38,7 @@ function Report() {
         <div class="h-25 w-6/12  ">
           <Line data={revenue} />
         </div>
-        {/* <div className="h-4/6 w-4/12 "> */}
-        {/* box for individual data */}
+       
         <div className=" w-5/12 pr-10 bg-blue justify-end border rounded-xl p-24 shadow-md mr-12  ">
           <div className="text-center -mt-16 dark:text-white">
             <h1>Goal Completion</h1>
