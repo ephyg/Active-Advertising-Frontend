@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "../pages/common/AuthPage/Login";
 import Forgot from "../pages/common/AuthPage/Forgot";
-import OrderList from "../pages/common/orderList/OrderList";
+// import OrderList from "../pages/common/orderList/OrderList";
 import Report from "../pages/admin/report/Report";
 import ProformaList from "../pages/common/proformaList/ProformaList";
 import CustomerList from "../pages/common/customerList/CustomerList";
@@ -66,7 +66,7 @@ function RouteList() {
         {/* Route common for admin and account manager only*/}
         {(roleType == "account-manager" || roleType == "admin") && (
           <>
-            <Route path="/order" element={<OrderList />} />
+            {/* <Route path="/order" element={<OrderList />} /> */}
             <Route path="/proforma" element={<ProformaList />} />
             <Route path="/proforma/:id" element={<ProformaDetail />} />
             <Route path="/proforma/add" element={<AddProforma />} />
@@ -84,7 +84,7 @@ function RouteList() {
         {/* Route for employees only*/}
         {roleType !== "account-manager" && roleType !== "admin" && (
           <>
-            <Route path="/order" element={<OrderList />} />
+            {/* <Route path="/order" element={<OrderList />} /> */}
             <Route path="/order/:id" element={<OrderDetail />} />
           </>
         )}

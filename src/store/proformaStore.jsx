@@ -3,16 +3,19 @@ import { persist } from "zustand/middleware";
 const useProformaStore = create(
   persist(
     (set) => ({
-      allProforma: null,
-      proformaDetail: null,
+      allProforma: {},
       eachOrder: null,
       eachProforma: null,
-      setAllProforma: (allProforma) => {
+      setAllProforma: (data) => {
+        const { allProforma } = data;
         set(allProforma);
       },
       setProformaDetail: (data) => {
-        const { proforma, order } = data;
-        set({ eachOrder: order, eachProforma: proforma });
+        const { order, proforma } = data;
+        set({
+          eachOrder: order,
+          eachProforma: proforma,
+        });
       },
     }),
     {
