@@ -43,7 +43,9 @@ function Report() {
           <div className="text-center -mt-16 dark:text-white">
             <h1>Goal Completion</h1>
           </div>
-          {/* progress bar */}
+         
+          {/*---------------------------------------- progress bar----------------------------------------------------- */}
+
           <div className="-ml-12 pb-2   ">
             <div class=" flex justify-between mb-1">
               <span class="text-base font-medium text-blue dark:text-white">
@@ -97,6 +99,9 @@ function Report() {
           </div>
         </div>
       </div>
+      
+         {/*---------------------------------------- information box ----------------------------------------------------- */}
+
       <div className=" static ... pt-10 h-48 grid grid-cols-3 gap-4  ">
         {/* <div className="w-50 h-100 border rounded-md p-4 bg-blue-200  shadow-md">1</div> */}
         <div className=" h-16 flex border rounded-md p-4 bg-blue  shadow-md w-10/12">
