@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,17 +11,12 @@
 
 /* Include the default configuration */
 
-
 /* @import "tailwindcss/base"; */
-
 
 /* Include the components */
 
-
 /* @import "tailwindcss/components"; */
 
-
 /* Include the utilities */
-
 
 /* @import "tailwindcss/utilities"; */
