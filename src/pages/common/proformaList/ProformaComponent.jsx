@@ -22,7 +22,7 @@ import * as api from "../../../api/proformaApi";
 import useProformaStore from "../../../store/proformaStore";
 import { useMutation, useQuery } from "react-query";
 import ProformaDetail from "../ProformaDetail/ProformaDetail";
-function ProformaComponent({allProformas}) {
+function ProformaComponent({ allProformas }) {
   const navigate = useNavigate();
 
   const columns = useMemo(() => Columns, []);
@@ -93,7 +93,7 @@ function ProformaComponent({allProformas}) {
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className="py-3 px-2 border text-base text-blue font-roboto font-bold"
+                    className="py-3 px-2 border text-sm text-blue font-roboto font-bold"
                   >
                     <span className="flex items-center justify-between">
                       {column.render("Header")}
@@ -125,7 +125,7 @@ function ProformaComponent({allProformas}) {
                     <td
                       key={index}
                       {...cell.getCellProps}
-                      className="border py-1 text-sm px-2 group-hover:border-slate-200"
+                      className="border py-1 text-xs px-2 group-hover:border-slate-200"
                     >
                       {cell.render("Cell")}
                     </td>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "../../../components/Layout/Layout";
 import Card from "../../../components/common/card/Card";
@@ -6,8 +6,12 @@ import data from "../orderList/DATA.json";
 import Button from "../../../components/common/button/Button";
 import useProformaStore from "../../../store/proformaStore";
 function OrderDetail() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
   const { id } = useParams();
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
+
   const filteredData = eachOrder.filter((item) => item.id == id);
   console.log(filteredData);
   return (

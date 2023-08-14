@@ -16,7 +16,7 @@ const InputField = ({
     <div className={`flex flex-col`}>
       <label
         htmlFor=""
-        className="font-normal mb-1 text-blue font-roboto text-lg "
+        className="font-normal mb-1 text-blue font-roboto text-lg md:text-sm"
       >
         {label}
       </label>

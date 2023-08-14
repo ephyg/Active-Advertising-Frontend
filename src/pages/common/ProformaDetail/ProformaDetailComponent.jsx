@@ -196,30 +196,30 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
             <tbody class="divide-y divide-gray-300">
               {eachOrder.map((items, index) => (
                 <tr
-                  className="cursor-pointer hover:bg"
+                  className="cursor-pointer hover:bg-slate-200"
                   onClick={() => handleRowClick(eachOrder[index].id)}
                 >
-                  <td class="py-1 border-slate-200 border  text-sm md:text-xxs px-4">
+                  <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
                     <li key={index} className="list-none">
                       {index + 1}
                     </li>
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
+                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.item_description}
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
+                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.size}
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
+                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.vendor_name}
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
+                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.quantity}
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
+                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.unit_price}
                   </td>
-                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
+                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {Number(items.quantity) * Number(items.unit_price)}
                   </td>
                 </tr>

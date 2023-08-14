@@ -43,6 +43,7 @@ function ProformaDetail() {
   }
   let tax = 15;
   let Tax = (tax / 100) * subTotal;
+  Tax = parseFloat(Tax.toFixed(2));
   let grandtedTotal = Tax + subTotal;
   const handleDownload = () => {
     const element = document.getElementById("download-pdf");
@@ -62,7 +63,7 @@ function ProformaDetail() {
   };
   return (
     <Layout>
-      <div className="flex relative flex-col mr-24 ml-20 px-9 py-6 md:mr-0 md:ml-0 md:px-0">
+      <div className="flex relative flex-col  mx-10  py-6 md:mr-0 md:ml-0 md:px-0">
         {isAddOpen && (
           <div className="fixed inset-0 flex items-center justify-center">
             <AddPopUp
@@ -215,6 +216,9 @@ function ProformaDetail() {
                 <th class="py-1 border-slate-200 border-2 px-4 text-sm md:text-xxs text-left">
                   Total Price
                 </th>
+                <th class="py-1 border-slate-200 border-2 px-4 text-sm md:text-xxs text-left">
+                  Profit
+                </th>
               </tr>
             </thead>
 
@@ -239,10 +243,13 @@ function ProformaDetail() {
                     {item["quantity"]}
                   </td>
                   <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
-                    {item["price"]}
+                    {item["unitPrice"]}
                   </td>
                   <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
                     {item["totalPrice"]}
+                  </td>{" "}
+                  <td class="py-1 border-slate-200 border text-sm md:text-xxs px-4">
+                    {item["profitPrice"]}
                   </td>
                   <td class="py-1 flex gap-2 px-4">
                     <FaEdit
