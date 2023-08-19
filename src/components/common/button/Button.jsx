@@ -8,12 +8,13 @@ const Button = ({
   clr,
   disabled,
   animation,
+  type,
   iconSize,
 }) => {
   return (
     <div className="flex items-stretch justify-center">
       <button
-        type="submit"
+        type={type}
         className={`font-roboto font-bold text-lg text-white items-stretch flex justify-center ${className}`}
         onClick={onClick}
         disabled={disabled}

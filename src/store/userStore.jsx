@@ -4,7 +4,7 @@ const useUserStore = create(
   persist(
     (set) => ({
       user_role: {},
-      User: localStorage.getItem("User"),
+      user: localStorage.getItem("user"),
       token: localStorage.getItem("token") || null,
 
       login: (userData) => {

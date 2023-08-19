@@ -40,7 +40,7 @@ function AddPopUp({ Open, onClick, len }) {
     });
   return (
     <>
-      <form
+      <div
         onSubmit={handleSubmit}
         className="flex flex-col bg-white px-10 shadow-2xl py-6 rounded-2xl md:px-2"
       >
@@ -137,11 +137,13 @@ function AddPopUp({ Open, onClick, len }) {
         </div>
         <div className="w-full justify-center items-center mt-3">
           <Button
+            onClick={handleSubmit}
+            type="submit"
             text="Add Order"
             className="bg-blue text-white py-1 w-full rounded-lg hover:bg-blue_hover"
           />
         </div>
-      </form>
+      </div>
     </>
   );
 }

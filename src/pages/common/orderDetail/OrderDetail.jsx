@@ -13,7 +13,8 @@ function OrderDetail() {
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
 
   const filteredData = eachOrder.filter((item) => item.id == id);
-  console.log(filteredData);
+  // console.log(filteredData);
+  
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">

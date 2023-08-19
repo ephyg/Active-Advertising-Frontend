@@ -3,6 +3,7 @@ import { TiDelete } from "react-icons/ti";
 import InputField from "../../../components/common/inputField/InputField";
 import Button from "../../../components/common/button/Button";
 import { useFormik } from "formik";
+import UpdateValidation from "./updateValidation";
 
 function UpdatePopUp({ Open, id, data, onClick }) {
   const [itemDescription, setitemDescription] = useState(
@@ -15,23 +16,6 @@ function UpdatePopUp({ Open, id, data, onClick }) {
   const [totalPrice, setTotalPrice] = useState(data[id]["totalPrice"]);
   const [profitPrice, setProfitPrice] = useState(data[id]["profitPrice"]);
 
-  const handleUpdateClick = () => {
-    setTotalPrice(Number(quantity) * Number(price));
-
-    const updatedData = {
-      id: data[id]["id"],
-      itemDecription: data[id]["itemDescription"],
-      size: size,
-      vendor: vendor,
-      quantity: quantity,
-      price: price,
-      totalPrice: Number(quantity) * Number(price),
-    };
-    data[id] = updatedData;
-    onClick(data);
-    Open(false);
-  };
-
   const onSubmit = () => {
     const updatedData = {
       id: data[id]["id"],
@@ -43,11 +27,10 @@ function UpdatePopUp({ Open, id, data, onClick }) {
       totalPrice: Number(values.quantity) * Number(values.unitPrice),
       profitPrice: values.profitPrice,
     };
-     data[id] = updatedData;
+    data[id] = updatedData;
     onClick(data);
     Open(false);
   };
-  console.log(data);
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {
@@ -59,7 +42,7 @@ function UpdatePopUp({ Open, id, data, onClick }) {
         totalPrice: data[id].totalPrice,
         profitPrice: data[id].profitPrice,
       },
-      // validationSchema: AddValidation,
+      validationSchema: UpdateValidation,
       onSubmit,
     });
   return (
@@ -104,20 +87,22 @@ function UpdatePopUp({ Open, id, data, onClick }) {
         <InputField
           label="Quantity"
           className="py-1 md:h-8 md:text-sm"
-          value={quantity}
-          onChange={(e) => {
-            setQuantity(e.target.value);
-          }}
-        />
-        <InputField
-          label="Price"
-          className="py-1 md:h-8 md:text-sm"
           id="quantity"
           name="quantity"
           value={values.quantity}
           onChange={handleChange}
           onBlur={handleBlur}
           error={errors.quantity && touched.quantity ? errors.quantity : ""}
+        />
+        <InputField
+          label="Price"
+          className="py-1 md:h-8 md:text-sm"
+          id="unitPrice"
+          name="unitPrice"
+          value={values.unitPrice}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={errors.unitPrice && touched.unitPrice ? errors.unitPrice : ""}
         />
         <InputField
           label="Vendor"
@@ -144,6 +129,8 @@ function UpdatePopUp({ Open, id, data, onClick }) {
       </div>
       <div className="w-full justify-center items-center mt-3">
         <Button
+          type="submit"
+          onClick={handleSubmit}
           text="Update Order"
           className="bg-blue text-white py-1 px-3 rounded-md hover:bg-blue_hover"
         />

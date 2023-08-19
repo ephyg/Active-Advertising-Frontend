@@ -138,6 +138,7 @@ const NewPassword = () => {
           />
         ) : (
           <Button
+            type="submit"
             className=" py-2 w-full px-16 mt-7 rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 "
             text="Change Password"
           />

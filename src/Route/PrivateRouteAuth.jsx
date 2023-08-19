@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import useUserStore from "../store/userStore";
 
 function PrivateRouteAuth() {
-  const { User, user_role, token, login } = useUserStore();
+  const {  user_role, token, login } = useUserStore();
 
   const navigate = useNavigate();
   useEffect(() => {
