@@ -8,7 +8,10 @@ function ProformaList() {
     data: allProforma,
     isLoading,
     isError,
-  } = useQuery("allProformas", api.GetAllProforma, { staleTime: 6000 });
+    isFetching,
+  } = useQuery("allProformas", api.GetAllProforma, {
+    refetchOnWindowFocus: true,
+  });
   if (isLoading) {
     return <h1></h1>;
   }

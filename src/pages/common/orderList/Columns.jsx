@@ -6,34 +6,27 @@ export const Columns = [
   },
   {
     Header: "Items Description",
-    accessor: "Items-Description",
+    accessor: "item_description",
   },
   {
     Header: "Size",
-    accessor: "Size",
+    accessor: "size",
   },
   {
     Header: "Quantity",
-    accessor: "Quantity",
+    accessor: "quantity",
   },
   {
-    Header: "Price",
-    accessor: "Price",
+    Header: "Unit-Price",
+    accessor: "unit_price",
   },
-  {
-    Header: "Total-Price",
-    accessor: "Total-Price",
-  },
+
   {
     Header: "Status",
-    accessor: "Status",
+    accessor: "status",
   },
   {
     Header: "Order-Date",
-    accessor: "Order-Date",
-  },
-  {
-    Header: "Delivery-Date",
-    accessor: "Delivery-Date",
+    accessor: "formatted_created_at",
   },
 ];

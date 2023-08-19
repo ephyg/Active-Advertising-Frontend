@@ -14,7 +14,7 @@ import useForgotStore from "../../../store/forgotStore";
 const Login = () => {
   const navigate = useNavigate();
   const [credentialError, setCredentialError] = useState("");
-  const { User, token, login, user_role } = useUserStore();
+  const {  token, login, user_role } = useUserStore();
   const { notification, setSentMessage, sentMessage, setNotification } =
     useForgotStore();
   useEffect(() => {
@@ -35,6 +35,7 @@ const Login = () => {
   const mutation = useMutation(loginUser, {
     onSuccess: (userData) => {
       login(userData);
+      console.log(userData)
       user_role === "admin" ? navigate("/report") : navigate("/order");
     },
   });

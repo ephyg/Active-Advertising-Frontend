@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import Layout from "../../../components/Layout/Layout";
 import Logo from "../../../assets/image/logo.png";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
 import Button from "../../../components/common/button/Button";
 import AddPopUp from "./AddPopUp";
 import UpdatePopUp from "./UpdatePopUp";
 import html2pdf from "html2pdf.js";
-
+import * as api from "../../../api/proformaApi";
 import { data } from "autoprefixer";
+import { useMutation, useQuery } from "react-query";
+import { ToastContainer, toast } from "react-toastify";
+import useUserStore from "../../../store/userStore";
 function ProformaDetail() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -26,11 +30,37 @@ function ProformaDetail() {
   const [payment, setPayment] = useState("");
   const [priceIncludingVat, setPriceIncludingVat] = useState("");
   const [delivery, setDelivery] = useState("");
-  const handleDelete = (itemId) => {
-    setDataArray((prevData) => {
-      return prevData.filter((order) => order.id !== itemId);
-    });
+  const { user } = useUserStore();
+  const addProforma = (data) => {
+    const response = api.AddProforma(data);
+    return response;
   };
+  const mutation = useMutation(addProforma, {
+    onSuccess: () => {
+      toast.success("Proforma added successfully", {
+        position: "top-center",
+        toastId: "error1",
+      });
+    },
+  });
+  const {
+    data: basicInfo,
+    isLoading: basicInfoLoading,
+    isError,
+  } = useQuery("basicInfo-store", () => api.GetProformaBasicInfo());
+  if (basicInfoLoading) {
+    return <h1>Loading ...</h1>;
+  }
+  const contact = String(basicInfo[0].active_phone_number);
+  const contactArray = contact.split(":");
+  const bankAccount = String(basicInfo[0].active_account_number);
+  const bankAccountArray = bankAccount.split(":");
+  const currentDate = new Date();
+  const date = currentDate.getDate();
+  const month = currentDate.getMonth() + 1;
+  const year = currentDate.getFullYear();
+  const today = `${year}-${month}-${date}`;
+
   const handleAddOnclick = (data) => {
     setDataArray([...dataArray, data]);
   };
@@ -38,32 +68,82 @@ function ProformaDetail() {
     setDataArray(data);
   };
   let subTotal = 0;
+  let AllOrders = [];
+  let totalProfit = 0;
   for (let index = 0; index < dataArray.length; index++) {
     subTotal += dataArray[index]["totalPrice"];
+    totalProfit += dataArray[index]["profitPrice"];
+    const order = {
+      item_description: dataArray[index].itemDecription,
+      size: dataArray[index].size,
+      quantity: dataArray[index].quantity,
+      unit_price: dataArray[index].unitPrice,
+      vendor_name: dataArray[index].vendor,
+    };
+    AllOrders[index] = order;
   }
+  const AllProformaData = {
+    invoice_date: today,
+    payment_request_number: paymentRequest,
+    active_tin_nUmber: basicInfo[0].active_tin_number,
+    active_account_number: basicInfo[0].active_account_number,
+    active_vat: basicInfo[0].active_vat,
+    active_phone_number: basicInfo[0].active_phone_number,
+    active_email: basicInfo[0].active_email,
+    client_name: clienName,
+    client_tin_number: tinNumber,
+    client_phone_number: phoneNumber,
+    price_validity: priceValidity,
+    payment_method: payment,
+    contact_person: `${user.user_first_name + " " + user.user_last_name}`,
+    total_price: subTotal,
+    total_profit: Number(totalProfit),
+    orders: AllOrders,
+  };
+
   let tax = 15;
   let Tax = (tax / 100) * subTotal;
   Tax = parseFloat(Tax.toFixed(2));
   let grandtedTotal = Tax + subTotal;
-  const handleDownload = () => {
-    const element = document.getElementById("download-pdf");
-    const opt = {
-      margin: 10,
-      filename: "proforma.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "portrait",
-        fontSize: 10,
-      },
-    };
-    html2pdf().from(element).set(opt).save();
+
+  const handleDownload = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (AllOrders.length == 0) {
+        toast.error("Atleast one order is needed", {
+          position: "top-center",
+          toastId: "erro1",
+        });
+      } else {
+        mutation.mutate(AllProformaData);
+        const element = document.getElementById("download-pdf");
+        const opt = {
+          margin: 10,
+          filename: "proforma.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: {
+            unit: "mm",
+            format: "a4",
+            orientation: "portrait",
+            fontSize: 10,
+          },
+        };
+        // html2pdf().from(element).set(opt).save();
+        navigate("/proforma");
+      }
+    } catch (error) {
+      throw new error();
+    }
   };
+
   return (
     <Layout>
-      <div className="flex relative flex-col  mx-10  py-6 md:mr-0 md:ml-0 md:px-0">
+      <form
+        onSubmit={handleDownload}
+        className="flex relative flex-col  mx-10  py-6 md:mr-0 md:ml-0 md:px-0"
+      >
         {isAddOpen && (
           <div className="fixed inset-0 flex items-center justify-center">
             <AddPopUp
@@ -94,8 +174,11 @@ function ProformaDetail() {
                 Contact:
               </h1>
               <div className="flex flex-col">
-                <h1 className="text-sm md:text-xxs ">+251909901092</h1>
-                <h1 className="text-sm md:text-xxs ">+251909901092</h1>
+                {contactArray.map((items, index) => (
+                  <h1 className="text-sm md:text-xxs " key={index}>
+                    {items}
+                  </h1>
+                ))}
               </div>
             </div>
             <div className="flex gap-2">
@@ -103,7 +186,9 @@ function ProformaDetail() {
                 Email:
               </h1>
               <div className="flex flex-col">
-                <h1 className="text-sm md:text-xxs">active@gmail.com</h1>
+                <h1 className="text-sm md:text-xxs">
+                  {basicInfo[0].active_email}
+                </h1>
               </div>
             </div>
             <div className="flex gap-2">
@@ -111,7 +196,9 @@ function ProformaDetail() {
                 Tin Number:
               </h1>
               <div className="flex flex-col">
-                <h1 className="text-sm md:text-xxs ">0011036929</h1>
+                <h1 className="text-sm md:text-xxs ">
+                  {basicInfo[0].active_tin_number}
+                </h1>
               </div>
             </div>
             <div className="flex gap-2">
@@ -119,7 +206,7 @@ function ProformaDetail() {
                 Invoice Date :
               </h1>
               <div className="flex flex-col">
-                <h1 className="text-sm md:text-xxs ">01/01/2022</h1>
+                <h1 className="text-sm md:text-xxs ">{today}</h1>
               </div>
             </div>
             <div className="flex gap-2">
@@ -127,9 +214,11 @@ function ProformaDetail() {
                 Account No.:
               </h1>
               <div className="flex flex-col">
-                <h1 className="text-sm md:text-xxs ">CBE 1000015487562</h1>
-                <h1 className="text-sm md:text-xxs ">CBE 1000015487562</h1>
-                <h1 className="text-sm md:text-xxs ">CBE 1000015487562</h1>
+                {bankAccountArray.map((items, index) => (
+                  <h1 className="text-sm md:text-xxs " key={index}>
+                    {items}
+                  </h1>
+                ))}
               </div>
             </div>
           </div>
@@ -144,6 +233,7 @@ function ProformaDetail() {
             </h1>
             <div className="">
               <input
+                required
                 type="text"
                 className="mb-1 outline-none leading-3 border-b  bg-white_blue border-black md:h-3 md:text-xxs md:w-24"
                 value={paymentRequest}
@@ -158,6 +248,7 @@ function ProformaDetail() {
             <div className="">
               <input
                 type="text"
+                required
                 className="mb-1 outline-none leading-3 border-b bg-white_blue border-black md:h-3 md:text-xxs md:w-24"
                 value={clienName}
                 onChange={(e) => setClientName(e.target.value)}
@@ -171,6 +262,7 @@ function ProformaDetail() {
             <div className="">
               <input
                 type="text"
+                required
                 className=" mb-1 outline-none leading-3 border-b bg-white_blue border-black md:h-3 md:text-xxs md:w-24"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -184,6 +276,7 @@ function ProformaDetail() {
             <div className="">
               <input
                 type="text"
+                required
                 className=" mb-1 outline-none leading-3 border-b bg-white_blue border-black md:h-3 md:text-xxs md:w-24"
                 value={tinNumber}
                 onChange={(e) => setTinNumber(e.target.value)}
@@ -288,7 +381,9 @@ function ProformaDetail() {
         </div>
         <div className="flex justify-end">
           <Button
+            onSubmit={(e) => e.preventDefault()}
             text="+"
+            type="button"
             className="text-white text-lg  px-9 flex rounded-lg bg-blue hover:bg-blue_hover"
             onClick={() => setIsAddOpen(!isAddOpen)}
           />
@@ -326,6 +421,7 @@ function ProformaDetail() {
             <div className="">
               <input
                 type="text"
+                required
                 className="mb-1 outline-none leading-3 border-b bg-white_blue border-black"
                 value={priceValidity}
                 onChange={(e) => setPriceValidity(e.target.value)}
@@ -339,6 +435,7 @@ function ProformaDetail() {
             <div className="">
               <input
                 type="text"
+                required
                 className="mb-1 outline-none leading-3 border-b bg-white_blue border-black"
                 value={payment}
                 onChange={(e) => setPayment(e.target.value)}
@@ -388,18 +485,19 @@ function ProformaDetail() {
         </div>
         <div className="flex justify-end mb-10 gap-4">
           <Button
-            text="Send"
+            text="Verify"
             className="text-white text-lg py-1  px-8 flex rounded-lg bg-blue hover:bg-blue_hover"
           />
           <Button
-            text="Download"
+            text="Verify & Download"
+            type="submit"
             className="text-white text-lg  px-8 flex rounded-lg py-1 bg-green hover:bg-green"
-            onClick={handleDownload}
+            // onClick={handleDownload}
           />
         </div>
-      </div>
+      </form>
 
-      <div className="hidden">
+      <form className="hidden">
         <div className="flex relative flex-col px-9 " id="download-pdf">
           <div className="flex w-full justify-center items-center mb-5">
             <img src={Logo} className="w-28" alt="" />
@@ -411,8 +509,11 @@ function ProformaDetail() {
                   Contact:
                 </h1>
                 <div className="flex flex-col">
-                  <h1 className="text-sm font-roboto">+251909901092</h1>
-                  <h1 className="text-sm font-roboto">+251909901092</h1>
+                  {contactArray.map((items, index) => (
+                    <h1 className="text-sm font-roboto" key={index}>
+                      {items}
+                    </h1>
+                  ))}
                 </div>
               </div>
               <div className="flex gap-2">
@@ -420,7 +521,9 @@ function ProformaDetail() {
                   Email:
                 </h1>
                 <div className="flex flex-col">
-                  <h1 className="text-sm font-roboto">active@gmail.com</h1>
+                  <h1 className="text-sm font-roboto">
+                    {basicInfo[0].active_email}
+                  </h1>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -428,7 +531,9 @@ function ProformaDetail() {
                   Tin Number:
                 </h1>
                 <div className="flex flex-col">
-                  <h1 className="text-sm font-roboto">0011036929</h1>
+                  <h1 className="text-sm font-roboto">
+                    {basicInfo[0].active_tin_number}
+                  </h1>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -436,7 +541,7 @@ function ProformaDetail() {
                   Invoice Date :
                 </h1>
                 <div className="flex flex-col">
-                  <h1 className="text-sm font-roboto">01/01/2022</h1>
+                  <h1 className="text-sm font-roboto">{today}</h1>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -444,9 +549,11 @@ function ProformaDetail() {
                   Account No.:
                 </h1>
                 <div className="flex flex-col">
-                  <h1 className="text-sm font-roboto">CBE 1000015487562</h1>
-                  <h1 className="text-sm font-roboto">CBE 1000015487562</h1>
-                  <h1 className="text-sm font-roboto">CBE 1000015487562</h1>
+                  {bankAccountArray.map((items, index) => (
+                    <h1 className="text-sm font-roboto" key={index}>
+                      {items}
+                    </h1>
+                  ))}
                 </div>
               </div>
             </div>
@@ -621,7 +728,8 @@ function ProformaDetail() {
             className="text-white text-lg py-1  px-8 flex rounded-lg bg-blue hover:bg-blue_hover"
           />
         </div>
-      </div>
+      </form>
+      <ToastContainer />
     </Layout>
   );
 }
