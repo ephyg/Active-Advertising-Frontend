@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 import { NavBarData } from "./NavBarData";
 import Logo from "../../../assets/image/logo.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Profile from "../../../assets/image/profile.jpeg";
 import Button from "../../common/button/Button";
-
+import useUserStore from "../../../store/userStore";
 function NavBar() {
   const [drop, setDrop] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
   const pathName = location.pathname;
+  const handleLogout = () => {
+    useUserStore.getState().logout();
+    navigate("/login");
+  };
   return (
     <div className="flex fixed w-full bg-white_blue z-50 top-0 left-0 flex-row justify-between px-12 items-center">
       <div className="flex w-24 pt-1">
         <img src={Logo} alt="" />
       </div>
       <div className="flex flex-row gap-2 justify-end items-center">
-        {NavBarData.map(({ path, title }) => (
-          <Link to={path}>
+        {NavBarData.map(({ path, title }, index) => (
+          <Link to={path} key={index}>
             <h1
               className={`text-sm font-roboto font-bold   hover:text-red ${
                 pathName == path ? `text-red` : "text-blue"
@@ -47,9 +52,11 @@ function NavBar() {
                   text="Profile"
                 />
               </Link>
-              <Link to="/login">
-                <Button className="bg-blue flex rounded px-10" text="Logout" />
-              </Link>
+              <Button
+                onClick={handleLogout}
+                className="bg-blue flex rounded px-10"
+                text="Logout"
+              />
             </div>
           </div>
         </div>

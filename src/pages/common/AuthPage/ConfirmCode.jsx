@@ -2,10 +2,17 @@ import React from "react";
 import Logo from "../../../assets/image/logocopy.png";
 import InputField from "../../../components/common/inputField/InputField";
 import Button from "../../../components/common/button/Button";
-import { Link } from "react-router-dom";
-import useUserStore from "../../../store.js/store";
+import { Link, useNavigate } from "react-router-dom";
+import useUserStore from "../../../store/userStore";
+import useForgotStore from "../../../store/forgotStore";
 const ConfirmCode = () => {
-  const user = useUserStore((state) => state.user);
+  const navigate = useNavigate();
+  const { user_email, verification } = useForgotStore();
+  console.log(!user_email,user_email)
+  if (!user_email) {
+    navigate("/forgot");
+  }
+
   return (
     <div className="grid grid-cols-2 max-h-screen bg-white_blue md:grid-cols-1">
       <div className="flex justify-end items-center max-h-screen bg-login bg-cover bg-no-repeat md:hidden">

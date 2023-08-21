@@ -18,7 +18,11 @@ import {
 } from "react-icons/bi";
 import Button from "../../../components/common/button/Button";
 import InputField from "../../../components/common/inputField/InputField";
+import useUserStore from "../../../store/userStore";
 function OrderList() {
+  const roleType = useUserStore((state) => state.user_role);
+  const User = useUserStore((state) => state.User);
+  const Token = useUserStore((state) => state.token);
   const navigate = useNavigate();
   const columns = useMemo(() => Columns, []);
   const data = useMemo(() => DATA, []);
@@ -111,9 +115,10 @@ function OrderList() {
                     className="hover:bg-slate-200 cursor-pointer group"
                     onClick={() => handleRowClick(row)}
                   >
-                    {row.cells.map((cell) => (
+                    {row.cells.map((cell, index) => (
                       <td
                         {...cell.getCellProps}
+                        key={index}
                         className="border py-1 text-sm px-2 group-hover:border-slate-200"
                       >
                         {cell.render("Cell")}

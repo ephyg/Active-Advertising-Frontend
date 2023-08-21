@@ -28,7 +28,6 @@ function AddPopUp({ Open, onClick, len }) {
     onClick(Order);
     Open(false);
   };
-  // console.log(input);
   return (
     <>
       <form className="flex flex-col bg-white px-10 shadow-2xl py-6 rounded-2xl">

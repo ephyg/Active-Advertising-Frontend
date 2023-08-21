@@ -10,7 +10,6 @@ import AccountManagerList from "../pages/admin/accountManagerList/AccountManager
 import FreelancerList from "../pages/common/freelancerList/FreelancerList";
 import DesignerList from "../pages/common/designerList/DesignerList";
 import InventoryList from "../pages/common/inventoryList/InventoryList";
-import NavBar from "../components/accountManager/navBar/NavBar";
 import AgreementForm from "../pages/common/agreementForm/AgreementForm";
 import OrderDetail from "../pages/common/orderDetail/OrderDetail";
 import AddProforma from "../pages/common/addProforma/AddProforma";
@@ -18,58 +17,79 @@ import Downloadable from "../pages/common/addProforma/downloadableProforma";
 import CustomerDetails from "../pages/common/customerDetail/CustomerDetails";
 import AdminProfile from "../pages/admin/adminProfile/AdminProfile";
 import AddStaff from "../pages/admin/addStaff/AddStaff";
-import useUserStore from "../store.js/store";
+import useUserStore from "../store/userStore";
 import AddItems from "../pages/common/inventoryRegistration/AddItems";
 import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
 import ConfirmCode from "../pages/common/AuthPage/ConfirmCode";
 import NewPassword from "../pages/common/AuthPage/NewPassword";
-// import ProformaDetail from "../pages/common/proformaDetail/ProformaDetail";
 import DeliveryForm from "../pages/common/deliveryForm/DeliveryForm";
+import PrivateRoutes from "./PrivateRoutes";
+import PrivateRouteAuth from "./PrivateRouteAuth";
+
 function RouteList() {
+<<<<<<< HEAD
 
   const roleType = useUserStore((state) => state.user);
+=======
+  const { User, token, login } = useUserStore();
+  const roleType = useUserStore((state) => state.user_role);
+>>>>>>> 6a96d93 (new feature: create login and forgot store with zustand)
   return (
     <Routes>
-      {roleType === "admin" && (
-        <>
-          <Route path="/account-manager" Component={AccountManagerList} />
-          <Route path="/report" Component={Report} />
-          <Route path="/admin/profile" Component={AdminProfile} />
-          <Route path="/admin/add-staff" Component={AddStaff} />
-        </>
-      )}
-      {roleType === "account-manager" && (
-        <>
-          <Route
-            path="/account-manager/profile"
-            Component={AccountManagerProfile}
-          />
-        </>
-      )}
-      {(roleType === "account-manager" || roleType === "admin") && (
-        <>
-          <Route path="/proforma" Component={ProformaList} />
-          <Route path="/proforma/:id" Component={AddProforma} />
-          <Route path="/proforma/add" Component={AddProforma} />
-          <Route path="/proforma/download" Component={Downloadable} />
-          <Route path="/order" Component={OrderList} />
-          <Route path="/order/:id" Component={OrderDetail} />
-          <Route path="/customer" Component={CustomerList} />
-          <Route path="/customer/:id" Component={CustomerDetails} />
-          <Route path="/freelancer" Component={FreelancerList} />
-          <Route path="/designer" Component={DesignerList} />
-          <Route path="/stock" Component={InventoryList} />
-          <Route path="/stock/additem" Component={AddItems} />
-          <Route path="/agreement" Component={AgreementForm} />
-          <Route path="/delivery" Component={DeliveryForm} />
-        </>
-      )}
+      <Route element={<PrivateRouteAuth />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/verify" element={<ConfirmCode />} />
+        <Route path="/new-password" element={<NewPassword />} />
+        <Route path="/" element={<Login />} />
+      </Route>
 
-      <Route path="/login" Component={Login} />
-      <Route path="/forgot" Component={Forgot} />
-      <Route path="/verify" Component={ConfirmCode} />
-      <Route path="/new-password" Component={NewPassword} />
-      <Route path="/" Component={Login} />
+      <Route element={<PrivateRoutes />}>
+        {/* Route for admin only */}
+        {roleType == "admin" && (
+          <>
+            <Route path="/account-manager" element={<AccountManagerList />} />
+            <Route path="/report" element={<Report />} />
+            <Route path="/admin/profile" element={<AdminProfile />} />
+            <Route path="/admin/add-staff" element={<AddStaff />} />
+          </>
+        )}
+        {/* Route for account manager only*/}
+        {roleType == "account-manager" && (
+          <>
+            <Route
+              path="/account-manager/profile"
+              element={<AccountManagerProfile />}
+            />
+          </>
+        )}
+        {/* Route common for admin and account manager only*/}
+        {(roleType == "account-manager" || roleType == "admin") && (
+          <>
+            <Route path="/order" element={<OrderList />} />
+            <Route path="/proforma" element={<ProformaList />} />
+            <Route path="/proforma/:id" element={<AddProforma />} />
+            <Route path="/proforma/add" element={<AddProforma />} />
+            <Route path="/proforma/download" element={<Downloadable />} />
+            <Route path="/order/:id" element={<OrderDetail />} />
+            <Route path="/customer" element={<CustomerList />} />
+            <Route path="/customer/:id" element={<CustomerDetails />} />
+            <Route path="/freelancer" element={<FreelancerList />} />
+            <Route path="/designer" element={<DesignerList />} />
+            <Route path="/stock" element={<InventoryList />} />
+            <Route path="/stock/additem" element={<AddItems />} />
+            <Route path="/agreement" element={<AgreementForm />} />
+            <Route path="/delivery" element={<DeliveryForm />} />
+          </>
+        )}
+        {/* Route for employees only*/}
+        {roleType !== "account-manager" && roleType !== "admin" && (
+          <>
+            <Route path="/order" element={<OrderList />} />
+            <Route path="/order/:id" element={<OrderDetail />} />
+          </>
+        )}
+      </Route>
     </Routes>
   );
 }
