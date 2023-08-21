@@ -79,6 +79,7 @@ function ProformaDetail() {
       quantity: dataArray[index].quantity,
       unit_price: dataArray[index].unitPrice,
       vendor_name: dataArray[index].vendor,
+      status: "Pending",
     };
     AllOrders[index] = order;
   }

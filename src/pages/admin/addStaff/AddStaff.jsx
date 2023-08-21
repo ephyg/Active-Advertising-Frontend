@@ -39,14 +39,12 @@ function AddStaff() {
   };
   const staffMutation = useMutation(addUser, {
     onSuccess: (response) => {
-      console.log(response);
       toast.success(response.message, {
         position: "top-center",
         toastId: "successUser",
       });
     },
     onError: (response) => {
-      console.log(response.response.data.message);
       toast.error(response.response.data.message, {
         position: "top-center",
         toastId: "successUser",
@@ -113,7 +111,7 @@ function AddStaff() {
   if (roleLoading) {
     return <h1>loading...</h1>;
   }
-  console.log(userRole);
+  // console.log(userRole);
   return (
     <Layout>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
@@ -142,11 +140,11 @@ function AddStaff() {
           <div className="grid grid-cols-2 gap-x-16 gap-y-4">
             <InputField
               label="First Name"
+              className="py-2 text-lg"
+              placeholder="John"
               type="text"
               id="first_name"
               name="first_name"
-              placeholder="John"
-              className="py-2 text-lg"
               value={values.first_name}
               onChange={handleChange}
               onBlur={handleBlur}
