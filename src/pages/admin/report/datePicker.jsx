@@ -9,20 +9,30 @@ function MyDatePickerComponent() {
     setSelectedDate(date);
   };
 
+  const handleSearch = () => {
+    if (selectedDate) {
+      console.log("Selected date:", selectedDate);
+    } else {
+      console.log("No date selected.");
+    }
+  };
+
   return (
-    <div class="border-2 border-solid border-blue p-2 rounded-md">
-    <DatePicker
-      selected={selectedDate}
-      onChange={handleDateChange}
-      dateFormat="MM/dd/yyyy"
-      placeholderText="search by date"
-      className="border-none"
-      
-    />
-    <button className="bg-blue-500 hover:bg-blue-700 text-blue font-bold  rounded">
-    Search
-  </button>
-  </div>
+    <div className="border-2 border-solid border-blue p-2 rounded-md">
+      <DatePicker
+        selected={selectedDate}
+        onChange={handleDateChange}
+        dateFormat="dd/MM/yyyy"
+        placeholderText="search by date"
+        className="border-none"
+      />
+      <button
+        onClick={handleSearch}
+        className="bg-blue-500 hover:text-red text-blue font-bold rounded"
+      >
+        Search
+      </button>
+    </div>
   );
 }
 
