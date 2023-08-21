@@ -27,17 +27,8 @@ import PrivateRouteAuth from "./PrivateRouteAuth";
 import ProformaDetail from "../pages/common/ProformaDetail/ProformaDetail";
 
 function RouteList() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-  const roleType = useUserStore((state) => state.user);
-=======
   const { User, token, login } = useUserStore();
-=======
-  const { token, login } = useUserStore();
->>>>>>> 7e56bce (new feature add customer list)
   const roleType = useUserStore((state) => state.user_role);
->>>>>>> 6a96d93 (new feature: create login and forgot store with zustand)
   return (
     <Routes>
       <Route element={<PrivateRouteAuth />}>
