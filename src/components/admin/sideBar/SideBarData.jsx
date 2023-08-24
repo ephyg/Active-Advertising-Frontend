@@ -28,9 +28,9 @@ export const SideBarData = [
     title: "Customer",
   },
   {
-    path: "/account-manager",
+    path: "/freelancer",
     icon: FaUserAlt,
-    title: "Account Manager",
+    title: "Freelancers",
   },
   {
     path: "/admin/add-staff",

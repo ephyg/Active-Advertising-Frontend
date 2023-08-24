@@ -10,14 +10,16 @@ import {
 import { Columns } from "./Columns";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
-import CustomerComponent from "./CustomerComponent"
+import CustomerComponent from "./CustomerComponent";
+import useUserStore from "../../../store/userStore";
 function OrderList() {
+  const user = useUserStore();
   const {
     data: allProforma,
     isLoading,
     isError,
     isFetching,
-  } = useQuery("allProformas", api.GetAllProforma, {
+  } = useQuery("allProformas", () => api.GetAllProforma(user.token), {
     refetchOnWindowFocus: true,
   });
 
@@ -26,7 +28,7 @@ function OrderList() {
   }
   return (
     <Layout>
-     {allProforma && <CustomerComponent allProformas={allProforma} />}
+      {allProforma && <CustomerComponent allProformas={allProforma} />}
     </Layout>
   );
 }

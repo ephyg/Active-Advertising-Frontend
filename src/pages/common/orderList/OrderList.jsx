@@ -1,15 +1,17 @@
-import React, { useMemo } from "react";
+import React from "react";
 import Layout from "../../../components/Layout/Layout";
 import * as api from "../../../api/proformaApi";
 import { useQuery } from "react-query";
 import OrderListComponent from "./OrderListComponent";
+import useUserStore from "../../../store/userStore";
 function OrderList() {
+  const user = useUserStore();
   const {
     data: orderlist,
     isLoading,
     isError,
     isFetching,
-  } = useQuery("OrderList", api.GetOrder, {
+  } = useQuery("OrderList",()=> api.GetOrder(user.token), {
     refetchOnWindowFocus: true,
   });
   // console.log(orderlist);1

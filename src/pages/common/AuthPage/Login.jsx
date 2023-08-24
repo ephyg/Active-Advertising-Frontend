@@ -14,9 +14,10 @@ import useForgotStore from "../../../store/forgotStore";
 const Login = () => {
   const navigate = useNavigate();
   const [credentialError, setCredentialError] = useState("");
-  const {  token, login, user_role } = useUserStore();
+  const { login, token } = useUserStore();
   const { notification, setSentMessage, sentMessage, setNotification } =
     useForgotStore();
+
   useEffect(() => {
     if (notification == 3) {
       toast.success(sentMessage, {
@@ -35,8 +36,8 @@ const Login = () => {
   const mutation = useMutation(loginUser, {
     onSuccess: (userData) => {
       login(userData);
-      console.log(userData)
-      user_role === "admin" ? navigate("/report") : navigate("/order");
+      console.log(userData);
+      userData.user.user_role === "admin" ? navigate("/report") : navigate("/order");
     },
   });
   const onSubmit = async (values) => {
@@ -59,6 +60,14 @@ const Login = () => {
       validationSchema: LoginValidation,
       onSubmit,
     });
+  // const { data: authUserData, isLoading } = useQuery("authUser", () =>
+  //   api.AuthenticatedUser(token)
+  // );
+
+  // const user_role = authUserData.user_role;
+  // if (isLoading) {
+  //   return <h1>Loading sidebar....</h1>;
+  // }
   return (
     <div className="grid grid-cols-2 min-h-screen bg-white_blue md:grid-cols-1">
       <div className="flex justify-end items-center max-h-screen bg-login bg-cover bg-no-repeat md:hidden">

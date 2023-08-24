@@ -4,23 +4,18 @@ import defaultProfileImage from "../../../assets/image/users.png";
 import Button from "../../../components/common/button/Button";
 import InputField from "../../../components/common/inputField/InputField";
 import { useFormik } from "formik";
-import * as api from "../../../api/staffApi";
+import * as api from "../../../api/freelancerApi";
 import AddStaffValidation from "./AddStaffValidation";
 import { useMutation, useQuery } from "react-query";
 import { AddProforma } from "../../../api/proformaApi";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import useUserStore from "../../../store/userStore";
-function AddStaff() {
+function AddFreelancer() {
+  const user = useUserStore();
   const [profile_picture_url, setProfile_picture_url] = useState("");
   const [img, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(defaultProfileImage);
-  const user = useUserStore();
-  const {
-    data: userRole,
-    isLoading: roleLoading,
-    isError,
-  } = useQuery("userRole-store", () => api.GetRole(user.token));
 
   const imageHandler = (event) => {
     const selectedImage = event.target.files ? event.target.files[0] : null;
@@ -35,13 +30,13 @@ function AddStaff() {
     }
   };
 
-  const addUser = (userdata) => {
-    const response = () => api.AddUser(user.token, userdata);
+  const addFreelancer = (userdata) => {
+    const response = () => api.AddFreelancer(user.token, userdata);
     return response;
   };
-  const staffMutation = useMutation(addUser, {
+  const FreelancerMutation = useMutation(addFreelancer, {
     onSuccess: (response) => {
-      toast.success(response.message, {
+      toast.success("Freelancer Registered Successfully ", {
         position: "top-center",
         toastId: "successUser",
       });
@@ -56,16 +51,15 @@ function AddStaff() {
   const onSubmit = () => {
     upload((uploadedFileUrl) => {
       const UserData = {
-        user_first_name: values.first_name,
-        user_last_name: values.last_name,
-        user_email: values.email,
-        user_address: values.address,
-        user_phone_number: values.phone_number,
-        user_role: values.role,
-        user_image_url: uploadedFileUrl,
-        user_password: `${values.first_name + "." + values.last_name}`,
+        freelancer_first_name: values.first_name,
+        freelancer_last_name: values.last_name,
+        freelancer_email: values.email,
+        freelancer_address: values.address,
+        freelancer_phone_number: values.phone_number,
+        freelancer_portfolio_link: values.portfolio_link,
+        freelancer_image_url: uploadedFileUrl,
       };
-      staffMutation.mutate(UserData);
+      FreelancerMutation.mutate(UserData);
       console.log("Done successfully", UserData);
     });
   };
@@ -109,17 +103,15 @@ function AddStaff() {
         address: "",
         phone_number: "",
         role: "",
+        portfolio_link: "",
       },
       validationSchema: AddStaffValidation,
       onSubmit,
     });
-  if (staffMutation.isLoading) {
+  if (FreelancerMutation.isLoading) {
     return <h1>Loading..</h1>;
   }
-  if (roleLoading) {
-    return <h1>loading...</h1>;
-  }
-  // console.log(userRole);
+
   return (
     <Layout>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
@@ -211,35 +203,21 @@ function AddStaff() {
                   : ""
               }
             />
-            <div className="flex flex-col">
-              <label
-                htmlFor=""
-                className="font-normal mb-1 text-blue font-roboto text-lg "
-              >
-                Role
-              </label>
-              <select
-                data-te-select-init
-                className="h-12 border-2 border-blue bg-white outline-none text-blue py-1 rounded-md px-4 font-roboto"
-                id="role"
-                name="role"
-                value={values.role}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              >
-                <option value="" className="">
-                  Select User Role
-                </option>
-                {userRole.map((item, index) => (
-                  <option value={item.role} className="">
-                    {item.role}
-                  </option>
-                ))}
-              </select>
-              <h1 className="text-sm text-red">
-                {errors.role && touched.role ? errors.role : ""}
-              </h1>
-            </div>
+            <InputField
+              label="Portfolio Link"
+              id="portfolio_link"
+              name="portfolio_link"
+              placeholder="http://"
+              className="py-2 text-lg"
+              value={values.portfolio_link}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={
+                errors.portfolio_link && touched.portfolio_link
+                  ? errors.portfolio_link
+                  : ""
+              }
+            />
           </div>
         </div>
         <div className="flex mb-6 w-full justify-center">
@@ -256,4 +234,4 @@ function AddStaff() {
   );
 }
 
-export default AddStaff;
+export default AddFreelancer;

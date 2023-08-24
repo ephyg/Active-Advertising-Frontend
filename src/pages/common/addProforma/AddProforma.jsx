@@ -30,9 +30,9 @@ function ProformaDetail() {
   const [payment, setPayment] = useState("");
   const [priceIncludingVat, setPriceIncludingVat] = useState("");
   const [delivery, setDelivery] = useState("");
-  const { user } = useUserStore();
+  const { user ,token } = useUserStore();
   const addProforma = (data) => {
-    const response = api.AddProforma(data);
+    const response = api.AddProforma(token, data);
     return response;
   };
   const mutation = useMutation(addProforma, {
@@ -47,7 +47,7 @@ function ProformaDetail() {
     data: basicInfo,
     isLoading: basicInfoLoading,
     isError,
-  } = useQuery("basicInfo-store", () => api.GetProformaBasicInfo());
+  } = useQuery("basicInfo-store", () => api.GetProformaBasicInfo(token));
   if (basicInfoLoading) {
     return <h1>Loading ...</h1>;
   }

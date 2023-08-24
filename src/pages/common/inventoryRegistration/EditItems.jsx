@@ -6,53 +6,82 @@ import { useFormik } from "formik";
 import * as api from "../../../api/stockApi";
 import AddItemValidation from "./AddItemValidation";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
+import stockStore from "../../../store/stockStore";
+import { ToastContainer, toast } from "react-toastify";
 import useUserStore from "../../../store/userStore";
-function AddItems() {
-  const user = useUserStore();
-  const navigate = useNavigate();
+function EditItems() {
   const queryClient = useQueryClient();
-  const addItem = (itemData) => {
-    const response = api.AddItems(user.token, itemData);
+  const { setProformaDetail, eachItem } = stockStore();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const user = useUserStore();
+  const addItem = async (data) => {
+    const response = await api.EditItem(user.token, data.id, data.ItemData);
     return response;
   };
-  const mutation = useMutation(addItem, {
+  const deleteItem = async (data) => {
+    const response = await api.DeleteItems(user.token, data);
+    return response;
+  };
+  const updateMutation = useMutation(addItem, {
     onSuccess: (response) => {
-      // toast.success("Item added Successfully", {
-      //   position: "top-center",
-      //   toastId: "successUser",
-      // });
-      console.log(response);
+      toast.success("Item Updated Successfully", {
+        position: "top-center",
+        toastId: "successUser",
+      });
+      navigate("/stock");
       queryClient.invalidateQueries(["inventoryList"]);
       navigate("/stock");
     },
   });
-
-  const onSubmit = () => {
-    const ItemData = {
-      item_description: values.item_description,
-      quantity: values.quantity,
-      unit_price: values.unit_price,
-      total_price: values.total_price,
-      unit_measurement: values.unit_measurement,
-      purchase_date: values.purchase_date,
-      expire_date: values.expire_date,
-      dealer_name: values.dealer_name,
-    };
-    mutation.mutate(ItemData);
+  const deleteMutation = useMutation(deleteItem, {
+    onSuccess: (response) => {
+      toast.error("Item Deleted Successfully", {
+        position: "top-center",
+        toastId: "successUser",
+      });
+      queryClient.invalidateQueries(["inventoryList"]);
+      navigate("/stock");
+    },
+  });
+  const handleDelete = async () => {
+    try {
+      await deleteMutation.mutateAsync(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const onSubmit = async () => {
+    try {
+      console.log("clicked");
+      const ItemData = {
+        item_description: values.item_description,
+        quantity: values.quantity,
+        unit_price: values.unit_price,
+        total_price: values.total_price,
+        unit_measurement: values.unit_measurement,
+        purchase_date: values.purchase_date,
+        expire_date: values.expire_date,
+        dealer_name: values.dealer_name,
+      };
+      // console.log(id, ItemData);
+      await updateMutation.mutateAsync({ id: id, ItemData: ItemData });
+    } catch (error) {
+      console.log(error);
+    }
   };
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {
-        item_description: "",
-        quantity: "",
-        unit_price: "",
-        total_price: "",
-        unit_measurement: "",
-        dealer_name: "",
-        purchase_date: "",
-        expire_date: "",
+        item_description: eachItem.item_description,
+        quantity: eachItem.quantity,
+        unit_price: eachItem.unit_price,
+        total_price: eachItem.total_price,
+        unit_measurement: eachItem.unit_measurement,
+        dealer_name: eachItem.dealer_name,
+        purchase_date: eachItem.purchase_date,
+        expire_date: eachItem.expire_date,
       },
       validationSchema: AddItemValidation,
       onSubmit,
@@ -61,7 +90,7 @@ function AddItems() {
     <Layout>
       <form onSubmit={handleSubmit} className="flex flex-col px px-20">
         <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
-          <span className="mb-2px">Add Items</span>
+          <span className="mb-2px">Edit Items</span>
           <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
         </div>
         <div className="grid grid-cols-2 gap-x-11 gap-y-4">
@@ -174,16 +203,24 @@ function AddItems() {
             }
           />
         </div>
-        <Button
-          onClick={handleSubmit}
-          type="submit"
-          text="Add Item"
-          className="bg-blue px-8 mt-10 hover:bg-blue_hover py-1 rounded-lg"
-        />
+        <div className="flex justify-center mt-10 gap-10 w-full">
+          <Button
+            onClick={handleSubmit}
+            type="button"
+            text="Update Item"
+            className="bg-blue px-8 hover:bg-blue_hover py-1 rounded-lg"
+          />
+          <Button
+            onClick={handleDelete}
+            type="button"
+            text="Delete Item"
+            className="bg-red px-8 py-1 rounded-lg"
+          />
+        </div>
       </form>
       <ToastContainer />
     </Layout>
   );
 }
 
-export default AddItems;
+export default EditItems;

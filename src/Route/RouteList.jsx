@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "../pages/common/AuthPage/Login";
 import Forgot from "../pages/common/AuthPage/Forgot";
 import OrderList from "../pages/common/orderList/OrderList";
@@ -25,11 +25,31 @@ import DeliveryForm from "../pages/common/deliveryForm/DeliveryForm";
 import PrivateRoutes from "./PrivateRoutes";
 import PrivateRouteAuth from "./PrivateRouteAuth";
 import ProformaDetail from "../pages/common/ProformaDetail/ProformaDetail";
+import EditItems from "../pages/common/inventoryRegistration/EditItems";
+import AddFreelancer from "../pages/common/freelancerRegistration/AddFreelancer";
+import { useQuery } from "react-query";
+import * as api from "../api/userApi";
 
 function RouteList() {
-  const { User, token, login } = useUserStore();
+  const user = useUserStore();
+  const navigate = useNavigate();
+  // const roleType = useUserStore((state) => state.user_role);
+  // const {
+  //   data: authUserData,
+  //   isError,
+  //   isLoading,
+  // } = useQuery("authUser", () => api.AuthenticatedUser(user.token));
 
-  const roleType = useUserStore((state) => state.user_role);
+  // if (isLoading) {
+  //   return <h1>Loading sidebar....</h1>;
+  // }
+  // if (isError) {
+  //   navigate("/login");
+  //   return
+  // }
+
+  // const roleType = authUserData.user_role;
+  const roleType ="admin";
   return (
     <Routes>
       <Route element={<PrivateRouteAuth />}>
@@ -70,8 +90,10 @@ function RouteList() {
             <Route path="/customer" element={<CustomerList />} />
             <Route path="/customer/:id" element={<CustomerDetails />} />
             <Route path="/freelancer" element={<FreelancerList />} />
+            <Route path="/addfreelancer" element={<AddFreelancer />} />
             <Route path="/designer" element={<DesignerList />} />
             <Route path="/stock" element={<InventoryList />} />
+            <Route path="/stock/:id" element={<EditItems />} />
             <Route path="/stock/additem" element={<AddItems />} />
             <Route path="/agreement" element={<AgreementForm />} />
             <Route path="/delivery" element={<DeliveryForm />} />

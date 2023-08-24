@@ -31,7 +31,7 @@ function SideBar({ className, setIsOpen }) {
             alt=""
           />
           <h1 className="text-lg font-roboto font-bold text-white ">
-            Tsion Tesfaye
+            Tsion Eshetu
           </h1>
         </div>
       </Link>

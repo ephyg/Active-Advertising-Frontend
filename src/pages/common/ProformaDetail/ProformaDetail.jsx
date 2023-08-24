@@ -5,9 +5,11 @@ import * as api from "../../../api/proformaApi";
 import { useQuery } from "react-query";
 import ProformaDetailComponent from "./ProformaDetailComponent";
 import useProformaStore from "../../../store/proformaStore";
+import useUserStore from "../../../store/userStore";
 
 function ProformaDetail() {
   const { id } = useParams();
+  const user = useUserStore();
   const setProformaDetail = useProformaStore(
     (state) => state.setProformaDetail
   );
@@ -15,7 +17,7 @@ function ProformaDetail() {
     data: proformaDetail,
     isLoading,
     isError,
-  } = useQuery("proformaDetail", () => api.GetProforma(id));
+  } = useQuery("proformaDetail", () => api.GetProforma(user.token, id));
   if (isLoading) {
     return <h1> </h1>;
   }
