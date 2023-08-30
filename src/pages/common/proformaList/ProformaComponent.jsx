@@ -22,11 +22,12 @@ import * as api from "../../../api/proformaApi";
 import useProformaStore from "../../../store/proformaStore";
 import { useMutation, useQuery } from "react-query";
 import ProformaDetail from "../ProformaDetail/ProformaDetail";
+import { useNoUser } from "../../../store/userStore";
 function ProformaComponent({ allProformas }) {
   const navigate = useNavigate();
 
   const columns = useMemo(() => Columns, []);
-  const data = useMemo(() => allProformas, []);
+  const data = useMemo(() => allProformas, [allProformas]);
   const tableInstance = useTable(
     {
       columns,

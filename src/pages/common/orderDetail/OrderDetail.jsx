@@ -13,8 +13,8 @@ function OrderDetail() {
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
 
   const filteredData = eachOrder.filter((item) => item.id == id);
-  // console.log(filteredData);
-  
+  console.log(filteredData);
+
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">
@@ -37,20 +37,24 @@ function OrderDetail() {
             }
           />
           <Card text="Size" information={filteredData[0].size} />
-          <Card
-            text="Status"
-            information={filteredData[0].status ? "not null" : "null"}
-          />
+          <Card text="Status" information={filteredData[0].status} />
           <Card text="Company Name" information={eachProforma[0].client_name} />
           <Card text="Order Date" information={eachProforma[0].invoice_date} />
 
           <Card text="Vendor Name" information={filteredData[0].vendor_name} />
         </div>
         <div className="flex justify-center gap-10 mb-20 md:gap-5">
-          <Button
-            text="Allocate Order"
-            className="text-center bg-blue rounded-md px-4 py-1 hover:bg-blue_hover md:px-2 md:py-1 md:text-base "
-          />
+          {filteredData[0].status == "Unallocated" ? (
+            <Button
+              text="Allocate Order"
+              className="text-center bg-blue rounded-md px-4 py-1 hover:bg-blue_hover md:px-2 md:py-1 md:text-base "
+            />
+          ) : (
+            <Button
+              text="Employee"
+              className="text-center bg-blue rounded-md px-4 py-1 hover:bg-blue_hover md:px-2 md:py-1 md:text-base "
+            />
+          )}
           <Button
             text="Delete"
             className="text-center bg-red rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"

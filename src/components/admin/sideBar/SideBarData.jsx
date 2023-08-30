@@ -33,7 +33,7 @@ export const SideBarData = [
     title: "Freelancers",
   },
   {
-    path: "/admin/add-staff",
+    path: "/admin/staffs",
     icon: HiUserGroup,
     title: "Staff",
   },

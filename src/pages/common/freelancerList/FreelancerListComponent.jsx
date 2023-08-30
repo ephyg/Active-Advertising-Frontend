@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import * as api from "../../../api/proformaApi";
 import Layout from "../../../components/Layout/Layout";
 import {
@@ -21,9 +21,9 @@ import InputField from "../../../components/common/inputField/InputField";
 import { useQuery } from "react-query";
 function FreelancerListComponent({ freelancerData }) {
   const navigate = useNavigate();
-
+  const { id, setId } = useState();
   const columns = useMemo(() => Columns, []);
-  const data = useMemo(() => freelancerData, []);
+  const data = useMemo(() => freelancerData, [freelancerData]);
 
   const tableInstance = useTable(
     {
@@ -107,7 +107,7 @@ function FreelancerListComponent({ freelancerData }) {
                 <tr
                   {...row.getRowProps()}
                   className="hover:bg-slate-200 cursor-pointer group"
-                  // onClick={() => handleRowClick(row)}
+                 
                 >
                   {row.cells.map((cell, index) => (
                     <td

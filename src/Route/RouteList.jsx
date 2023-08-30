@@ -29,6 +29,8 @@ import EditItems from "../pages/common/inventoryRegistration/EditItems";
 import AddFreelancer from "../pages/common/freelancerRegistration/AddFreelancer";
 import { useQuery } from "react-query";
 import * as api from "../api/userApi";
+import StaffList from "../pages/admin/staffList/StaffList";
+import StaffDetail from "../pages/admin/staffList/StaffDetail";
 
 function RouteList() {
   const user = useUserStore();
@@ -49,7 +51,7 @@ function RouteList() {
   // }
 
   // const roleType = authUserData.user_role;
-  const roleType ="admin";
+  const roleType = "admin";
   return (
     <Routes>
       <Route element={<PrivateRouteAuth />}>
@@ -68,6 +70,8 @@ function RouteList() {
             <Route path="/report" element={<Report />} />
             <Route path="/admin/profile" element={<AdminProfile />} />
             <Route path="/admin/add-staff" element={<AddStaff />} />
+            <Route path="/admin/staffs" element={<StaffList />} />
+            <Route path="/admin/staffs/:id" element={<StaffDetail />} />
           </>
         )}
         {/* Route for account manager only*/}

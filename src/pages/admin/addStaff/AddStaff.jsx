@@ -11,7 +11,9 @@ import { AddProforma } from "../../../api/proformaApi";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import useUserStore from "../../../store/userStore";
+import { useNavigate } from "react-router-dom";
 function AddStaff() {
+  const navigate = useNavigate();
   const [profile_picture_url, setProfile_picture_url] = useState("");
   const [img, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(defaultProfileImage);
@@ -36,15 +38,13 @@ function AddStaff() {
   };
 
   const addUser = (userdata) => {
-    const response = () => api.AddUser(user.token, userdata);
+    const response = api.AddUser(user.token, userdata);
     return response;
   };
   const staffMutation = useMutation(addUser, {
     onSuccess: (response) => {
-      toast.success(response.message, {
-        position: "top-center",
-        toastId: "successUser",
-      });
+     
+      navigate("/admin/staffs");
     },
     onError: (response) => {
       toast.error(response.response.data.message, {
@@ -73,13 +73,13 @@ function AddStaff() {
     const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
     const CLOUDINARY_UPLOAD_PRESET = import.meta.env
       .VITE_CLOUDINARY_UPLOAD_PRESET;
-    var bodyFormData = new FormData();
     console.log(defaultProfileImage);
     if (img === null) {
       return callback(
         "https://res.cloudinary.com/drbvkt6rd/image/upload/v1692794747/gasweutssmb0ghn8sqrf.png"
       );
     }
+    var bodyFormData = new FormData();
     bodyFormData.append("file", img);
     bodyFormData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
     axios

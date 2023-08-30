@@ -52,3 +52,13 @@ export const GetOrder = async (token) => {
     .then((response) => response.data);
   return getOrder;
 };
+export const UpdateStatus = async (token, id, data) => {
+  const updateStatus = await axios
+    .put(`${baseURL}/proforma/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return updateStatus;
+};

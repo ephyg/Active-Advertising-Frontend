@@ -1,12 +1,10 @@
 import React, { useMemo, useState } from "react";
-import Layout from "../../../components/Layout/Layout";
 import {
   useTable,
   useSortBy,
   useGlobalFilter,
   usePagination,
 } from "react-table";
-import DATA from "./DATA.json";
 import { Columns } from "./Columns";
 import { Link, useNavigate } from "react-router-dom";
 import * as api from "../../../api/proformaApi";
@@ -22,13 +20,13 @@ import InputField from "../../../components/common/inputField/InputField";
 import useUserStore from "../../../store/userStore";
 import { useQuery } from "react-query";
 import useProformaStore from "../../../store/proformaStore";
-function OrderListComponent({ orderlists }) {
+function StaffListComponent({ userLists }) {
   const roleType = useUserStore((state) => state.user_role);
   const User = useUserStore((state) => state.User);
   const user = useUserStore();
   const navigate = useNavigate();
   const columns = useMemo(() => Columns, []);
-  const data = useMemo(() => orderlists, [orderlists]);
+  const data = useMemo(() => userLists, [userLists]);
   const [id, setId] = useState();
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
 
@@ -59,42 +57,22 @@ function OrderListComponent({ orderlists }) {
     state: { globalFilter, pageIndex },
   } = tableInstance;
 
-  const handleRowClick = async (index) => {
-    const proformaId = orderlists[index].proforma_id;
-    console.log("id", proformaId);
-    setId(proformaId);
-    // console.log("before loading...");
-    try {
-      const proformaDetailData = await api.GetProforma(user.token, proformaId);
-      console.log(proformaDetailData); // Check the fetched data
+  const handleRowClick = async (index, row) => {
+    const userId = row.original.id;
+    // console.log("id", userId);
+    // console.log();
+    setId(userId);
 
-      const order = proformaDetailData.order;
-      const proforma = proformaDetailData.proforma;
-      const DT = {
-        order: order,
-        proforma: proforma,
-      };
-
-      setProformaDetail(DT);
-    } catch (error) {
-      console.error("Error fetching proforma data:", error);
-    }
-    navigate(`${orderlists[index].id}`);
+    navigate(`${userId}`);
   };
 
   return (
     <div className="w-full md:pr-0">
-      <div className="w-full md:flex justify-center items-center">
-        <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
-          <span className="mb-2px">Order List</span>
-          <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
-        </div>
-      </div>
       <div className="flex justify-between mb-3 md:grid md:grid-cols-2 md:gap-10 ">
         <div className="hover:bg-blue_hover flex items-center justify-between gap-2 rounded-md cursor-pointer bg-blue px-6 md:px-3 md:py-0">
-          <Link to="/proforma/add">
+          <Link to="/admin/add-staff">
             <Button
-              text="Add Order"
+              text="Add Staff"
               className="md:text-sm"
               icon={FaPlus}
               iconSize={12}
@@ -144,7 +122,7 @@ function OrderListComponent({ orderlists }) {
                 <tr
                   {...row.getRowProps()}
                   className="hover:bg-slate-200 cursor-pointer group"
-                  onClick={() => handleRowClick(index)}
+                  onClick={() => handleRowClick(index, row)}
                 >
                   {row.cells.map((cell, index) => (
                     <td
@@ -185,4 +163,4 @@ function OrderListComponent({ orderlists }) {
   );
 }
 
-export default OrderListComponent;
+export default StaffListComponent;

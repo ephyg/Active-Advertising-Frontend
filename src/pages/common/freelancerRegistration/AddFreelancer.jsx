@@ -11,12 +11,13 @@ import { AddProforma } from "../../../api/proformaApi";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import useUserStore from "../../../store/userStore";
+import { useNavigate } from "react-router-dom";
 function AddFreelancer() {
   const user = useUserStore();
   const [profile_picture_url, setProfile_picture_url] = useState("");
   const [img, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(defaultProfileImage);
-
+  const navigate = useNavigate();
   const imageHandler = (event) => {
     const selectedImage = event.target.files ? event.target.files[0] : null;
     setImage(selectedImage);
@@ -31,15 +32,17 @@ function AddFreelancer() {
   };
 
   const addFreelancer = (userdata) => {
-    const response = () => api.AddFreelancer(user.token, userdata);
+    const response = api.AddFreelancer(user.token, userdata);
     return response;
   };
   const FreelancerMutation = useMutation(addFreelancer, {
     onSuccess: (response) => {
-      toast.success("Freelancer Registered Successfully ", {
-        position: "top-center",
-        toastId: "successUser",
-      });
+      // toast.success("Freelancer Registered Successfully ", {
+      //   position: "top-center",
+      //   toastId: "successUser",
+      // });
+      console.log("Done successfully", response);
+      navigate("/freelancer");
     },
     onError: (response) => {
       toast.error(response.response.data.message, {
@@ -60,9 +63,9 @@ function AddFreelancer() {
         freelancer_image_url: uploadedFileUrl,
       };
       FreelancerMutation.mutate(UserData);
-      console.log("Done successfully", UserData);
     });
   };
+
   const upload = (callback) => {
     const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
     const CLOUDINARY_UPLOAD_PRESET = import.meta.env
@@ -94,6 +97,9 @@ function AddFreelancer() {
         console.log(error);
       });
   };
+  // if (FreelancerMutation.isLoading) {
+  //   return <h1>Please Loading</h1>;
+  // }
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {

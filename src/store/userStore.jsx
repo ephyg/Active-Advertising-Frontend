@@ -27,48 +27,69 @@ const useUserStore = create(
 );
 
 export const useUser = () => {
-  const {token} = useUserStore();
+  const { token } = useUserStore();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!token){
-      navigate('/login');
+    if (!token) {
+      navigate("/login");
     }
-  }, [token])
+  }, [token]);
 
   const {
-      data: authUserData,
-      isError,
-      isLoading,
-  } = useQuery("authUser", () => api.AuthenticatedUser(token), {retry: false});
+    data: authUserData,
+    isError,
+    isLoading,
+  } = useQuery("authUser", () => api.AuthenticatedUser(token), {
+    retry: false,
+  });
 
   useEffect(() => {
     if (!isLoading && isError) {
-      navigate('/login');
+      navigate("/login");
     }
   }, [isLoading, isError]);
 
   return authUserData;
-}
+};
 
 export const useNoUser = () => {
-  const {token} = useUserStore();
+  const { token } = useUserStore();
   const navigate = useNavigate();
 
   const {
-      data: authUserData,
-      isError,
-      isLoading,
-  } = useQuery("authUser", () => api.AuthenticatedUser(token), {retry: false});
+    data: authUserData,
+    isError,
+    isLoading,
+  } = useQuery("authUser", () => api.AuthenticatedUser(token), {
+    retry: false,
+  });
 
   useEffect(() => {
     if (token && !isLoading && !isError && authUserData) {
-    
-      authUserData.user_role == "admin" ? navigate("/report") : navigate("/order");
+      authUserData.user_role == "admin"
+        ? navigate("/report")
+        : navigate("/order");
     }
   }, [isLoading, isError, token, authUserData]);
 
   return authUserData;
-}
+};
 
+export const useUserData = () => {
+  const { token } = useUserStore();
+  const navigate = useNavigate();
+
+  const {
+    data: authUserData,
+    isError,
+    isLoading,
+  } = useQuery("authUser", () => api.AuthenticatedUser(token), {
+    retry: false,
+  });
+  if (isLoading) {
+    return <h1>loading</h1>;
+  }
+  return authUserData;
+};
 export default useUserStore;
