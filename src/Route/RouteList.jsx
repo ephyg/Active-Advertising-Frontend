@@ -30,7 +30,7 @@ import AddFreelancer from "../pages/common/freelancerRegistration/AddFreelancer"
 import { useQuery } from "react-query";
 import * as api from "../api/userApi";
 import StaffList from "../pages/admin/staffList/StaffList";
-import StaffDetail from "../pages/admin/staffList/StaffDetail";
+import StaffDetail from "../pages/common/staffDetail/StaffDetail";
 
 function RouteList() {
   const user = useUserStore();
@@ -70,8 +70,8 @@ function RouteList() {
             <Route path="/report" element={<Report />} />
             <Route path="/admin/profile" element={<AdminProfile />} />
             <Route path="/admin/add-staff" element={<AddStaff />} />
-            <Route path="/admin/staffs" element={<StaffList />} />
-            <Route path="/admin/staffs/:id" element={<StaffDetail />} />
+            <Route path="/staffs" element={<StaffList />} />
+            <Route path="/staffs/:id" element={<StaffDetail />} />
           </>
         )}
         {/* Route for account manager only*/}

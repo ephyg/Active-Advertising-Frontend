@@ -44,7 +44,7 @@ function AddStaff() {
   const staffMutation = useMutation(addUser, {
     onSuccess: (response) => {
      
-      navigate("/admin/staffs");
+      navigate("/staffs");
     },
     onError: (response) => {
       toast.error(response.response.data.message, {

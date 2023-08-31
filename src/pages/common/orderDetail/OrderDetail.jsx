@@ -1,19 +1,36 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../../../components/Layout/Layout";
 import Card from "../../../components/common/card/Card";
 import data from "../orderList/DATA.json";
 import Button from "../../../components/common/button/Button";
 import useProformaStore from "../../../store/proformaStore";
+import * as api from "../../../api/proformaApi";
+import { useQuery } from "react-query";
+import useUserStore from "../../../store/userStore";
 function OrderDetail() {
+  const user = useUserStore();
+  const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
   });
   const { id } = useParams();
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
+  const {
+    data: OrderedEmployee,
+    isLoading: OrderedEmployeeLoading,
+    isError,
+  } = useQuery("OrderedEmployee-store", () =>
+    api.OrderedEmployee(user.token, id)
+  );
 
   const filteredData = eachOrder.filter((item) => item.id == id);
-  console.log(filteredData);
+  if (OrderedEmployeeLoading) {
+    return <h1>Loading....</h1>;
+  }
+  const handleEmployee = () => {
+    navigate(`/staffs/${OrderedEmployee[0].id}`);
+  };
 
   return (
     <Layout>
@@ -44,19 +61,31 @@ function OrderDetail() {
           <Card text="Vendor Name" information={filteredData[0].vendor_name} />
         </div>
         <div className="flex justify-center gap-10 mb-20 md:gap-5">
-          {filteredData[0].status == "Unallocated" ? (
+          {eachProforma[0].status == "Verified" ? (
+            filteredData[0].status == "Unallocated" ? (
+              <Button
+                text="Allocate Order"
+                className="text-center bg-blue rounded-md px-4 py-1 hover:bg-blue_hover md:px-2 md:py-1 md:text-base "
+              />
+            ) : (
+              <Button
+                text="Employee"
+                onClick={handleEmployee}
+                className="text-center bg-blue rounded-md px-4 py-1 hover:bg-blue_hover md:px-2 md:py-1 md:text-base "
+              />
+            )
+          ) : eachProforma[0].status == "Completed" ? (
             <Button
-              text="Allocate Order"
+              text="Employee"
+              onClick={handleEmployee}
               className="text-center bg-blue rounded-md px-4 py-1 hover:bg-blue_hover md:px-2 md:py-1 md:text-base "
             />
           ) : (
-            <Button
-              text="Employee"
-              className="text-center bg-blue rounded-md px-4 py-1 hover:bg-blue_hover md:px-2 md:py-1 md:text-base "
-            />
+            ""
           )}
           <Button
             text="Delete"
+            // onClick={}
             className="text-center bg-red rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
           />
         </div>

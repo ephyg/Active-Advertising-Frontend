@@ -9,6 +9,7 @@ import * as api from "../../../api/proformaApi";
 import useProformaStore from "../../../store/proformaStore";
 import { useMutation, useQueryClient } from "react-query";
 import { FaSpinner } from "react-icons/fa";
+import { number } from "yup";
 function ProformaDetailComponent({ eachOrder, eachProforma }) {
   const user = useUserStore();
   const userData = useUserData();
@@ -23,16 +24,24 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
     order: eachOrder,
     proforma: eachProforma,
   };
-  const verifyProforma = (statusData) => {
+  const proformaMutation = (statusData) => {
     const response = api.UpdateStatus(user.token, id, statusData);
     return response;
   };
-  const verifyMutation = useMutation(verifyProforma, {
+  const verifyMutation = useMutation(proformaMutation, {
     onSuccess: (response) => {
-      // toast.success(response.message, {
-      //   position: "top-center",
-      //   toastId: "successUser",
-      // });
+      queryClient.invalidateQueries(["proformaDetail"]);
+      console.log(response);
+    },
+  });
+  const declineMutation = useMutation(proformaMutation, {
+    onSuccess: (response) => {
+      queryClient.invalidateQueries(["proformaDetail"]);
+      console.log(response);
+    },
+  });
+  const cancelMutation = useMutation(proformaMutation, {
+    onSuccess: (response) => {
       queryClient.invalidateQueries(["proformaDetail"]);
       console.log(response);
     },
@@ -55,8 +64,8 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
     (item) => (subTotal += Number(item.quantity) * Number(item.unit_price))
   );
   let tax = 15;
-  let Tax = (tax / 100) * subTotal;
-  let grandtedTotal = Tax + subTotal;
+  let Tax = ((tax / 100) * subTotal).toFixed(2);
+  let grandtedTotal = Number(Tax) + Number(subTotal);
   const handleDownload = () => {
     const element = document.getElementById("download-pdf");
     const opt = {
@@ -82,6 +91,19 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
     };
     verifyMutation.mutate(statusData);
   };
+  const handleDecline = () => {
+    const statusData = {
+      status: "Declined",
+    };
+    declineMutation.mutate(statusData);
+  };
+  const handleCancel = () => {
+    const statusData = {
+      status: "Canceled",
+    };
+    cancelMutation.mutate(statusData);
+  };
+  const handleDelivery = () => {};
   return (
     <Layout>
       <div className="flex relative flex-col mx-16 md:mr-0 md:ml-0 md:px-0">
@@ -327,19 +349,25 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
               {eachProforma[0].status == "Verified" ? (
                 <Button
                   text="Verified"
-                  className="text-white text-lg  px-8 flex rounded-lg py-1 bg-slate-500"
+                  className="text-white text-lg  px-8 flex rounded-lg py-1 bg-slate-400"
                   disabled={true}
                 />
               ) : eachProforma[0].status == "Completed" ? (
                 <Button
                   text="Completed"
-                  className="text-white text-lg  px-8 flex rounded-lg py-1 bg-slate-500"
+                  className="text-white text-lg  px-8 flex rounded-lg py-1 bg-rose-300"
                   disabled={true}
                 />
               ) : eachProforma[0].status == "Canceled" ? (
                 <Button
                   text="Canceled"
-                  className="text-white text-lg  px-8 flex rounded-lg py-1 bg-slate-500"
+                  className="text-white text-lg  px-8 flex rounded-lg py-1 bg-rose-300"
+                  disabled={true}
+                />
+              ) : eachProforma[0].status == "Declined" ? (
+                <Button
+                  text="Declined"
+                  className="text-white text-lg  px-8 flex rounded-lg py-1 bg-rose-300"
                   disabled={true}
                 />
               ) : (
@@ -348,23 +376,54 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
 
               {userRole == "admin" ? (
                 eachProforma[0].status == "Pending" ? (
-                  verifyMutation.isLoading ? (
+                  <>
                     <Button
-                      text="Verifying"
-                      className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
-                      onClick={handleVerify}
-                      disabled={true}
-                      iconSize={18}
-                      icon={FaSpinner}
-                      animation="animate-spin"
+                      text="Decline"
+                      className="text-white text-lg  px-8 flex rounded-lg py-1 bg-red hover:bg-red"
+                      onClick={handleDecline}
                     />
-                  ) : (
-                    <Button
-                      text="Verify"
-                      className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
-                      onClick={handleVerify}
-                    />
-                  )
+                    {verifyMutation.isLoading ? (
+                      <Button
+                        text="Verifying"
+                        className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
+                        onClick={handleVerify}
+                        disabled={true}
+                        iconSize={18}
+                        icon={FaSpinner}
+                        animation="animate-spin"
+                      />
+                    ) : (
+                      <Button
+                        text="Verify"
+                        className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
+                        onClick={handleVerify}
+                      />
+                    )}
+                  </>
+                ) : eachProforma[0].status == "Declined" ? (
+                  <Button
+                    text="Verify"
+                    className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
+                    onClick={handleVerify}
+                  />
+                ) : eachProforma[0].status == "Verified" ? (
+                  <Button
+                    text="Cancel"
+                    className="text-white text-lg  px-8 flex rounded-lg py-1 bg-red "
+                    onClick={handleCancel}
+                  />
+                ) : eachProforma[0].status == "Completed" ? (
+                  <Button
+                    text="Delivery"
+                    className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
+                    onClick={handleDelivery}
+                  />
+                ) : eachProforma[0].status == "Canceled" ? (
+                  <Button
+                    text="Verify"
+                    className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
+                    onClick={handleVerify}
+                  />
                 ) : (
                   ""
                 )

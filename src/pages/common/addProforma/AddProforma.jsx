@@ -117,13 +117,13 @@ function ProformaDetail() {
     client_phone_number: phoneNumber,
     price_validity: priceValidity,
     payment_method: payment,
+    status: "Pending",
     contact_person: `${
       userData.user_first_name + " " + userData.user_last_name
     }`,
     total_price: subTotal,
     total_profit: Number(totalProfit),
     orders: AllOrders,
-    status: "Verified",
   };
 
   let tax = 15;
@@ -131,7 +131,7 @@ function ProformaDetail() {
   Tax = parseFloat(Tax.toFixed(2));
   let grandtedTotal = Tax + subTotal;
   const handleVerifyProforma = () => {
-    console.log(AllProformaData)
+    AllProformaData.status="Verified"
     if (AllOrders.length == 0) {
       toast.error("Atleast one order is needed", {
         position: "top-center",
@@ -139,12 +139,9 @@ function ProformaDetail() {
       });
     } else {
       mutation.mutate(AllProformaData);
-     
-      // navigate("/proforma");
     }
   };
-  const handleDownload = async (e) => {
-    e.preventDefault();
+  const handleDownload = async () => {
 
     try {
       if (AllOrders.length == 0) {
@@ -174,9 +171,9 @@ function ProformaDetail() {
       throw new error();
     }
   };
-if(mutation.isLoading){
-  return <h1>Is loading</h1>
-}
+  if (mutation.isLoading) {
+    return <h1>Is loading</h1>;
+  }
   return (
     <Layout>
       <form

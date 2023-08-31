@@ -5,8 +5,9 @@ import * as api from "../../../api/userApi";
 import Card from "../../../components/common/card/Card";
 import Button from "../../../components/common/button/Button";
 import { useMutation, useQuery } from "react-query";
-import useUserStore from "../../../store/userStore";
+import useUserStore, { useUserData } from "../../../store/userStore";
 function StaffDetail() {
+  const CurrentUserData = useUserData();
   const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -24,17 +25,15 @@ function StaffDetail() {
   };
   const deleteStaffMutation = useMutation(deleteStaff, {
     onSuccess: (response) => {
-      navigate("/admin/staffs");
+      navigate("/staffs");
     },
   });
   const handleDelete = () => {
     deleteStaffMutation.mutate(id);
-    navigate("/admin/staffs");
   };
   if (userLoading) {
     return <h1>loading</h1>;
   }
-  console.log(userData, userData.user_image_url);
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">
@@ -58,15 +57,15 @@ function StaffDetail() {
           <Card text="Role" information={userData.user_role} />
         </div>
         <div className="flex justify-center gap-10 mb-20 md:gap-5">
-          <Button
-            text="Allocate Order"
-            className="text-center bg-blue rounded-md px-4 py-1 hover:bg-blue_hover md:px-2 md:py-1 md:text-base "
-          />
-          <Button
-            onClick={handleDelete}
-            text="Delete"
-            className="text-center bg-red rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
-          />
+          {CurrentUserData.id != id ? (
+            <Button
+              onClick={handleDelete}
+              text="Delete"
+              className="text-center bg-red rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </Layout>
