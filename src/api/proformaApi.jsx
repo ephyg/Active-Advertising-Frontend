@@ -72,3 +72,13 @@ export const OrderedEmployee = async (token, id) => {
     .then((response) => response.data);
   return orderEmployee;
 };
+export const UpdateOrder = async (token, data) => {
+  const updateStatus = await axios
+    .put(`${baseURL}/orderStaff`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return updateStatus;
+};

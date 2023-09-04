@@ -15,6 +15,7 @@ function OrderDetail() {
     window.scrollTo(0, 0);
   });
   const { id } = useParams();
+  const { setNumber, number } = useUserStore();
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
   const {
     data: OrderedEmployee,
@@ -30,6 +31,11 @@ function OrderDetail() {
   }
   const handleEmployee = () => {
     navigate(`/staffs/${OrderedEmployee[0].id}`);
+  };
+  const handleAllocateOrder = async () => {
+    await setNumber(id);
+    console.log(number, id);
+    navigate(`/allocate-order`);
   };
 
   return (
@@ -65,7 +71,8 @@ function OrderDetail() {
             filteredData[0].status == "Unallocated" ? (
               <Button
                 text="Allocate Order"
-                className="text-center bg-blue rounded-md px-4 py-1 hover:bg-blue_hover md:px-2 md:py-1 md:text-base "
+                className="text-center bg-blue rounded-md px-4 py-1 hover:bg-blue_hover md:px-2 md:py-1 md:text-base"
+                onClick={handleAllocateOrder}
               />
             ) : (
               <Button

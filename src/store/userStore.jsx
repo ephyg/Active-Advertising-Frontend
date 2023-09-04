@@ -10,7 +10,11 @@ const useUserStore = create(
       // user_role: {},
       // user: localStorage.getItem("user"),
       token: localStorage.getItem("token") || null,
-
+      number: null,
+      setNumber: (x) => {
+        const number = x;
+        set({ number });
+      },
       login: (userData) => {
         const { token } = userData;
         set({ token });
@@ -25,7 +29,13 @@ const useUserStore = create(
     }
   )
 );
-
+// export const useUserInformation = create((set) => ({
+//   User: null,
+//   setUser: (userData) => {
+//     const { User } = userData;
+//     set({ User });
+//   },
+// }));
 export const useUser = () => {
   const { token } = useUserStore();
   const navigate = useNavigate();
@@ -79,7 +89,7 @@ export const useNoUser = () => {
 export const useUserData = () => {
   const { token } = useUserStore();
   const navigate = useNavigate();
-
+  // const user=useUserInformation()
   const {
     data: authUserData,
     isError,
@@ -90,6 +100,7 @@ export const useUserData = () => {
   if (isLoading) {
     return <h1>loading</h1>;
   }
+  // user.setUser(authUserData)
   return authUserData;
 };
 export default useUserStore;

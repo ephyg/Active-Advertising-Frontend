@@ -31,6 +31,8 @@ import { useQuery } from "react-query";
 import * as api from "../api/userApi";
 import StaffList from "../pages/admin/staffList/StaffList";
 import StaffDetail from "../pages/common/staffDetail/StaffDetail";
+import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
+import StaffEmployeeOrders from "../pages/common/AllocateOrder/StaffEmployeeOrders";
 
 function RouteList() {
   const user = useUserStore();
@@ -101,6 +103,11 @@ function RouteList() {
             <Route path="/stock/additem" element={<AddItems />} />
             <Route path="/agreement" element={<AgreementForm />} />
             <Route path="/delivery" element={<DeliveryForm />} />
+            <Route path="/allocate-order/" element={<AllocateOrderLayout />} />
+            <Route
+              path="/allocate-order/staff/:id"
+              element={<StaffEmployeeOrders />}
+            />
           </>
         )}
         {/* Route for employees only*/}

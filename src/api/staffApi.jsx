@@ -21,6 +21,16 @@ export const AddUser = async (token, data) => {
     .then((response) => response.data);
   return addUser;
 };
+export const UpdateUser = async (token, id, data) => {
+  const updateUser = await axios
+    .put(`${baseURL}/user/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return updateUser;
+};
 export const CheckUser = async (token, email) => {
   const user_email = await axios
     .post(`${baseURL}/forgot`, email)

@@ -49,3 +49,24 @@ export const DeleteStaff = async (token, id) => {
     .then((response) => response.data);
   return deleteStaff;
 };
+// employeeList
+export const EmployeeFreelancerList = async (token) => {
+  const employeeList = await axios
+    .get(`${baseURL}/employeeList/freelancer`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return employeeList;
+};
+export const EmployeeStaffList = async (token) => {
+  const employeeList = await axios
+    .get(`${baseURL}/employeeList/staff`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return employeeList;
+};

@@ -132,6 +132,7 @@ function ProformaDetail() {
   let grandtedTotal = Tax + subTotal;
   const handleVerifyProforma = () => {
     AllProformaData.status="Verified"
+    console.log(AllProformaData)
     if (AllOrders.length == 0) {
       toast.error("Atleast one order is needed", {
         position: "top-center",
