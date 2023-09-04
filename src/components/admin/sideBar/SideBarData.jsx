@@ -2,48 +2,48 @@ import { GoGraph } from "react-icons/go";
 import { CgNotes } from "react-icons/cg";
 import { MdBorderColor } from "react-icons/md";
 import { BiSolidUserDetail } from "react-icons/bi";
-import { FaUserAlt } from "react-icons/fa";
-import {HiUserGroup} from "react-icons/hi"
-import {SiDesignernews} from "react-icons/si"
-import {LuPackageSearch} from "react-icons/lu"
+import { FaUserAlt, FaHandshake } from "react-icons/fa";
+import { HiUserGroup } from "react-icons/hi";
+import { SiDesignernews } from "react-icons/si";
+import { LuPackageSearch } from "react-icons/lu";
 export const SideBarData = [
   {
-    path:"/report",
+    path: "/report",
     icon: GoGraph,
     title: "Report",
   },
   {
-    path:"/proforma",
+    path: "/proforma",
     icon: CgNotes,
     title: "Proforma",
   },
   {
-    path:"/order",
+    path: "/order",
     icon: MdBorderColor,
     title: "Order",
   },
   {
-    path:"/customer",
+    path: "/customer",
     icon: BiSolidUserDetail,
     title: "Customer",
   },
   {
-    path:"/account-manager",
+    path: "/freelancer",
     icon: FaUserAlt,
-    title: "Account Manager",
+    title: "Freelancers",
   },
   {
-    path:"/freelancer",
+    path: "/staffs",
     icon: HiUserGroup,
-    title: "Freelancer",
+    title: "Staff",
   },
   {
-    path:"/designer",
-    icon: SiDesignernews,
-    title: "Designer",
+    path: "/agreement",
+    icon: FaHandshake,
+    title: "Agreement",
   },
   {
-    path:"/stock",
+    path: "/stock",
     icon: LuPackageSearch,
     title: "Stock",
   },

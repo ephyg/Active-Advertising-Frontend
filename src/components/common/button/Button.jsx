@@ -1,15 +1,30 @@
 import React from "react";
 
-const Button = ({ className, text, icon }) => {
+const Button = ({
+  className,
+  text,
+  icon,
+  onClick,
+  clr,
+  disabled,
+  animation,
+  type,
+  iconSize,
+}) => {
   return (
     <div className="flex items-stretch justify-center">
       <button
-        className={`font-roboto font-bold text-lg text-white items-stretch flex ${className}`}
+        type={type}
+        className={`font-roboto font-bold text-lg text-white items-stretch flex justify-center ${className}`}
+        onClick={onClick}
+        disabled={disabled}
       >
         <div className="flex justify-center items-center gap-2">
           {icon != null &&
             React.createElement(icon, {
-              size: 13,
+              size: iconSize,
+              color: `${clr}`,
+              className: `${animation}`,
             })}
           {text}
         </div>

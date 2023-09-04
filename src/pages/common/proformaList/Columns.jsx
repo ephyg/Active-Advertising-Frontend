@@ -1,24 +1,24 @@
 export const Columns = [
   {
     Header: "No.",
-    accessor: (row, index) => index + 1, // Incremental number starting from 1
-    disableSortBy: true, // Disable sorting for this column
+    accessor: (row, index) => index + 1,
+    disableSortBy: true,
   },
   {
-    Header: "Company Name",
-    accessor: "Company Name",
+    Header: "Client Name",
+    accessor: "client_name",
   },
   {
-    Header: "Order Description",
-    accessor: "Order Description",
+    Header: "Payment Request No.",
+    accessor: "payment_request_number",
   },
   {
     Header: "Order Taker",
-    accessor: "Order Taker",
+    accessor: "contact_person",
   },
   {
     Header: "Tin Number",
-    accessor: "Till Number",
+    accessor: "active_tin_nUmber",
   },
   {
     Header: "status",
@@ -26,6 +26,6 @@ export const Columns = [
   },
   {
     Header: "order Date",
-    accessor: "order Date",
+    accessor: "formatted_created_at",
   },
 ];

@@ -11,13 +11,13 @@ export const NavBarData = [
     path: "/customer",
     title: "Customer",
   },
+  // {
+  //   path: "/freelancer",
+  //   title: "Freelancer",
+  // },
   {
-    path: "/freelancer",
-    title: "Freelancer",
-  },
-  {
-    path: "/designer",
-    title: "Designer",
+    path: "/employee",
+    title: "Employee",
   },
   {
     path: "/agreement",
