@@ -5,9 +5,10 @@ import {
   useGlobalFilter,
   usePagination,
 } from "react-table";
+// import { Columns } from "../Columns";
 import { Columns } from "./Columns";
 import { Link, useNavigate } from "react-router-dom";
-import * as api from "../../../api/proformaApi";
+// import * as api from "../../../../api/proformaApi";
 import { FaAngleUp, FaAngleDown, FaPlus } from "react-icons/fa";
 import {
   BiChevronLeft,
@@ -15,11 +16,10 @@ import {
   BiChevronsLeft,
   BiChevronsRight,
 } from "react-icons/bi";
-import Button from "../../../components/common/button/Button";
-import InputField from "../../../components/common/inputField/InputField";
-import useUserStore from "../../../store/userStore";
 import { useQuery } from "react-query";
-import useProformaStore from "../../../store/proformaStore";
+import InputField from "../../../../components/common/inputField/InputField";
+import useUserStore from "../../../../store/userStore";
+import useProformaStore from "../../../../store/proformaStore";
 function StaffEmployeeComponent({ employeeList }) {
   const roleType = useUserStore((state) => state.user_role);
   const User = useUserStore();

@@ -1,8 +1,8 @@
 import React from "react";
 import { useQuery } from "react-query";
-import useUserStore from "../../../store/userStore";
-import * as api from "../../../api/userApi";
-import StaffEmployeeComponent from "./StaffEmployeeComponent";
+import useUserStore from "../../../../store/userStore";
+import * as api from "../../../../api/userApi";
+import StaffEmployeeComponent from "../AllocateStaff/StaffEmployeeComponent";
 import FreelancerEmployeeComponent from "./FreelancerEmployeeComponent";
 
 function FreelancerEmployee() {

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
-import * as api from "../../../api/proformaApi";
-import Layout from "../../../components/Layout/Layout";
+import * as api from "../../../../api/proformaApi";
+import Layout from "../../../../components/Layout/Layout";
 import {
   useTable,
   useSortBy,
@@ -16,12 +16,13 @@ import {
   BiChevronsLeft,
   BiChevronsRight,
 } from "react-icons/bi";
-import Button from "../../../components/common/button/Button";
-import InputField from "../../../components/common/inputField/InputField";
+import Button from "../../../../components/common/button/Button";
+import InputField from "../../../../components/common/inputField/InputField";
 import { useQuery } from "react-query";
 function FreelancerEmployeeComponent({ employeeFreelancerList }) {
   const navigate = useNavigate();
-  const { id, setId } = useState();
+  const [id, setId] = useState();
+
   const columns = useMemo(() => freelancerColumns, []);
   const data = useMemo(() => employeeFreelancerList, [employeeFreelancerList]);
 
@@ -51,7 +52,13 @@ function FreelancerEmployeeComponent({ employeeFreelancerList }) {
     previousPage,
     state: { globalFilter, pageIndex },
   } = tableInstance;
-
+  const handleRowClick = async (index, row) => {
+    const userId = row.original.id;
+    // console.log("id", userId);
+    // console.log();
+    setId(userId);
+    navigate(`/allocate-order/freelancer/${userId}`);
+  };
   return (
     <div className="w-screen, overflow-auto">
       <div className="flex justify-between mb-3">
@@ -93,12 +100,13 @@ function FreelancerEmployeeComponent({ employeeFreelancerList }) {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {page.map((row, index) => {
               prepareRow(row);
               return (
                 <tr
                   {...row.getRowProps()}
                   className="hover:bg-slate-200 cursor-pointer group"
+                  onClick={() => handleRowClick(index, row)}
                 >
                   {row.cells.map((cell, index) => (
                     <td
