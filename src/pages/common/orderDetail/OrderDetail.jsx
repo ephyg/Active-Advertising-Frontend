@@ -29,8 +29,9 @@ function OrderDetail() {
   if (OrderedEmployeeLoading) {
     return <h1>Loading....</h1>;
   }
-  const handleEmployee = () => {
-    navigate(`/staffs/${OrderedEmployee[0].id}`);
+  const handleEmployee = async () => {
+    await setNumber(id);
+    navigate(`/staffs-order/${OrderedEmployee[0].id}`);
   };
   const handleAllocateOrder = async () => {
     await setNumber(id);

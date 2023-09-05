@@ -37,6 +37,15 @@ function Report() {
   // -------------------------progress bar starts here percent generator ------------------------------------------------------
   const randomPercentage = Math.floor(Math.random() * 101);
 
+  // const TotalRevenueComponent = () => {
+
+  //   const { totalrevenue, fetchRevenueFromDatabase } = useContext(DatabaseContext);
+
+  //   // calling fetching function
+  //   useEffect(() => {
+  //     fetchRevenueFromDatabase();
+  //   }, []);
+
   return <Layout>Report</Layout>;
 }
 

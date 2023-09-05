@@ -82,3 +82,13 @@ export const UpdateOrder = async (token, data) => {
     .then((response) => response.data);
   return updateStatus;
 };
+export const UpdateOrderFreelancer = async (token, data) => {
+  const updateStatus = await axios
+    .put(`${baseURL}/orderFreelancer`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return updateStatus;
+};

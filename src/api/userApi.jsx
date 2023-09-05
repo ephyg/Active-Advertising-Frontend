@@ -60,6 +60,7 @@ export const EmployeeFreelancerList = async (token) => {
     .then((response) => response.data);
   return employeeList;
 };
+// list of the staffs 
 export const EmployeeStaffList = async (token) => {
   const employeeList = await axios
     .get(`${baseURL}/employeeList/staff`, {
@@ -70,3 +71,15 @@ export const EmployeeStaffList = async (token) => {
     .then((response) => response.data);
   return employeeList;
 };
+// order of the employee
+export const staffOrderList = async (token, id) => {
+  const staffOrder = await axios
+    .get(`${baseURL}/employee/staff/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return staffOrder;
+};
+

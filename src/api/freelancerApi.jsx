@@ -17,6 +17,26 @@ export const AddFreelancer = async (token, data) => {
 //     .then((response) => console.log(response, data));
 //   return editItems;
 // };
+export const SingleFreelancer = async (token, id) => {
+  const addFreelancer = await axios
+    .get(`${baseURL}/freelancer/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return addFreelancer;
+};
+export const FreelancerOrderList = async (token, id) => {
+  const staffOrder = await axios
+    .get(`${baseURL}/employee/staff/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return staffOrder;
+};
 export const GetAllFreelancer = async (token) => {
   const getAllFrrelancer = await axios
     .get(`${baseURL}/freelancer`, {

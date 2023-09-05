@@ -63,6 +63,7 @@ function ProformaDetail() {
       //   position: "top-center",
       //   toastId: "error1",
       // });
+      navigate('/proforma')
     },
   });
   const {

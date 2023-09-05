@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+// import Layout from "../../../components/Layout/Layout";
+import FreelancerEmployee from "./AllocateFreelancer/FreelancerEmployee";
+import StaffEmployeeComponent from "./AllocateStaff/StaffEmployeeComponent";
 import Layout from "../../../components/Layout/Layout";
 import StaffEmployee from "./AllocateStaff/StaffEmployee";
 import FreelancerEmployee from "./AllocateFreelancer/FreelancerEmployee";
 // import StaffEmployee from "./StaffEmployee";
 // import FreelancerEmployee from "./FreelancerEmployee";
+import FreelancerEmployeeComponent from "./AllocateFreelancer/FreelancerEmployeeComponent";
+import StaffEmployee from "./AllocateStaff/StaffEmployee";
 
 function AllocateOrderLayout() {
   const [toggle, setToggle] = useState("staff");

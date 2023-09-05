@@ -31,9 +31,13 @@ import { useQuery } from "react-query";
 import * as api from "../api/userApi";
 import StaffList from "../pages/admin/staffList/StaffList";
 import StaffDetail from "../pages/common/staffDetail/StaffDetail";
-import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
+// import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
+// import StaffEmployeeOrders from "../pages/common/AllocateOrder/AllocateToStaff/StaffEmployeeOrders";
+import StaffOrder from "../pages/common/AllocateOrder/AllocateStaff/StaffOrder";
 import StaffEmployeeOrders from "../pages/common/AllocateOrder/AllocateStaff/StaffEmployeeOrders";
 
+import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
+import FreeelancerEmployeeOrders from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerEmployeeOrder";
 function RouteList() {
   const user = useUserStore();
   const navigate = useNavigate();
@@ -72,6 +76,7 @@ function RouteList() {
         {/* Route common for admin and account manager only*/}
         {(roleType == "account-manager" || roleType == "admin") && (
           <>
+            <Route path="/staffs-order/:id" element={<StaffOrder />} />
             <Route path="/order" element={<OrderList />} />
             <Route path="/proforma" element={<ProformaList />} />
             <Route path="/proforma/:id" element={<ProformaDetail />} />
@@ -91,6 +96,10 @@ function RouteList() {
             <Route
               path="/allocate-order/staff/:id"
               element={<StaffEmployeeOrders />}
+            />
+            <Route
+              path="/allocate-order/freelancer/:id"
+              element={<FreeelancerEmployeeOrders />}
             />
           </>
         )}
