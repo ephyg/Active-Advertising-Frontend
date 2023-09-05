@@ -28,7 +28,7 @@ function StaffEmployeeOrders() {
     isLoading: staffLoading,
     isError: staffError,
   } = useQuery("StaffOrder-store", () => apis.staffOrderList(user.token, id));
-  console.log(StaffOrder);
+  console.log(userData);
   const updateOrder = (StatusData) => {
     const response = api.UpdateOrder(user.token, StatusData);
     return response;
