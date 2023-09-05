@@ -36,7 +36,7 @@ function StaffEmployeeOrders() {
   console.log(number);
   const handleAllocate = () => {
     const StatusData = {
-      status: "Allocated X",
+      status: "Allocated",
       user_id: Number(id),
       order_id: Number(number),
     };
@@ -67,14 +67,17 @@ function StaffEmployeeOrders() {
           <Card text="Email " information={userData.user_email} />
           <Card text="Address" information={userData.user_address} />
           <Card text="Role" information={userData.user_role} />
-          <Card text="Role" information={userData.status} />
+          <Card text="Status" information={userData.status} />
         </div>
+        <div className="">Allocated Orders</div>
         <div className="flex justify-center gap-10 mb-20 md:gap-5">
+          {/* {userData.status != "Allocated" && ( */}
           <Button
             onClick={handleAllocate}
             text="Allocate"
             className="text-center bg-blue rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
           />
+          {/* )} */}
         </div>
       </div>
     </Layout>

@@ -528,7 +528,7 @@ function ProformaDetail() {
             className="text-white text-lg py-1  px-8 flex rounded-lg bg-blue hover:bg-blue_hover"
           />
           <Button
-            text="Verify & Download"
+            text="Download"
             type="submit"
             className="text-white text-lg  px-8 flex rounded-lg py-1 bg-green hover:bg-green"
             onClick={handleDownload}

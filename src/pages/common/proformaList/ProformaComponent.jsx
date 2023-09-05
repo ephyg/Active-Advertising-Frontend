@@ -125,8 +125,22 @@ function ProformaComponent({ allProformas }) {
                   {row.cells.map((cell, index) => (
                     <td
                       key={index}
-                      {...cell.getCellProps}
-                      className="border py-1 text-xs px-2 group-hover:border-slate-200"
+                      {...cell.getCellProps()}
+                      className={`border py-1 text-xs px-2 group-hover:border-slate-200 ${
+                        cell.column.Header === "Status"
+                          ? cell.value === "Canceled"
+                            ? "text-red font-roboto"
+                            : cell.value === "Done"
+                            ? "text-blue font-roboto"
+                            : cell.value === "Verified"
+                            ? "text-lime-600 font-roboto"
+                            : cell.value === "Pending"
+                            ? "text-blue font-roboto"
+                            : cell.value === "Completed"
+                            ? "text-green font-roboto"
+                            : ""
+                          : ""
+                      }`}
                     >
                       {cell.render("Cell")}
                     </td>

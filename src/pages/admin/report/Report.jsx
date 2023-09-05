@@ -37,146 +37,136 @@ function Report() {
   // -------------------------progress bar starts here percent generator ------------------------------------------------------
   const randomPercentage = Math.floor(Math.random() * 101);
 
-  
-//   //==============================================
-//   function FreshInventory() {
-//     const [freshInventory, setFreshInventory] = useState(null);
+  //   //==============================================
+  //   function FreshInventory() {
+  //     const [freshInventory, setFreshInventory] = useState(null);
 
-//     useEffect(() => {
-//       // API call to fetch the value from the database
-//       axios.get("/api/fresh-inventory").then((response) => {
-//         setFreshInventory(response.data.freshInventory); 
-//       });
-//     }, []);
-//   }
-// //=================================================
-// function ApprovedOrder() {
-//   const [approvedOrder, ApprovedOrder] = useState(null);
+  //     useEffect(() => {
+  //       // API call to fetch the value from the database
+  //       axios.get("/api/fresh-inventory").then((response) => {
+  //         setFreshInventory(response.data.freshInventory);
+  //       });
+  //     }, []);
+  //   }
+  // //=================================================
+  // function ApprovedOrder() {
+  //   const [approvedOrder, ApprovedOrder] = useState(null);
 
-//   useEffect(() => {
-//     // API call to fetch the value from the database
-//     axios.get("/api/approved-order").then((response) => {
-//       setApprovedOrder(response.data.approvedOrder); 
-//     });
-//   }, []);
-// }
+  //   useEffect(() => {
+  //     // API call to fetch the value from the database
+  //     axios.get("/api/approved-order").then((response) => {
+  //       setApprovedOrder(response.data.approvedOrder);
+  //     });
+  //   }, []);
+  // }
 
+  // //=================================================
+  // function DeliverdOrder() {
+  //   const [deliverdOrder, DeliverdOrder] = useState(null);
 
-// //=================================================
-// function DeliverdOrder() {
-//   const [deliverdOrder, DeliverdOrder] = useState(null);
+  //   useEffect(() => {
+  //     // API call to fetch the value from the database
+  //     axios.get("/api/delivered order").then((response) => {
+  //       setDeliverdOrder(response.data.deliverdOrder);
+  //     });
+  //   }, []);
+  // }
 
-//   useEffect(() => {
-//     // API call to fetch the value from the database
-//     axios.get("/api/delivered order").then((response) => {
-//       setDeliverdOrder(response.data.deliverdOrder); 
-//     });
-//   }, []);
-// }
+  // //=================================================
+  // function CompletedOrder() {
+  //   const [completedOrder, CompletedOrder] = useState(null);
 
-// //=================================================
-// function CompletedOrder() {
-//   const [completedOrder, CompletedOrder] = useState(null);
+  //   useEffect(() => {
+  //     // API call to fetch the value from the database
+  //     axios.get("/api/delivered order").then((response) => {
+  //       setCompletedOrder(response.data.completedOrder);
+  //     });
+  //   }, []);
+  // }
 
-//   useEffect(() => {
-//     // API call to fetch the value from the database
-//     axios.get("/api/delivered order").then((response) => {
-//       setCompletedOrder(response.data.completedOrder); 
-//     });
-//   }, []);
-// }
+  // //=================================================
+  // function ProgressBar() {
+  //   const [progressBar, ProgressBar] = useState(null);
 
-// //=================================================
-// function ProgressBar() {
-//   const [progressBar, ProgressBar] = useState(null);
+  //   useEffect(() => {
+  //     // API call to fetch the value from the database
+  //     axios.get("/api/delivered order").then((response) => {
+  //       setProgressBar(response.data.progressBar);
+  //     });
+  //   }, []);
+  // }
 
-//   useEffect(() => {
-//     // API call to fetch the value from the database
-//     axios.get("/api/delivered order").then((response) => {
-//       setProgressBar(response.data.progressBar); 
-//     });
-//   }, []);
-// }
+  // //=================================================
+  // function TotalRevenue() {
+  //   const [totalRevenue, TotalRevenue] = useState(null);
 
-// //=================================================
-// function TotalRevenue() {
-//   const [totalRevenue, TotalRevenue] = useState(null);
+  //   useEffect(() => {
+  //     // API call to fetch the value from the database
+  //     axios.get("/api/delivered order").then((response) => {
+  //       setTotalRevenue(response.data.totalRevenue);
+  //     });
+  //   }, []);
+  // }
 
-//   useEffect(() => {
-//     // API call to fetch the value from the database
-//     axios.get("/api/delivered order").then((response) => {
-//       setTotalRevenue(response.data.totalRevenue); 
-//     });
-//   }, []);
-// }
+  // //=================================================
+  // function TotalCost() {
+  //   const [totalCost, TotalCost] = useState(null);
 
+  //   useEffect(() => {
+  //     // API call to fetch the value from the database
+  //     axios.get("/api/delivered order").then((response) => {
+  //       setTotalCost(response.data.totalCost);
+  //     });
+  //   }, []);
+  // }
 
-// //=================================================
-// function TotalCost() {
-//   const [totalCost, TotalCost] = useState(null);
+  // //=================================================
+  // function TotalProfit() {
+  //   const [totalProfit, TotalProfit] = useState(null);
 
-//   useEffect(() => {
-//     // API call to fetch the value from the database
-//     axios.get("/api/delivered order").then((response) => {
-//       setTotalCost(response.data.totalCost); 
-//     });
-//   }, []);
-// }
+  //   useEffect(() => {
+  //     // API call to fetch the value from the database
+  //     axios.get("/api/delivered order").then((response) => {
+  //       setTotalProfit(response.data.totalProfit);
+  //     });
+  //   }, []);
+  // }
 
+  // //=================================================
+  // function AllocatedOrder() {
+  //   const [allocatedOrder, AllocatedOrder] = useState(null);
 
-// //=================================================
-// function TotalProfit() {
-//   const [totalProfit, TotalProfit] = useState(null);
+  //   useEffect(() => {
+  //     // API call to fetch the value from the database
+  //     axios.get("/api/delivered order").then((response) => {
+  //       setAllocatedOrder(response.data.allocatedOrder);
+  //     });
+  //   }, []);
+  // }
 
-//   useEffect(() => {
-//     // API call to fetch the value from the database
-//     axios.get("/api/delivered order").then((response) => {
-//       setTotalProfit(response.data.totalProfit); 
-//     });
-//   }, []);
-// }
+  // //=================================================
+  // function DeliveredOrder() {
+  //   const [deliveredOrder, DeliveredOrder] = useState(null);
 
-// //=================================================
-// function AllocatedOrder() {
-//   const [allocatedOrder, AllocatedOrder] = useState(null);
+  //   useEffect(() => {
+  //     // API call to fetch the value from the database
+  //     axios.get("/api/delivered order").then((response) => {
+  //       setDeliveredOrder(response.data.deliveredOrder);
+  //     });
+  //   }, []);
+  // }
 
-//   useEffect(() => {
-//     // API call to fetch the value from the database
-//     axios.get("/api/delivered order").then((response) => {
-//       setAllocatedOrder(response.data.allocatedOrder); 
-//     });
-//   }, []);
-// }
+  // //=================================================
+  // function CompletedOrder() {
+  //   const [completedOrder, CompletedOrder] = useState(null);
 
-// //=================================================
-// function DeliveredOrder() {
-//   const [deliveredOrder, DeliveredOrder] = useState(null);
-
-//   useEffect(() => {
-//     // API call to fetch the value from the database
-//     axios.get("/api/delivered order").then((response) => {
-//       setDeliveredOrder(response.data.deliveredOrder); 
-//     });
-//   }, []);
-// }
-
-// //=================================================
-// function CompletedOrder() {
-//   const [completedOrder, CompletedOrder] = useState(null);
-
-//   useEffect(() => {
-//     // API call to fetch the value from the database
-//     axios.get("/api/delivered order").then((response) => {
-//       setCompletedOrder(response.data.completedOrder); 
-//     });
-//   }, []);
-// }
-
-
-
-
-
-
+  //   useEffect(() => {
+  //     // API call to fetch the value from the database
+  //     axios.get("/api/delivered order").then((response) => {
+  //       setCompletedOrder(response.data.completedOrder);
+  //     });
+  //   }, []);
+  // }
 
   return (
     <Layout>
@@ -283,7 +273,7 @@ function Report() {
                 </h1>
               </div>
               <span className="pt-4 -ml-24 text-medium font-medium dark:text-white ">
-                17  {/*deliverdOrder*/}
+                17 {/*deliverdOrder*/}
               </span>
             </div>
             <div className=" h-16 flex border rounded-md p-4 bg-blue  shadow-md">
@@ -322,7 +312,8 @@ function Report() {
                 <h1 className="-mt-4 text-lg font-semibold dark:text-white">
                   Goal Completion
                 </h1>
-                <ProgressBar percentage={randomPercentage } />{/*progressBar*/}
+                <ProgressBar percentage={randomPercentage} />
+                {/*progressBar*/}
               </div>
             </div>
           </div>
@@ -347,12 +338,12 @@ function Report() {
                     alt=""
                   />
                   <h1 className=" pl-24 -mt-12 text-3xl font-semibold dark:text-white">
-                    2050000 Birr{" "}   {/* {totalRevenue}  */}
+                    2050000 Birr {/* {totalRevenue}  */}
                   </h1>
                 </div>
                 <div className="flex-1 pl-6">
                   <h4 className="pl-20 -mt-3 -mb-2 text-sm  dark:text-white">
-                    Total Cost  
+                    Total Cost
                   </h4>
                   <img
                     class="ml-4 mt-3"
@@ -360,7 +351,7 @@ function Report() {
                     alt=""
                   />
                   <h1 className=" pl-24 -mt-12 text-3xl font-semibold dark:text-white">
-                    1500000 Birr{" "}  {/* {totalCost}  */}
+                    1500000 Birr {/* {totalCost}  */}
                   </h1>
                 </div>
                 <div className="flex-1 pl-6">
@@ -373,7 +364,7 @@ function Report() {
                     alt=""
                   />
                   <h1 className=" pl-24 -mt-12 text-3xl font-semibold dark:text-white">
-                    850000 Birr{" "}  {/* {totalProfit}  */}
+                    850000 Birr {/* {totalProfit}  */}
                   </h1>
                 </div>
               </div>
@@ -386,7 +377,36 @@ function Report() {
         <div class="flex space-x-20 div4 ">
           <div className="flex-1 div4ElementWidth   h-16 ml-24  flex border rounded-md p-4 bg-blue  shadow-md">
             <div className="pt-2 -mt-2 pl-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 36 36"><circle cx="17.99" cy="10.36" r="6.81" fill="white" class="clr-i-solid clr-i-solid-path-1"/><path fill="white" d="M12 26.65a2.8 2.8 0 0 1 4.85-1.8L20.71 29l6.84-7.63A16.81 16.81 0 0 0 18 18.55A16.13 16.13 0 0 0 5.5 24a1 1 0 0 0-.2.61V30a2 2 0 0 0 1.94 2h8.57l-3.07-3.3a2.81 2.81 0 0 1-.74-2.05Z" class="clr-i-solid clr-i-solid-path-2"/><path fill="white" d="M28.76 32a2 2 0 0 0 1.94-2v-3.76L25.57 32Z" class="clr-i-solid clr-i-solid-path-3"/><path fill="white" d="M33.77 18.62a1 1 0 0 0-1.42.08l-11.62 13l-5.2-5.59a1 1 0 0 0-1.41-.11a1 1 0 0 0 0 1.42l6.68 7.2L33.84 20a1 1 0 0 0-.07-1.38Z" class="clr-i-solid clr-i-solid-path-4"/><path fill="none" d="M0 0h36v36H0z"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 36 36"
+              >
+                <circle
+                  cx="17.99"
+                  cy="10.36"
+                  r="6.81"
+                  fill="white"
+                  class="clr-i-solid clr-i-solid-path-1"
+                />
+                <path
+                  fill="white"
+                  d="M12 26.65a2.8 2.8 0 0 1 4.85-1.8L20.71 29l6.84-7.63A16.81 16.81 0 0 0 18 18.55A16.13 16.13 0 0 0 5.5 24a1 1 0 0 0-.2.61V30a2 2 0 0 0 1.94 2h8.57l-3.07-3.3a2.81 2.81 0 0 1-.74-2.05Z"
+                  class="clr-i-solid clr-i-solid-path-2"
+                />
+                <path
+                  fill="white"
+                  d="M28.76 32a2 2 0 0 0 1.94-2v-3.76L25.57 32Z"
+                  class="clr-i-solid clr-i-solid-path-3"
+                />
+                <path
+                  fill="white"
+                  d="M33.77 18.62a1 1 0 0 0-1.42.08l-11.62 13l-5.2-5.59a1 1 0 0 0-1.41-.11a1 1 0 0 0 0 1.42l6.68 7.2L33.84 20a1 1 0 0 0-.07-1.38Z"
+                  class="clr-i-solid clr-i-solid-path-4"
+                />
+                <path fill="none" d="M0 0h36v36H0z" />
+              </svg>
             </div>
             <div className="pl-14 ">
               <h1 className="-mt-4 -ml-12 text-2xl font-semibold dark:text-white ">
@@ -394,35 +414,59 @@ function Report() {
               </h1>
             </div>
             <span className="pt-4 -ml-24 text-medium font-medium dark:text-white ">
-              23   {/* {allocatedOrder}  */} 
+              23 {/* {allocatedOrder}  */}
             </span>
           </div>
 
           <div className="flex-1 div4ElementWidth   h-16  flex border rounded-md p-4 bg-blue  shadow-md">
             <div className="pt-2 -mt-2 pl-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="white" d="m29.92 16.61l-3-7A1 1 0 0 0 26 9h-3V7a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v17a1 1 0 0 0 1 1h2.14a4 4 0 0 0 7.72 0h6.28a4 4 0 0 0 7.72 0H29a1 1 0 0 0 1-1v-7a1 1 0 0 0-.08-.39ZM23 11h2.34l2.14 5H23ZM9 26a2 2 0 1 1 2-2a2 2 0 0 1-2 2Zm10.14-3h-6.28a4 4 0 0 0-7.72 0H4V8h17v12.56A4 4 0 0 0 19.14 23ZM23 26a2 2 0 1 1 2-2a2 2 0 0 1-2 2Zm5-3h-1.14A4 4 0 0 0 23 20v-2h5Z"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  fill="white"
+                  d="m29.92 16.61l-3-7A1 1 0 0 0 26 9h-3V7a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v17a1 1 0 0 0 1 1h2.14a4 4 0 0 0 7.72 0h6.28a4 4 0 0 0 7.72 0H29a1 1 0 0 0 1-1v-7a1 1 0 0 0-.08-.39ZM23 11h2.34l2.14 5H23ZM9 26a2 2 0 1 1 2-2a2 2 0 0 1-2 2Zm10.14-3h-6.28a4 4 0 0 0-7.72 0H4V8h17v12.56A4 4 0 0 0 19.14 23ZM23 26a2 2 0 1 1 2-2a2 2 0 0 1-2 2Zm5-3h-1.14A4 4 0 0 0 23 20v-2h5Z"
+                />
+              </svg>
             </div>
             <div className="pl-14 ">
               <h1 className="-mt-4 -ml-12 text-2xl font-semibold dark:text-white ">
-               Delivered Order
+                Delivered Order
               </h1>
             </div>
             <span className="pt-4 -ml-24 text-medium font-medium dark:text-white ">
-                23  {/*  {deliveredOrder}   */}
+              23 {/*  {deliveredOrder}   */}
             </span>
           </div>
 
           <div className="flex-1 div4ElementWidth   h-16  flex border rounded-md p-4 bg-blue  shadow-md">
             <div className="pt-2 -mt-2 pl-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="white" d="m22 27.18l-2.59-2.59L18 26l4 4l8-8l-1.41-1.41L22 27.18z"/><path fill="white" d="M25 5h-3V4a2.006 2.006 0 0 0-2-2h-8a2.006 2.006 0 0 0-2 2v1H7a2.006 2.006 0 0 0-2 2v21a2.006 2.006 0 0 0 2 2h9v-2H7V7h3v3h12V7h3v11h2V7a2.006 2.006 0 0 0-2-2Zm-5 3h-8V4h8Z"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  fill="white"
+                  d="m22 27.18l-2.59-2.59L18 26l4 4l8-8l-1.41-1.41L22 27.18z"
+                />
+                <path
+                  fill="white"
+                  d="M25 5h-3V4a2.006 2.006 0 0 0-2-2h-8a2.006 2.006 0 0 0-2 2v1H7a2.006 2.006 0 0 0-2 2v21a2.006 2.006 0 0 0 2 2h9v-2H7V7h3v3h12V7h3v11h2V7a2.006 2.006 0 0 0-2-2Zm-5 3h-8V4h8Z"
+                />
+              </svg>
             </div>
             <div className="pl-14 ">
               <h1 className="-mt-4 -ml-12 text-2xl font-semibold dark:text-white ">
-              Completed Order
+                Completed Order
               </h1>
             </div>
             <span className="pt-4 -ml-24 text-medium font-medium dark:text-white ">
-              23   {/* {completedOrder}  */} 
+              23 {/* {completedOrder}  */}
             </span>
           </div>
         </div>
