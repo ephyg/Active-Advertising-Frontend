@@ -26,16 +26,17 @@ export const SingleFreelancer = async (token, id) => {
     })
     .then((response) => response.data);
   return addFreelancer;
+  
 };
 export const FreelancerOrderList = async (token, id) => {
-  const staffOrder = await axios
-    .get(`${baseURL}/employee/staff/${id}`, {
+  const freelancerOrder = await axios
+    .get(`${baseURL}/employee/freelancer/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
     .then((response) => response.data);
-  return staffOrder;
+  return freelancerOrder;
 };
 export const GetAllFreelancer = async (token) => {
   const getAllFrrelancer = await axios

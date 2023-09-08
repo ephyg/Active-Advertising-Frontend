@@ -38,6 +38,8 @@ import StaffEmployeeOrders from "../pages/common/AllocateOrder/AllocateStaff/Sta
 
 import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
 import FreeelancerEmployeeOrders from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerEmployeeOrder";
+import FreelancerOrder from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerOrder";
+import Repo from "../pages/admin/report/Repo";
 function RouteList() {
   const user = useUserStore();
   const navigate = useNavigate();
@@ -77,6 +79,7 @@ function RouteList() {
         {(roleType == "account-manager" || roleType == "admin") && (
           <>
             <Route path="/staffs-order/:id" element={<StaffOrder />} />
+            <Route path="/freelancer-order/:id" element={<FreelancerOrder />} />
             <Route path="/order" element={<OrderList />} />
             <Route path="/proforma" element={<ProformaList />} />
             <Route path="/proforma/:id" element={<ProformaDetail />} />
@@ -100,6 +103,10 @@ function RouteList() {
             <Route
               path="/allocate-order/freelancer/:id"
               element={<FreeelancerEmployeeOrders />}
+            />
+            <Route
+              path="/repo"
+              element={<Repo />}
             />
           </>
         )}

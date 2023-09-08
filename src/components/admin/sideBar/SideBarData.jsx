@@ -18,11 +18,6 @@ export const SideBarData = [
     title: "Proforma",
   },
   {
-    path: "/order",
-    icon: MdBorderColor,
-    title: "Order",
-  },
-  {
     path: "/customer",
     icon: BiSolidUserDetail,
     title: "Customer",

@@ -3,22 +3,27 @@ import Layout from "../../../components/Layout/Layout";
 import * as api from "../../../api/stockApi";
 import { useQuery } from "react-query";
 import OrderListComponent from "./InventoryListComponent";
+import Loading from "../../../assets/image/Loading.gif";
 import useUserStore from "../../../store/userStore";
 function InventoryList() {
-  const user=useUserStore()
+  const user = useUserStore();
   const {
     data: inventoryList,
     isLoading,
     isError,
     isFetching,
-  } = useQuery("inventoryList",()=> api.GetAllItems(user.token), {
+  } = useQuery("inventoryList", () => api.GetAllItems(user.token), {
     refetchOnWindowFocus: true,
     // staleTime: Infinity,
     // forceFetch: true,
   });
   // console.log(orderlist);
   if (isLoading) {
-    return <h1></h1>;
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   console.log(inventoryList);
 

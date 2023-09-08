@@ -52,6 +52,16 @@ export const GetOrder = async (token) => {
     .then((response) => response.data);
   return getOrder;
 };
+export const GetSingleOrder = async (token, id) => {
+  const getSingleOrder = await axios
+    .get(`${baseURL}/order/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return getSingleOrder;
+};
 export const UpdateStatus = async (token, id, data) => {
   const updateStatus = await axios
     .put(`${baseURL}/proforma/${id}`, data, {

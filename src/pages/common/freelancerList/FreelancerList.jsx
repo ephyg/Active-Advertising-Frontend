@@ -1,9 +1,10 @@
 import React from "react";
 import Layout from "../../../components/Layout/Layout";
 import { useQuery } from "react-query";
-import * as api from "../../../api/freelancerApi";
+import * as api from "../../../api/userApi";
 import FreelancerListComponent from "./FreelancerListComponent";
 import useUserStore from "../../../store/userStore";
+import Loading from '../../../assets/image/Loading.gif'
 
 function FreelancerList() {
   const user = useUserStore();
@@ -11,9 +12,11 @@ function FreelancerList() {
     isLoading,
     data: freelancerData,
     isError,
-  } = useQuery("allFreelancers", () => api.GetAllFreelancer(user.token));
+  } = useQuery("allFreelancers", () => api.EmployeeFreelancerList(user.token));
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return  <div className="flex bg-transparent h-screen w-full justify-center items-center">
+    <img src={Loading} className="w-24 " alt="Loading..." />
+  </div>
   }
   return (
     <Layout>

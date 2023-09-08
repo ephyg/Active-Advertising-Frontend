@@ -5,6 +5,7 @@ import * as api from "../../../api/userApi";
 import Card from "../../../components/common/card/Card";
 import Button from "../../../components/common/button/Button";
 import { useMutation, useQuery } from "react-query";
+import Loading from '../../../assets/image/Loading.gif'
 import useUserStore, { useUserData } from "../../../store/userStore";
 function StaffDetail() {
   const CurrentUserData = useUserData();
@@ -32,7 +33,11 @@ function StaffDetail() {
     deleteStaffMutation.mutate(id);
   };
   if (userLoading) {
-    return <h1>loading</h1>;
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   return (
     <Layout>

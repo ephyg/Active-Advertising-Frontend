@@ -27,10 +27,12 @@ function StaffOrder() {
     isLoading: staffLoading,
     isError: staffError,
   } = useQuery("StaffOrder-store", () => api.staffOrderList(user.token, id));
+
   const updateOrder = (userdata) => {
     const response = apis.UpdateOrder(user.token, userdata);
     return response;
   };
+
   const UnallocateOrder = useMutation(updateOrder, {
     onSuccess: async (response) => {
       await queryClient.invalidateQueries([
@@ -42,6 +44,7 @@ function StaffOrder() {
       });
     },
   });
+  
   const handleUnallocated = () => {
     const StatusData = {
       status: "Unallocated",

@@ -23,13 +23,15 @@ function FreeelancerEmployeeOrders() {
     isLoading: userLoading,
     isError: roleError,
   } = useQuery("userData-store", () => apis.SingleFreelancer(user.token, id));
+
   const {
-    data: Freelancer,
+    data: FreelancerOrder,
     isLoading: staffLoading,
     isError: staffError,
-  } = useQuery("Freelancer-store", () =>
+  } = useQuery("FreelancerOrder-store", () =>
     apis.FreelancerOrderList(user.token, id)
   );
+
   const updateOrder = (StatusData) => {
     const response = api.UpdateOrderFreelancer(user.token, StatusData);
     return response;
@@ -37,18 +39,19 @@ function FreeelancerEmployeeOrders() {
   const UpdateOrderMutation = useMutation(updateOrder, {
     onSuccess: async (response) => {
       //   navigate("/staffs");
+      console.log(userData);
       await queryClient.invalidateQueries([
         "userData-store",
-        "Freelancer-store",
+        "FreelancerOrder-store",
       ]);
       await queryClient.refetchQueries({
         include: "active",
       });
-
       console.log("Success");
+      console.log(response);
     },
   });
-//   console.log(number);
+  //   console.log(number);
   const handleAllocate = () => {
     const StatusData = {
       status: "Allocated",
@@ -61,7 +64,7 @@ function FreeelancerEmployeeOrders() {
   const handleUnallocate = () => {
     const StatusData = {
       status: "Unallocated",
-      freelancer_id: Number(id),
+      freelancer_id: null,
       order_id: Number(number),
     };
     UpdateOrderMutation.mutate(StatusData);
@@ -72,12 +75,13 @@ function FreeelancerEmployeeOrders() {
   if (staffLoading) {
     return <h1>Loading</h1>;
   }
-  console.log(Freelancer);
+  // console.log(userData);
+
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">
         <div className=" relative w-full mb-6 text-red font-roboto font-bold text-xl md:items-center md:flex md:justify-center">
-          <span className="mb-2px">Staff Detail</span>
+          <span className="mb-2px">Freelancer Detail</span>
           <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
         </div>
         <div className="flex justify-center mb-10 rounded-full h-40 ">
@@ -150,7 +154,7 @@ function FreeelancerEmployeeOrders() {
             </thead>
 
             <tbody class="divide-y divide-gray-300">
-              {Freelancer.map((items, index) => (
+              {FreelancerOrder.map((items, index) => (
                 <tr className="cursor-pointer hover:bg-slate-200">
                   <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
                     <li key={index} className="list-none">

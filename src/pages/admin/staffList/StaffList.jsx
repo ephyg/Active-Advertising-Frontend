@@ -5,6 +5,7 @@ import { QueryClient, useQuery, useQueryClient } from "react-query";
 import * as apis from "../../../api/staffApi";
 import useUserStore from "../../../store/userStore";
 import StaffListComponent from "./StaffListComponent";
+import Loading from "../../../assets/image/Loading.gif";
 
 function StaffList() {
   const queryClient = useQueryClient();
@@ -26,14 +27,22 @@ function StaffList() {
     queryClient.invalidateQueries(["userList"]);
   }, [uRole]);
   // console.log(userList);
-  
+
   // console.log(userList);
 
   if (roleLoading) {
-    return <h1>loading</h1>;
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   if (isLoading) {
-    return <h1></h1>;
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   // if (roleError && userListError) {
   //   console.log(roleError, userListError);

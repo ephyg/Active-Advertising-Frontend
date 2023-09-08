@@ -6,14 +6,21 @@ import data from "../orderList/DATA.json";
 import Button from "../../../components/common/button/Button";
 import useProformaStore from "../../../store/proformaStore";
 import * as api from "../../../api/proformaApi";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
+import Loading from '../../../assets/image/Loading.gif'
 import useUserStore from "../../../store/userStore";
 function OrderDetail() {
   const user = useUserStore();
+  // const queryClient = useQueryClient();
+  // queryClient.invalidateQueries("proformaDetail");
+  // queryClient.refetchQueries({
+  //   include: "active",
+  // });
   const navigate = useNavigate();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  });
+
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // });
   const { id } = useParams();
   const { setNumber, number } = useUserStore();
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
@@ -27,11 +34,22 @@ function OrderDetail() {
 
   const filteredData = eachOrder.filter((item) => item.id == id);
   if (OrderedEmployeeLoading) {
-    return <h1>Loading....</h1>;
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
+  console.log("OrderedEmployee", OrderedEmployee);
+
   const handleEmployee = async () => {
     await setNumber(id);
-    navigate(`/staffs-order/${OrderedEmployee[0].id}`);
+    // console.log(OrderedEmployee);
+    if (OrderedEmployee[0].user_role) {
+      navigate(`/staffs-order/${OrderedEmployee[0].id}`);
+    } else {
+      navigate(`/freelancer-order/${OrderedEmployee[0].id}`);
+    }
   };
   const handleAllocateOrder = async () => {
     await setNumber(id);
@@ -39,6 +57,9 @@ function OrderDetail() {
     navigate(`/allocate-order`);
   };
 
+  // if (OrderedEmployeeLoading) {
+  //   console.log(OrderedEmployee);
+  // }
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">
@@ -64,7 +85,6 @@ function OrderDetail() {
           <Card text="Status" information={filteredData[0].status} />
           <Card text="Company Name" information={eachProforma[0].client_name} />
           <Card text="Order Date" information={eachProforma[0].invoice_date} />
-
           <Card text="Vendor Name" information={filteredData[0].vendor_name} />
         </div>
         <div className="flex justify-center gap-10 mb-20 md:gap-5">
@@ -93,7 +113,6 @@ function OrderDetail() {
           )}
           <Button
             text="Delete"
-            // onClick={}
             className="text-center bg-red rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
           />
         </div>

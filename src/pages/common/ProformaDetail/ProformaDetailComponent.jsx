@@ -24,7 +24,7 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
     order: eachOrder,
     proforma: eachProforma,
   };
-  console.log(eachProforma);
+  console.log(eachOrder);
   const proformaMutation = (statusData) => {
     const response = api.UpdateStatus(user.token, id, statusData);
     return response;

@@ -51,7 +51,7 @@ export const useUser = () => {
     isError,
     isLoading,
   } = useQuery("authUser", () => api.AuthenticatedUser(token), {
-    retry: false,
+    retry: 0,
   });
 
   useEffect(() => {
@@ -72,7 +72,7 @@ export const useNoUser = () => {
     isError,
     isLoading,
   } = useQuery("authUser", () => api.AuthenticatedUser(token), {
-    retry: false,
+    retry: 0,
   });
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export const useUserData = () => {
     isError,
     isLoading,
   } = useQuery("authUser", () => api.AuthenticatedUser(token), {
-    retry: false,
+    retry: 0,
   });
   if (isLoading) {
     return <h1>loading</h1>;
