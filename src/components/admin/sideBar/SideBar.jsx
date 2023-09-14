@@ -16,7 +16,7 @@ function SideBar({ className, setIsOpen }) {
   };
   return (
     <div
-      className={`h-screen fixed w-72 bg-blue flex flex-col items-center pt-5 px-5 2xl: ${className}`}
+      className={`h-screen fixed w-68 bg-blue flex flex-col items-center pt-5 px-5 2xl: ${className}`}
     >
       <BiMenu
         className="absolute top-2 right-2 cursor-pointer text-white hover:text-red 2xl:hidden md:flex"
@@ -30,7 +30,7 @@ function SideBar({ className, setIsOpen }) {
             className="rounded-full w-28 mb-2 border-2 border-blue_hover"
             alt=""
           />
-          <h1 className="text-lg font-roboto font-bold text-white ">
+          <h1 className="text-lg font-roboto font-bold text-white font-light">
             Tsion Tesfaye
           </h1>
         </div>
@@ -48,7 +48,7 @@ function SideBar({ className, setIsOpen }) {
                 size: 20,
               })}
               <h1
-                className={`text-base font-roboto font-bold   hover:text-red ${
+                className={`text-base font-roboto font-bold   hover:text-red font-normal ${
                   pathName == path ? `text-red` : "text-white"
                 }`}
               >
@@ -60,7 +60,7 @@ function SideBar({ className, setIsOpen }) {
       </div>
       <div className="h-full flex items-end w-full pl-10 cursor-pointer">
         <div onClick={handleLogout}>
-          <h1 className="text-base font-roboto font-bold   hover:text-red pb-7 text-white ">
+          <h1 className="text-base font-roboto font-bold   hover:text-red pb-7 text-white font-medium ">
             Logout
           </h1>
         </div>

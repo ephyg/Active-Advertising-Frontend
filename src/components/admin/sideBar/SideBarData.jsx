@@ -6,6 +6,7 @@ import { FaUserAlt, FaHandshake } from "react-icons/fa";
 import { HiUserGroup } from "react-icons/hi";
 import { SiDesignernews } from "react-icons/si";
 import { LuPackageSearch } from "react-icons/lu";
+import {AiFillFileAdd } from "react-icons/ai";
 export const SideBarData = [
   {
     path: "/report",
@@ -46,5 +47,10 @@ export const SideBarData = [
     path: "/stock",
     icon: LuPackageSearch,
     title: "Stock",
+  },
+  {
+    path:"/",
+    icon: AiFillFileAdd,
+    title: "basic info",
   },
 ];

@@ -25,7 +25,7 @@ import DeliveryForm from "../pages/common/deliveryForm/DeliveryForm";
 import PrivateRoutes from "./PrivateRoutes";
 import PrivateRouteAuth from "./PrivateRouteAuth";
 import ProformaDetail from "../pages/common/ProformaDetail/ProformaDetail";
-
+import BasicInfo from "../pages/admin/basicInfo/basic_info";
 function RouteList() {
   const { User, token, login } = useUserStore();
 
@@ -37,7 +37,10 @@ function RouteList() {
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/verify" element={<ConfirmCode />} />
         <Route path="/new-password" element={<NewPassword />} />
-        <Route path="/" element={<Login />} />
+        
+        <Route path="/r" element={<Login />} /> 
+        
+        <Route path="/" element={<BasicInfo/>}/>
       </Route>
 
       <Route element={<PrivateRoutes />}>

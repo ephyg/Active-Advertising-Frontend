@@ -6,7 +6,7 @@ import { BiMenu } from "react-icons/bi";
 function Layout({ children }) {
   // const roleType = "account-manager";
   // const roleType = "admin";
-  const roleType = useUserStore((state) => state.user_role);
+  const roleType = "admin";
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="bg-white_blue min-h-screen ">
