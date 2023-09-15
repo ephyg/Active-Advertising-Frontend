@@ -76,7 +76,7 @@ function BasicInfo() {
       <div class="layout">
         <div className=" relative left-24 -top-24 translate-y-3">
         
-          <div className=" relative ">
+          <div>
             <h1 className="relative  w-fit mb-6 text-red font-roboto  text-2xl font-normal ">
             Basic Informations
             </h1>
@@ -86,21 +86,21 @@ function BasicInfo() {
             {it.map((data,i)=>{
               return(
                  <div className="relative top-5">
-                      <InputField  value={data} onChange={e=>handleChangeAcc(e,i)} />
-                      <Button className={" relative left-48 bottom-7 bg-red w-16 h-8 p-4 rounded-lg font-light shadow-md shadow-stone-500 transition delay-100 duration-300 hover:bg-white hover:text-red"} text={"Delete"} onClick={()=>handleDeleteAcc(i)}></Button>
+                      <InputField className={"w-72 h-10 shadow-lg   rounded-sm placeholder-blue placeholder-opacity-50"} value={data} onChange={e=>handleChangeAcc(e,i)} />
+                      <Button className={" relative left-48 bottom-9 bg-red w-16 h-8 p-4 rounded-lg font-light shadow-md shadow-stone-500 transition delay-100 duration-300 hover:bg-white hover:text-red"} text={"Delete"} onClick={()=>handleDeleteAcc(i)}></Button>
                  </div>
               )
           })}
           </div>
           <div className="relative top-4">
-            <h4 className="relative   text-blue font-roboto ">Contact</h4>
+            <h4 className="text-blue font-roboto ">Contact</h4>
             <InputField className={"  w-72 h-10 shadow-lg   rounded-sm placeholder-blue placeholder-opacity-50"} placeholder={"+251"}></InputField>
             <Button onClick={()=>handleAdd()} text="Add" className=" relative top-2 left-28 bg-blue w-17 h-8 p-4 rounded-lg font-light shadow-md shadow-stone-500 transition delay-100 duration-300 hover:bg-white hover:text-blue "></Button>
             {val.map((data,i)=>{
               return(
                  <div className="relative top-5">
-                      <InputField  value={data} onChange={e=>handleChange(e,i)} />
-                      <Button className={" relative left-48 bottom-7 bg-red w-16 h-8 p-4 rounded-lg font-light shadow-md shadow-stone-500 transition delay-100 duration-300 hover:bg-white hover:text-red"} text={"Delete"} onClick={()=>handleDelete(i)}></Button>
+                      <InputField className={"w-72 h-10 shadow-lg   rounded-sm placeholder-blue placeholder-opacity-50"}  value={data} onChange={e=>handleChange(e,i)} />
+                      <Button className={" relative left-48 bottom-9 bg-red w-16 h-8 p-4 rounded-lg font-light shadow-md shadow-stone-500 transition delay-100 duration-300 hover:bg-white hover:text-red"} text={"Delete"} onClick={()=>handleDelete(i)}></Button>
                  </div>
               )
           })}
