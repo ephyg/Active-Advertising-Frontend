@@ -21,7 +21,7 @@ export const Columns = [
     accessor: "active_tin_nUmber",
   },
   {
-    Header: "status",
+    Header: "Status",
     accessor: "status",
   },
   {

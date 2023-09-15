@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "../pages/common/AuthPage/Login";
 import Forgot from "../pages/common/AuthPage/Forgot";
 import OrderList from "../pages/common/orderList/OrderList";
@@ -25,11 +25,29 @@ import DeliveryForm from "../pages/common/deliveryForm/DeliveryForm";
 import PrivateRoutes from "./PrivateRoutes";
 import PrivateRouteAuth from "./PrivateRouteAuth";
 import ProformaDetail from "../pages/common/ProformaDetail/ProformaDetail";
+<<<<<<< HEAD
 import BasicInfo from "../pages/admin/basicInfo/basic_info";
-function RouteList() {
-  const { User, token, login } = useUserStore();
+=======
+import EditItems from "../pages/common/inventoryRegistration/EditItems";
+import AddFreelancer from "../pages/common/freelancerRegistration/AddFreelancer";
+import { useQuery } from "react-query";
+import * as api from "../api/userApi";
+import StaffList from "../pages/admin/staffList/StaffList";
+import StaffDetail from "../pages/common/staffDetail/StaffDetail";
+// import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
+// import StaffEmployeeOrders from "../pages/common/AllocateOrder/AllocateToStaff/StaffEmployeeOrders";
+import StaffOrder from "../pages/common/AllocateOrder/AllocateStaff/StaffOrder";
+import StaffEmployeeOrders from "../pages/common/AllocateOrder/AllocateStaff/StaffEmployeeOrders";
 
-  const roleType = useUserStore((state) => state.user_role);
+import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
+import FreeelancerEmployeeOrders from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerEmployeeOrder";
+import FreelancerOrder from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerOrder";
+// import Repo from "../pages/admin/report/Repo";
+>>>>>>> ff7a58b02ddd6d6cd60565eca2cbad547f846532
+function RouteList() {
+  const user = useUserStore();
+  const navigate = useNavigate();
+  const roleType = "admin";
   return (
     <Routes>
       <Route element={<PrivateRouteAuth />}>
@@ -51,6 +69,8 @@ function RouteList() {
             <Route path="/report" element={<Report />} />
             <Route path="/admin/profile" element={<AdminProfile />} />
             <Route path="/admin/add-staff" element={<AddStaff />} />
+            <Route path="/staffs" element={<StaffList />} />
+            <Route path="/staffs/:id" element={<StaffDetail />} />
           </>
         )}
         {/* Route for account manager only*/}
@@ -65,6 +85,8 @@ function RouteList() {
         {/* Route common for admin and account manager only*/}
         {(roleType == "account-manager" || roleType == "admin") && (
           <>
+            <Route path="/staffs-order/:id" element={<StaffOrder />} />
+            <Route path="/freelancer-order/:id" element={<FreelancerOrder />} />
             <Route path="/order" element={<OrderList />} />
             <Route path="/proforma" element={<ProformaList />} />
             <Route path="/proforma/:id" element={<ProformaDetail />} />
@@ -73,11 +95,23 @@ function RouteList() {
             <Route path="/customer" element={<CustomerList />} />
             <Route path="/customer/:id" element={<CustomerDetails />} />
             <Route path="/freelancer" element={<FreelancerList />} />
+            <Route path="/addfreelancer" element={<AddFreelancer />} />
             <Route path="/designer" element={<DesignerList />} />
             <Route path="/stock" element={<InventoryList />} />
+            <Route path="/stock/:id" element={<EditItems />} />
             <Route path="/stock/additem" element={<AddItems />} />
             <Route path="/agreement" element={<AgreementForm />} />
             <Route path="/delivery" element={<DeliveryForm />} />
+            <Route path="/allocate-order/" element={<AllocateOrderLayout />} />
+            <Route
+              path="/allocate-order/staff/:id"
+              element={<StaffEmployeeOrders />}
+            />
+            <Route
+              path="/allocate-order/freelancer/:id"
+              element={<FreeelancerEmployeeOrders />}
+            />
+         
           </>
         )}
         {/* Route for employees only*/}

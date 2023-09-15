@@ -10,9 +10,14 @@ import UpdatePopUp from "./UpdatePopUp";
 import html2pdf from "html2pdf.js";
 import * as api from "../../../api/proformaApi";
 import { data } from "autoprefixer";
-import { useMutation, useQuery } from "react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import { ToastContainer, toast } from "react-toastify";
-import useUserStore from "../../../store/userStore";
+import useUserStore, { useNoUser, useUserData } from "../../../store/userStore";
 function ProformaDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -30,24 +35,42 @@ function ProformaDetail() {
   const [payment, setPayment] = useState("");
   const [priceIncludingVat, setPriceIncludingVat] = useState("");
   const [delivery, setDelivery] = useState("");
-  const { user } = useUserStore();
+  const { user, token } = useUserStore();
+  const queryClient = useQueryClient();
+  const userData = useUserData();
+  const verifyProforma = (statusData) => {
+    const response = api.UpdateStatus(user.token, id, statusData);
+    return response;
+  };
+  const verifyMutation = useMutation(verifyProforma, {
+    onSuccess: (response) => {
+      // toast.success(response.message, {
+      //   position: "top-center",
+      //   toastId: "successUser",
+      // });
+      queryClient.invalidateQueries(["proformaDetail"]);
+      console.log(response);
+    },
+  });
   const addProforma = (data) => {
-    const response = api.AddProforma(data);
+    const response = api.AddProforma(token, data);
     return response;
   };
   const mutation = useMutation(addProforma, {
     onSuccess: () => {
-      toast.success("Proforma added successfully", {
-        position: "top-center",
-        toastId: "error1",
-      });
+      queryClient.invalidateQueries(["allProformas"]);
+      // toast.success("Proforma added successfully", {
+      //   position: "top-center",
+      //   toastId: "error1",
+      // });
+      navigate("/proforma");
     },
   });
   const {
     data: basicInfo,
     isLoading: basicInfoLoading,
     isError,
-  } = useQuery("basicInfo-store", () => api.GetProformaBasicInfo());
+  } = useQuery("basicInfo-store", () => api.GetProformaBasicInfo(token));
   if (basicInfoLoading) {
     return <h1>Loading ...</h1>;
   }
@@ -79,7 +102,6 @@ function ProformaDetail() {
       quantity: dataArray[index].quantity,
       unit_price: dataArray[index].unitPrice,
       vendor_name: dataArray[index].vendor,
-      status: "Pending",
     };
     AllOrders[index] = order;
   }
@@ -96,7 +118,10 @@ function ProformaDetail() {
     client_phone_number: phoneNumber,
     price_validity: priceValidity,
     payment_method: payment,
-    contact_person: `${user.user_first_name + " " + user.user_last_name}`,
+    status: "Pending",
+    contact_person: `${
+      userData.user_first_name + " " + userData.user_last_name
+    }`,
     total_price: subTotal,
     total_profit: Number(totalProfit),
     orders: AllOrders,
@@ -106,10 +131,24 @@ function ProformaDetail() {
   let Tax = (tax / 100) * subTotal;
   Tax = parseFloat(Tax.toFixed(2));
   let grandtedTotal = Tax + subTotal;
-
+  const handleVerifyProforma = (e) => {
+    e.preventDefault();
+    AllProformaData.status = "Verified";
+    try {
+      console.log(AllProformaData);
+      if (AllOrders.length == 0) {
+        toast.error("Atleast one order is needed", {
+          position: "top-center",
+          toastId: "erro1",
+        });
+      } else {
+        mutation.mutate(AllProformaData);
+        navigate("/proforma");
+      }
+    } catch (error) {}
+  };
   const handleDownload = async (e) => {
     e.preventDefault();
-
     try {
       if (AllOrders.length == 0) {
         toast.error("Atleast one order is needed", {
@@ -131,14 +170,16 @@ function ProformaDetail() {
             fontSize: 10,
           },
         };
-        // html2pdf().from(element).set(opt).save();
+        html2pdf().from(element).set(opt).save();
         navigate("/proforma");
       }
     } catch (error) {
       throw new error();
     }
   };
-
+  if (mutation.isLoading) {
+    return <h1>Is loading</h1>;
+  }
   return (
     <Layout>
       <form
@@ -487,13 +528,15 @@ function ProformaDetail() {
         <div className="flex justify-end mb-10 gap-4">
           <Button
             text="Verify"
+            type="submit"
+            onClick={(e) => handleVerifyProforma(e)}
             className="text-white text-lg py-1  px-8 flex rounded-lg bg-blue hover:bg-blue_hover"
           />
           <Button
             text="Verify & Download"
             type="submit"
             className="text-white text-lg  px-8 flex rounded-lg py-1 bg-green hover:bg-green"
-            // onClick={handleDownload}
+            onClick={(e) => handleDownload(e)}
           />
         </div>
       </form>

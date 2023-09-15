@@ -1,0 +1,30 @@
+<input
+                type="text"
+                className="mb-1 placeholder-red outline-none leading-3 border-b  bg-white_blue border-black md:h-3 md:text-xxs md:w-24"
+                id="payment_request_number"
+                name="payment_request_number"
+                value={values.payment_request_number}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder={
+                  errors.payment_request_number &&
+                  touched.payment_request_number
+                    ? errors.payment_request_number
+                    : ""
+                }
+              />
+
+
+const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
+    useFormik({
+      initialValues: {
+        payment_request_number: "",
+        client_name: "",
+        client_phone_number: "",
+        client_tin_number: "",
+        price_validity: "",
+        payment_method: "",
+      },
+      // validationSchema: AddStaffValidation,
+      onSubmit,
+    });

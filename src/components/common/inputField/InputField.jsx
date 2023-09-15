@@ -11,6 +11,7 @@ const InputField = ({
   handleBlur,
   id,
   name,
+  disabled,
 }) => {
   return (
     <div className={`flex flex-col`}>
@@ -29,6 +30,7 @@ const InputField = ({
         onBlur={handleBlur}
         name={name}
         id={id}
+        disabled={disabled}
         className={`font-roboto max-h-16 outline-none px-4  rounded border-2 border-blue ${className}`}
       />
       <label htmlFor="" className="text-sm text-red">

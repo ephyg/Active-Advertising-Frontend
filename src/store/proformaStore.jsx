@@ -6,6 +6,11 @@ const useProformaStore = create(
       allProforma: {},
       eachOrder: null,
       eachProforma: null,
+      oToA: null,
+      setOToA: (data) => {
+        const { oToA } = data;
+        set(oToA);
+      },
       setAllProforma: (data) => {
         const { allProforma } = data;
         set(allProforma);

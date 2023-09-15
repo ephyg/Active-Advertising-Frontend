@@ -3,10 +3,11 @@ import { SideBarData } from "./SideBarData";
 import { BsGraphUp } from "react-icons/bs";
 import ProfilePicture from "../../../assets/image/profile.jpeg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import useUserStore from "../../../store/userStore";
+import useUserStore, { useUserData } from "../../../store/userStore";
 import { BiMenu } from "react-icons/bi";
 
 function SideBar({ className, setIsOpen }) {
+  const UserData = useUserData();
   const navigate = useNavigate();
   const location = useLocation();
   const pathName = location.pathname;
@@ -24,14 +25,19 @@ function SideBar({ className, setIsOpen }) {
         onClick={() => setIsOpen(false)}
       />
       <Link to="/admin/profile">
-        <div className="flex flex-col w-full items-center  h-28 mb-16">
+        <div className="flex flex-col w-full items-center mb-16">
           <img
-            src={ProfilePicture}
-            className="rounded-full w-28 mb-2 border-2 border-blue_hover"
+            src={UserData.user_image_url}
+            className="rounded-full w-28 mb-2 border-2 border-blue_hover  h-28 bg-slate-400"
             alt=""
           />
+<<<<<<< HEAD
           <h1 className="text-lg font-roboto font-bold text-white font-light">
             Tsion Tesfaye
+=======
+          <h1 className="text-lg font-roboto font-bold text-white ">
+            {UserData.user_first_name + " " + UserData.user_last_name}
+>>>>>>> ff7a58b02ddd6d6cd60565eca2cbad547f846532
           </h1>
         </div>
       </Link>

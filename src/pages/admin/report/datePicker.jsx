@@ -18,13 +18,13 @@ function MyDatePickerComponent() {
   };
 
   return (
-    <div className="border-2 border-solid border-blue p-2 rounded-md">
+    <div className="flex gap-3 border border-solid border-blue p-2 rounded-md">
       <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}
         dateFormat="dd/MM/yyyy"
         placeholderText="search by date"
-        className="border-none"
+        className="border-none bg-transparent outline-none"
       />
       <button
         onClick={handleSearch}

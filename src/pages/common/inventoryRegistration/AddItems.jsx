@@ -3,11 +3,44 @@ import Layout from "../../../components/Layout/Layout";
 import InputField from "../../../components/common/inputField/InputField";
 import Button from "../../../components/common/button/Button";
 import { useFormik } from "formik";
+import * as api from "../../../api/stockApi";
 import AddItemValidation from "./AddItemValidation";
-
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import useUserStore from "../../../store/userStore";
 function AddItems() {
+  const user = useUserStore();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const addItem = (itemData) => {
+    const response = api.AddItems(user.token, itemData);
+    return response;
+  };
+  const mutation = useMutation(addItem, {
+    onSuccess: (response) => {
+      // toast.success("Item added Successfully", {
+      //   position: "top-center",
+      //   toastId: "successUser",
+      // });
+      console.log(response);
+      queryClient.invalidateQueries(["inventoryList"]);
+      navigate("/stock");
+    },
+  });
+
   const onSubmit = () => {
-    console.log("clicked");
+    const ItemData = {
+      item_description: values.item_description,
+      quantity: values.quantity,
+      unit_price: values.unit_price,
+      total_price: values.total_price,
+      unit_measurement: values.unit_measurement,
+      purchase_date: values.purchase_date,
+      expire_date: values.expire_date,
+      dealer_name: values.dealer_name,
+    };
+    mutation.mutate(ItemData);
   };
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
@@ -142,11 +175,13 @@ function AddItems() {
           />
         </div>
         <Button
+          onClick={handleSubmit}
           type="submit"
           text="Add Item"
           className="bg-blue px-8 mt-10 hover:bg-blue_hover py-1 rounded-lg"
         />
       </form>
+      <ToastContainer />
     </Layout>
   );
 }

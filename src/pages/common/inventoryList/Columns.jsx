@@ -6,35 +6,35 @@ export const Columns = [
   },
   {
     Header: "Items Description",
-    accessor: "Items-Description",
+    accessor: "item_description",
   },
   {
     Header: "Quantity",
-    accessor: "Quantity",
+    accessor: "quantity",
   },
  
   {
     Header: "Unit-Price",
-    accessor: "Unit-Price",
+    accessor: "unit_price",
   },
   {
     Header: "Total-Price",
-    accessor: "Total-Price",
+    accessor: "total_price",
   },
   {
     Header: "Unit-Measurement",
-    accessor: "Unit-Measurement",
+    accessor: "unit_measurement",
   },
   {
     Header: "Purchase-date",
-    accessor: "Purchase-date",
+    accessor: "purchase_date",
   },
   {
     Header: "Expire-date",
-    accessor: "Expire-date",
+    accessor: "expire_date",
   },
   {
     Header: "Dealer-Name",
-    accessor: "Dealer-Name",
+    accessor: "dealer_name",
   },
 ];

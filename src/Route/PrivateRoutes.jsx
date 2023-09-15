@@ -1,16 +1,11 @@
 import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import useUserStore from "../store/userStore";
+import useUserStore, { useUser } from "../store/userStore";
 
 function PrivateRoutes() {
-  const { User, token, login } = useUserStore();
-
+  const user = useUser();
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-  });
+
   return <Outlet />;
 }
 

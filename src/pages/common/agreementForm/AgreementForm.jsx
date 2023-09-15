@@ -7,20 +7,43 @@ import AgreementPreview from "./AgreementPreview";
 
 function AgreementForm() {
   const [showPreview, setShowPreview] = useState(false);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const monthName = months[month];
+  const day = date.getDate();
+  const fullDate = `${monthName} ${day}, ${year}`;
+  const headerDate = `${day}/${month}/${year}`;
+  console.log(fullDate);
   const [formData, setFormData] = useState({
     logo: Logo,
     invoiceNo: "00001/6/22",
     tinNo: "0011036929",
-    date: "01/01/2022",
-    agreementDate: "January 1, 2022",
-    client:"",
+    date: headerDate,
+    agreementDate: fullDate,
     clientName: "",
+    client:"",
     keyTerms: "",
     serviceStartDate: "",
     serviceEndDate: "",
     price: "",
     paymentMode: "50% down payment should be made",
-    activeAdvert:"",
+    activeAdvert: "",
   });
 
   const handleInputChange = (event) => {
@@ -82,7 +105,8 @@ function AgreementForm() {
             </div>
             <div className="">
               <p className="leading-8">
-                This agreement is made on {formData.agreementDate} between active advertising and{" "}
+                This agreement is made on {formData.agreementDate} between
+                active advertising and {"   "}
                 <input
                   className="border-b border-black outline-none bg-transparent"
                   name="client"
@@ -103,21 +127,25 @@ function AgreementForm() {
               <p className="leading-8">
                 Delivery of service
                 <br />
-                <span className="ml-16">• Service start date:{" "}
-                <input
-                  className="border-b border-black outline-none w-24 bg-transparent"
-                  name="serviceStartDate"
-                  value={formData.serviceStartDate}
-                  onChange={handleInputChange}
-                /></span>
+                <span className="ml-16">
+                  • Service start date:{" "}
+                  <input
+                    className="border-b border-black outline-none w-24 bg-transparent"
+                    name="serviceStartDate"
+                    value={formData.serviceStartDate}
+                    onChange={handleInputChange}
+                  />
+                </span>
                 <br />
-                <span className="ml-16">• Service end date:{" "}
-                <input
-                  className="border-b border-black outline-none w-24 bg-transparent"
-                  name="serviceEndDate"
-                  value={formData.serviceEndDate}
-                  onChange={handleInputChange}
-                /></span>
+                <span className="ml-16">
+                  • Service end date:{" "}
+                  <input
+                    className="border-b border-black outline-none w-24 bg-transparent"
+                    name="serviceEndDate"
+                    value={formData.serviceEndDate}
+                    onChange={handleInputChange}
+                  />
+                </span>
                 <br />
                 Price:{" "}
                 <input
@@ -128,13 +156,19 @@ function AgreementForm() {
                 />
               </p>
               <p className="leading-9">
-                Payment Mode: {formData.paymentMode}. General Terms: Payment should be made on time for work to be completed on time.
+                Payment Mode: {formData.paymentMode}. General Terms: Payment
+                should be made on time for work to be completed on time.
               </p>
             </div>
             <div className="flex justify-between mt-8">
               <div className="flex flex-col">
                 <label className="leading-8">Active Adverting</label>
-                <input className="border-b border-black outline-none w-24 bg-transparent" name="activeAdvert" value={formData.activeAdvert} onChange={handleInputChange} />
+                <input
+                  className="border-b border-black outline-none w-24 bg-transparent"
+                  name="activeAdvert"
+                  value={formData.activeAdvert}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="flex flex-col">
                 <label className="leading-8">Client Name</label>
@@ -148,7 +182,10 @@ function AgreementForm() {
             </div>
           </div>
           <div className="flex justify-center mt-16">
-            <button className="border border-blue hover:bg-blue_hover text-blue hover:text-white font-bold py-2 px-4 rounded w-32" onClick={handlePreview}>
+            <button
+              className="border border-blue hover:bg-blue_hover text-blue hover:text-white font-bold py-2 px-4 rounded w-32"
+              onClick={handlePreview}
+            >
               Preview
             </button>
           </div>
@@ -159,4 +196,3 @@ function AgreementForm() {
 }
 
 export default AgreementForm;
-

@@ -25,14 +25,12 @@ import useProformaStore from "../../../store/proformaStore";
 function OrderListComponent({ orderlists }) {
   const roleType = useUserStore((state) => state.user_role);
   const User = useUserStore((state) => state.User);
-  const Token = useUserStore((state) => state.token);
+  const user = useUserStore();
   const navigate = useNavigate();
   const columns = useMemo(() => Columns, []);
-  const data = useMemo(() => orderlists, []);
+  const data = useMemo(() => orderlists, [orderlists]);
   const [id, setId] = useState();
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
-
- 
 
   const tableInstance = useTable(
     {
@@ -67,7 +65,7 @@ function OrderListComponent({ orderlists }) {
     setId(proformaId);
     // console.log("before loading...");
     try {
-      const proformaDetailData = await api.GetProforma(proformaId);
+      const proformaDetailData = await api.GetProforma(user.token, proformaId);
       console.log(proformaDetailData); // Check the fetched data
 
       const order = proformaDetailData.order;

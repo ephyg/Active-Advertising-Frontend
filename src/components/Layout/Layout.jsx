@@ -1,13 +1,27 @@
 import React, { useState } from "react";
 import NavBar from "../accountManager/navBar/NavBar";
 import SideBar from "../admin/sideBar/SideBar";
-import useUserStore from "../../store/userStore";
+import useUserStore, { useUser } from "../../store/userStore";
 import { BiMenu } from "react-icons/bi";
+import * as api from "../../api/userApi";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 function Layout({ children }) {
+<<<<<<< HEAD
   // const roleType = "account-manager";
   // const roleType = "admin";
   const roleType = "admin";
+=======
+>>>>>>> ff7a58b02ddd6d6cd60565eca2cbad547f846532
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+    const user = useUser();
+
+  if (!user ) {
+    return <div></div>;
+  }
+
+  const roleType = user.user_role;
   return (
     <div className="bg-white_blue min-h-screen ">
       {roleType == "admin" && (

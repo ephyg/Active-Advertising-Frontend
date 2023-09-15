@@ -6,14 +6,21 @@
   grid-template-rows: repeat(2, 1fr);
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
-  position: absolute;
-  top: 130px;
-  right: 10px;
+  position: relative;
+  top: 40px;
+  right: 530px;
+  z-index: 0;
 }
+.datepicker{
+  position: relative;
+  top: 10px;
+  left: 690px;
+}
+
 .middleDiv{
-  position: absolute;
-  top: 410px;
-  right: 30px;
+  position: relative;
+  top: 30px;
+  right: 0px;
 }
 .line{
   position: relative;

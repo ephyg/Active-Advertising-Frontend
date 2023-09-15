@@ -9,14 +9,16 @@ import { useMutation, useQuery } from "react-query";
 import { Formik, useFormik } from "formik";
 import LoginValidation from "./LoginValidation";
 import { ToastContainer, toast } from "react-toastify";
-import { FaSpinner } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import useForgotStore from "../../../store/forgotStore";
 const Login = () => {
   const navigate = useNavigate();
   const [credentialError, setCredentialError] = useState("");
-  const {  token, login, user_role } = useUserStore();
+  const { login, token } = useUserStore();
+  const [toggle, setToggle] = useState("password");
   const { notification, setSentMessage, sentMessage, setNotification } =
     useForgotStore();
+
   useEffect(() => {
     if (notification == 3) {
       toast.success(sentMessage, {
@@ -35,8 +37,10 @@ const Login = () => {
   const mutation = useMutation(loginUser, {
     onSuccess: (userData) => {
       login(userData);
-      console.log(userData)
-      user_role === "admin" ? navigate("/report") : navigate("/order");
+      console.log(userData);
+      userData.user.user_role === "admin"
+        ? navigate("/report")
+        : navigate("/order");
     },
   });
   const onSubmit = async (values) => {
@@ -59,6 +63,13 @@ const Login = () => {
       validationSchema: LoginValidation,
       onSubmit,
     });
+  const handleEyeClick = () => {
+    if (toggle === "password") {
+      setToggle("text");
+    } else {
+      setToggle("password");
+    }
+  };
   return (
     <div className="grid grid-cols-2 min-h-screen bg-white_blue md:grid-cols-1">
       <div className="flex justify-end items-center max-h-screen bg-login bg-cover bg-no-repeat md:hidden">
@@ -87,18 +98,33 @@ const Login = () => {
             onBlur={handleBlur}
             error={errors.email && touched.email ? errors.email : ""}
           />
-          <InputField
-            label="Password"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="******"
-            className="py-2 text-lg"
-            value={values.password}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            error={errors.password && touched.password ? errors.password : ""}
-          />
+          <div className="relative">
+            <InputField
+              label="Password"
+              type={toggle}
+              id="password"
+              name="password"
+              placeholder="******"
+              className="py-2 text-lg "
+              value={values.password}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              error={errors.password && touched.password ? errors.password : ""}
+            />
+            {toggle == "password" ? (
+              <FaEyeSlash
+                size={24}
+                onClick={handleEyeClick}
+                className="text-blue absolute right-3 bottom-4"
+              />
+            ) : (
+              <FaEye
+                size={24}
+                onClick={handleEyeClick}
+                className="text-blue absolute right-3 bottom-4"
+              />
+            )}
+          </div>
         </div>
         {mutation.isLoading ? (
           <Button

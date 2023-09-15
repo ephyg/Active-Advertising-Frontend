@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../../components/Layout/Layout";
 import Logo from "../../../assets/image/logo.png";
 import { useNavigate, useParams } from "react-router-dom";
-import useUserStore from "../../../store/userStore";
+import useUserStore, { useUserData } from "../../../store/userStore";
 import Button from "../../../components/common/button/Button";
 import html2pdf from "html2pdf.js";
 import * as api from "../../../api/proformaApi";
 import useProformaStore from "../../../store/proformaStore";
-import { useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
+import { FaSpinner } from "react-icons/fa";
+import { number } from "yup";
 function ProformaDetailComponent({ eachOrder, eachProforma }) {
+  const user = useUserStore();
+  const userData = useUserData();
+  const userRole = userData.user_role;
+  const queryClient = useQueryClient();
   const setProformaDetail = useProformaStore(
     (state) => state.setProformaDetail
   );
@@ -18,6 +24,30 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
     order: eachOrder,
     proforma: eachProforma,
   };
+  console.log(eachOrder);
+  const proformaMutation = (statusData) => {
+    const response = api.UpdateStatus(user.token, id, statusData);
+    return response;
+  };
+  const verifyMutation = useMutation(proformaMutation, {
+    onSuccess: (response) => {
+      queryClient.invalidateQueries(["proformaDetail"]);
+      console.log(response);
+    },
+  });
+  const declineMutation = useMutation(proformaMutation, {
+    onSuccess: (response) => {
+      queryClient.invalidateQueries(["proformaDetail"]);
+      console.log(response);
+    },
+  });
+  const cancelMutation = useMutation(proformaMutation, {
+    onSuccess: (response) => {
+      queryClient.invalidateQueries(["proformaDetail"]);
+      console.log(response);
+    },
+  });
+
   useEffect(() => {
     const orderDetail = async () => {
       await setProformaDetail(data);
@@ -25,7 +55,7 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
     orderDetail();
   }, []);
 
-  // console.log(data);
+  // console.log();
   const contact = String(eachProforma[0].active_phone_number);
   const contactArray = contact.split(":");
   const bankAccount = String(eachProforma[0].active_account_number);
@@ -35,8 +65,8 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
     (item) => (subTotal += Number(item.quantity) * Number(item.unit_price))
   );
   let tax = 15;
-  let Tax = (tax / 100) * subTotal;
-  let grandtedTotal = Tax + subTotal;
+  let Tax = ((tax / 100) * subTotal).toFixed(2);
+  let grandtedTotal = Number(Tax) + Number(subTotal);
   const handleDownload = () => {
     const element = document.getElementById("download-pdf");
     const opt = {
@@ -56,6 +86,25 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
   const handleRowClick = (rowId) => {
     navigate(`/order/${rowId}`);
   };
+  const handleVerify = () => {
+    const statusData = {
+      status: "Verified",
+    };
+    verifyMutation.mutate(statusData);
+  };
+  const handleDecline = () => {
+    const statusData = {
+      status: "Declined",
+    };
+    declineMutation.mutate(statusData);
+  };
+  const handleCancel = () => {
+    const statusData = {
+      status: "Canceled",
+    };
+    cancelMutation.mutate(statusData);
+  };
+  const handleDelivery = () => {};
   return (
     <Layout>
       <div className="flex relative flex-col mx-16 md:mr-0 md:ml-0 md:px-0">
@@ -296,6 +345,95 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
           </div>
         </div>
         <div className="flex justify-end mb-10 gap-4">
+          {
+            <>
+              {eachProforma[0].status == "Verified" ? (
+                <Button
+                  text="Verified"
+                  className="text-white text-lg  px-8 flex rounded-lg py-1 bg-slate-400"
+                  disabled={true}
+                />
+              ) : eachProforma[0].status == "Completed" ? (
+                <Button
+                  text="Completed"
+                  className="text-white text-lg  px-8 flex rounded-lg py-1 bg-rose-300"
+                  disabled={true}
+                />
+              ) : eachProforma[0].status == "Canceled" ? (
+                <Button
+                  text="Canceled"
+                  className="text-white text-lg  px-8 flex rounded-lg py-1 bg-rose-300"
+                  disabled={true}
+                />
+              ) : eachProforma[0].status == "Declined" ? (
+                <Button
+                  text="Declined"
+                  className="text-white text-lg  px-8 flex rounded-lg py-1 bg-rose-300"
+                  disabled={true}
+                />
+              ) : (
+                ""
+              )}
+
+              {userRole == "admin" ? (
+                eachProforma[0].status == "Pending" ? (
+                  <>
+                    <Button
+                      text="Decline"
+                      className="text-white text-lg  px-8 flex rounded-lg py-1 bg-red hover:bg-red"
+                      onClick={handleDecline}
+                    />
+                    {verifyMutation.isLoading ? (
+                      <Button
+                        text="Verifying"
+                        className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
+                        onClick={handleVerify}
+                        disabled={true}
+                        iconSize={18}
+                        icon={FaSpinner}
+                        animation="animate-spin"
+                      />
+                    ) : (
+                      <Button
+                        text="Verify"
+                        className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
+                        onClick={handleVerify}
+                      />
+                    )}
+                  </>
+                ) : eachProforma[0].status == "Declined" ? (
+                  <Button
+                    text="Verify"
+                    className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
+                    onClick={handleVerify}
+                  />
+                ) : eachProforma[0].status == "Verified" ? (
+                  <Button
+                    text="Cancel"
+                    className="text-white text-lg  px-8 flex rounded-lg py-1 bg-red "
+                    onClick={handleCancel}
+                  />
+                ) : eachProforma[0].status == "Completed" ? (
+                  <Button
+                    text="Delivery"
+                    className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
+                    onClick={handleDelivery}
+                  />
+                ) : eachProforma[0].status == "Canceled" ? (
+                  <Button
+                    text="Verify"
+                    className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
+                    onClick={handleVerify}
+                  />
+                ) : (
+                  ""
+                )
+              ) : (
+                ""
+              )}
+            </>
+          }
+
           <Button
             text="Download"
             className="text-white text-lg  px-8 flex rounded-lg py-1 bg-green hover:bg-green"

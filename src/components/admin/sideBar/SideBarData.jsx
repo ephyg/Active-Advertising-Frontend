@@ -19,22 +19,17 @@ export const SideBarData = [
     title: "Proforma",
   },
   {
-    path: "/order",
-    icon: MdBorderColor,
-    title: "Order",
-  },
-  {
     path: "/customer",
     icon: BiSolidUserDetail,
     title: "Customer",
   },
   {
-    path: "/account-manager",
+    path: "/freelancer",
     icon: FaUserAlt,
-    title: "Account Manager",
+    title: "Freelancers",
   },
   {
-    path: "/admin/add-staff",
+    path: "/staffs",
     icon: HiUserGroup,
     title: "Staff",
   },
