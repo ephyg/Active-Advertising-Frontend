@@ -39,7 +39,7 @@ import StaffEmployeeOrders from "../pages/common/AllocateOrder/AllocateStaff/Sta
 import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
 import FreeelancerEmployeeOrders from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerEmployeeOrder";
 import FreelancerOrder from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerOrder";
-import Repo from "../pages/admin/report/Repo";
+// import Repo from "../pages/admin/report/Repo";
 function RouteList() {
   const user = useUserStore();
   const navigate = useNavigate();
@@ -104,10 +104,7 @@ function RouteList() {
               path="/allocate-order/freelancer/:id"
               element={<FreeelancerEmployeeOrders />}
             />
-            <Route
-              path="/repo"
-              element={<Repo />}
-            />
+         
           </>
         )}
         {/* Route for employees only*/}

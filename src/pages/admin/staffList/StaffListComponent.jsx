@@ -25,11 +25,12 @@ function StaffListComponent({ userLists }) {
   const User = useUserStore((state) => state.User);
   const user = useUserStore();
   const navigate = useNavigate();
-  const columns = useMemo(() => Columns, []);
-  const data = useMemo(() => userLists, [userLists]);
+
   const [id, setId] = useState();
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
 
+  const columns = useMemo(() => Columns, []);
+  const data = useMemo(() => Object.values(userLists), []);
   const tableInstance = useTable(
     {
       columns,

@@ -1,9 +1,5 @@
 export const NavBarData = [
   {
-    path: "/order",
-    title: "Order",
-  },
-  {
     path: "/proforma",
     title: "Proforma",
   },
@@ -15,10 +11,10 @@ export const NavBarData = [
   //   path: "/freelancer",
   //   title: "Freelancer",
   // },
-  {
-    path: "/employee",
-    title: "Employee",
-  },
+  // {
+  //   path: "/employee",
+  //   title: "Employee",
+  // },
   {
     path: "/agreement",
     title: "Agreement",

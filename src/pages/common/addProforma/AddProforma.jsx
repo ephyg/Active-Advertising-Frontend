@@ -63,7 +63,7 @@ function ProformaDetail() {
       //   position: "top-center",
       //   toastId: "error1",
       // });
-      navigate('/proforma')
+      navigate("/proforma");
     },
   });
   const {
@@ -131,20 +131,24 @@ function ProformaDetail() {
   let Tax = (tax / 100) * subTotal;
   Tax = parseFloat(Tax.toFixed(2));
   let grandtedTotal = Tax + subTotal;
-  const handleVerifyProforma = () => {
-    AllProformaData.status="Verified"
-    console.log(AllProformaData)
-    if (AllOrders.length == 0) {
-      toast.error("Atleast one order is needed", {
-        position: "top-center",
-        toastId: "erro1",
-      });
-    } else {
-      mutation.mutate(AllProformaData);
-    }
+  const handleVerifyProforma = (e) => {
+    e.preventDefault();
+    AllProformaData.status = "Verified";
+    try {
+      console.log(AllProformaData);
+      if (AllOrders.length == 0) {
+        toast.error("Atleast one order is needed", {
+          position: "top-center",
+          toastId: "erro1",
+        });
+      } else {
+        mutation.mutate(AllProformaData);
+        navigate("/proforma");
+      }
+    } catch (error) {}
   };
-  const handleDownload = async () => {
-
+  const handleDownload = async (e) => {
+    e.preventDefault();
     try {
       if (AllOrders.length == 0) {
         toast.error("Atleast one order is needed", {
@@ -525,14 +529,14 @@ function ProformaDetail() {
           <Button
             text="Verify"
             type="submit"
-            onClick={handleVerifyProforma}
+            onClick={(e) => handleVerifyProforma(e)}
             className="text-white text-lg py-1  px-8 flex rounded-lg bg-blue hover:bg-blue_hover"
           />
           <Button
-            text="Download"
+            text="Verify & Download"
             type="submit"
             className="text-white text-lg  px-8 flex rounded-lg py-1 bg-green hover:bg-green"
-            onClick={handleDownload}
+            onClick={(e) => handleDownload(e)}
           />
         </div>
       </form>

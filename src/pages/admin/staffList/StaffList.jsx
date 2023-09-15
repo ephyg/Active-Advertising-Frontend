@@ -16,19 +16,17 @@ function StaffList() {
     isLoading: roleLoading,
     isError: roleError,
   } = useQuery("userRole-store", () => apis.GetRole(user.token));
+
   const {
     data: userList,
-    isLoading,
+    isLoading: userlistLoading,
     isError: userListError,
-  } = useQuery("userList", () => api.AllStaffs(user.token, uRole), {
-    refetchOnWindowFocus: true,
+  } = useQuery(["userList",uRole], () => api.AllStaffs(user.token, uRole), {
+    // refetchOnWindowFocus: true,
   });
-  useEffect(() => {
-    queryClient.invalidateQueries(["userList"]);
-  }, [uRole]);
-  // console.log(userList);
-
-  // console.log(userList);
+  // useEffect(() => {
+  //   queryClient.invalidateQueries(["userList"]);
+  // }, [uRole]);
 
   if (roleLoading) {
     return (
@@ -37,7 +35,8 @@ function StaffList() {
       </div>
     );
   }
-  if (isLoading) {
+  console.log(userRole);
+  if (userlistLoading) {
     return (
       <div className="flex bg-transparent h-screen w-full justify-center items-center">
         <img src={Loading} className="w-24 " alt="Loading..." />
@@ -63,10 +62,10 @@ function StaffList() {
           id="role"
           name="role"
           value={uRole}
-          onChange={(e) => {
+          onChange={async (e) => {
             setURole(e.target.value);
+         
           }}
-          //   onBlur={handleBlur}
         >
           <option value="all" className="">
             Select Employee
@@ -74,7 +73,13 @@ function StaffList() {
           {userRole.map((item, index) => (
             <option
               value={item.role}
-              onClick={(e) => setURole(e.target.value)}
+              // onClick={async (e) => {
+              //   setURole(e.target.value);
+              //   await queryClient.invalidateQueries(["userList"]);
+              //   await queryClient.refetchQueries({
+              //     include: "active",
+              //   });
+              // }}
               className=""
             >
               {item.role}
