@@ -23,18 +23,24 @@ import { useQuery } from "react-query";
 
 function Report() {
   const { user, token } = useUserStore();
-
+  const [day, setDay] = useState();
+  const [selectedDate, setSelectedDate] = useState();
+  const [searchDate, setSearchDate] = useState();
   const {
     data: ReportData,
     isLoading: ReportLoading,
     isError: roleError,
-  } = useQuery("Report-store", () => api.GetReport(token));
-
+  } = useQuery(["Report-store", searchDate], () =>
+    api.GetReport(token, searchDate)
+  );
+  const handleSearch = () => {
+    console.log(searchDate);
+  };
   if (ReportLoading) {
     return <h1>Return loading</h1>;
   }
 
-  console.log(ReportData.daily_totals.friday_profit);
+  // console.log(ReportData.daily_totals.friday_profit);
   const Revenue = [
     {
       id: 1,
@@ -90,10 +96,6 @@ function Report() {
       },
     ],
   };
-
-  // -------------------------progress bar starts here percent generator ------------------------------------------------------
-  const randomPercentage = Math.floor(Math.random() * 101);
-
   return (
     <Layout>
       <div className="flex justify-between items-center mb-5">
@@ -101,7 +103,27 @@ function Report() {
           Weekly Report
         </div>
         <div class="">
-          <MyDatePickerComponent />
+          <div className="flex gap-3 border border-solid border-blue p-2 rounded-md">
+            <input
+              className="border-none bg-transparent outline-none"
+              label="Purchase Date"
+              type="date"
+              id="purchase_date"
+              name="purchase_date"
+              value={searchDate}
+              onChange={(e) => setSearchDate(e.target.value)}
+            />
+            <button
+              onClick={handleSearch}
+              className="bg-blue-500 hover:text-red text-blue font-bold rounded"
+            >
+              Search
+            </button>
+          </div>
+          {/* <MyDatePickerComponent
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+          /> */}
         </div>
       </div>
       <div className="grid grid-cols-2 gap-10 md:grid-cols-1">
@@ -118,7 +140,9 @@ function Report() {
                 <h1 className="text-white font-roboto text-lg font-semibold">
                   Fresh Inventory
                 </h1>
-                <h1 className="text-white font-roboto text-base">23</h1>
+                <h1 className="text-white font-roboto text-base">
+                  {ReportData.totalStock}
+                </h1>
               </div>
             </div>
             <div className="bg-blue flex justify-center gap-6 items-center rounded-md py-1">
@@ -129,7 +153,9 @@ function Report() {
                 <h1 className="text-white font-roboto text-lg font-semibold">
                   Customer
                 </h1>
-                <h1 className="text-white font-roboto text-base">23</h1>
+                <h1 className="text-white font-roboto text-base">
+                  {ReportData.totalCustomer}
+                </h1>
               </div>
             </div>
             <div className="bg-blue flex justify-center gap-6 items-center rounded-md py-1">
@@ -138,9 +164,11 @@ function Report() {
               </div>
               <div className="flex flex-col justify-center items-center">
                 <h1 className="text-white font-roboto text-lg font-semibold">
-                  Approved Orders
+                  Approved Proformas
                 </h1>
-                <h1 className="text-white font-roboto text-base">23</h1>
+                <h1 className="text-white font-roboto text-base">
+                  {ReportData.approvedOrder}
+                </h1>
               </div>
             </div>
             <div className="bg-blue flex justify-center gap-6 items-center rounded-md py-1">
@@ -151,7 +179,9 @@ function Report() {
                 <h1 className="text-white font-roboto text-lg font-semibold">
                   Total Orders
                 </h1>
-                <h1 className="text-white font-roboto text-base">23</h1>
+                <h1 className="text-white font-roboto text-base">
+                  {ReportData.totalOrder}
+                </h1>
               </div>
             </div>
           </div>
@@ -179,7 +209,7 @@ function Report() {
             <div className="flex flex-col gap-1">
               <h4 className="text-sm">Total Revenue</h4>
               <h1 className="text-3xl font-semibold dark:text-white">
-                2050000 Birr
+                {Number(ReportData.totalRevenue).toFixed(2)} Birr
               </h1>
             </div>
           </div>
@@ -192,7 +222,7 @@ function Report() {
             <div className="flex flex-col gap-1">
               <h4 className="text-sm">Total Cost</h4>
               <h1 className="text-3xl font-semibold dark:text-white">
-                1500000 Birr
+                {Number(ReportData.totalCost).toFixed(2)} Birr
               </h1>
             </div>
           </div>
@@ -203,9 +233,9 @@ function Report() {
               alt=""
             />
             <div className="flex flex-col gap-1">
-              <h4 className="text-sm">Total Revenue</h4>
+              <h4 className="text-sm">Total Profit</h4>
               <h1 className="text-3xl font-semibold dark:text-white">
-                850000 Birr
+                {Number(ReportData.totalProfit).toFixed(2)} Birr
               </h1>
             </div>
           </div>
@@ -219,7 +249,9 @@ function Report() {
             <h1 className="text-white font-roboto text-center">
               Delivered Order
             </h1>
-            <h1 className="text-white font-roboto text-center">15</h1>
+            <h1 className="text-white font-roboto text-center">
+              {ReportData.deliveredOrder}
+            </h1>
           </div>
         </div>
         <div className="bg-blue flex justify-center gap-6 items-center rounded-md  px-10">
@@ -228,16 +260,20 @@ function Report() {
             <h1 className="text-white font-roboto text-center">
               Completed Order
             </h1>
-            <h1 className="text-white font-roboto text-center">15</h1>
+            <h1 className="text-white font-roboto text-center">
+              {ReportData.completedOrder}
+            </h1>
           </div>
         </div>
         <div className="bg-blue flex justify-center gap-6 items-center rounded-md px-10">
           <FaCar size={24} />
           <div className="flex flex-col">
             <h1 className="text-white font-roboto text-center">
-              Aprroved Orders
+              Allocated Orders
             </h1>
-            <h1 className="text-white font-roboto text-center">15</h1>
+            <h1 className="text-white font-roboto text-center">
+              {ReportData.allocatedOrder}
+            </h1>
           </div>
         </div>
       </div>

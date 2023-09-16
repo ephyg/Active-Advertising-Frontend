@@ -31,7 +31,8 @@ function StaffEmployeeOrders() {
     isLoading: staffLoading,
     isError: staffError,
   } = useQuery("StaffOrder-store", () => apis.staffOrderList(user.token, id));
-  console.log(userData);
+  console.log(StaffOrder, "ff");
+  console.log(userData, "xx");
   const updateOrder = (StatusData) => {
     const response = api.UpdateOrder(user.token, StatusData);
     return response;
@@ -74,6 +75,8 @@ function StaffEmployeeOrders() {
   if (staffLoading) {
     return <h1>Loading</h1>;
   }
+  const StaffOrders = StaffOrder.data;
+  console.log(StaffOrders, "fdsa");
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">
@@ -142,7 +145,7 @@ function StaffEmployeeOrders() {
             </thead>
 
             <tbody class="divide-y divide-gray-300">
-              {StaffOrder.map((items, index) => (
+              {StaffOrders.map((items, index) => (
                 <tr className="cursor-pointer hover:bg-slate-200">
                   <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
                     <li key={index} className="list-none">

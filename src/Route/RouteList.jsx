@@ -31,15 +31,11 @@ import { useQuery } from "react-query";
 import * as api from "../api/userApi";
 import StaffList from "../pages/admin/staffList/StaffList";
 import StaffDetail from "../pages/common/staffDetail/StaffDetail";
-// import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
-// import StaffEmployeeOrders from "../pages/common/AllocateOrder/AllocateToStaff/StaffEmployeeOrders";
 import StaffOrder from "../pages/common/AllocateOrder/AllocateStaff/StaffOrder";
 import StaffEmployeeOrders from "../pages/common/AllocateOrder/AllocateStaff/StaffEmployeeOrders";
-
 import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
 import FreeelancerEmployeeOrders from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerEmployeeOrder";
 import FreelancerOrder from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerOrder";
-// import Repo from "../pages/admin/report/Repo";
 function RouteList() {
   const user = useUserStore();
   const navigate = useNavigate();

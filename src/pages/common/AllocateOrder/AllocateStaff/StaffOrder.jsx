@@ -12,9 +12,9 @@ function StaffOrder() {
   const { number } = useUserStore();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-//   useEffect(() => {
-//     window.scrollTo(0, 0);
-//   });
+  //   useEffect(() => {
+  //     window.scrollTo(0, 0);
+  //   });
   const { id } = useParams();
   const user = useUserStore();
   const {
@@ -44,7 +44,7 @@ function StaffOrder() {
       });
     },
   });
-  
+
   const handleUnallocated = () => {
     const StatusData = {
       status: "Unallocated",
@@ -67,6 +67,7 @@ function StaffOrder() {
   if (staffLoading) {
     return <h1>Loading</h1>;
   }
+  const StaffOrders = StaffOrder.data;
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">
@@ -130,7 +131,7 @@ function StaffOrder() {
             </thead>
 
             <tbody class="divide-y divide-gray-300">
-              {StaffOrder.map((items, index) => (
+              {StaffOrders.map((items, index) => (
                 <tr className="cursor-pointer hover:bg-slate-200">
                   <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
                     <li key={index} className="list-none">

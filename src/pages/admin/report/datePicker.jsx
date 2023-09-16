@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-function MyDatePickerComponent() {
-  const [selectedDate, setSelectedDate] = useState(null);
+function MyDatePickerComponent({ selectedDate, setSelectedDate }) {
+  // const [selectedDate, setSelectedDate] = useState(null);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -12,6 +12,17 @@ function MyDatePickerComponent() {
   const handleSearch = () => {
     if (selectedDate) {
       console.log("Selected date:", selectedDate);
+      const formatDate = (date) => {
+        const day = date.getDate();
+        const month = date.getMonth() + 1; // Months are zero-indexed
+        const year = date.getFullYear();
+        return `${year}-${month}-${day}`;
+      };
+
+      const formattedDate = selectedDate ? formatDate(selectedDate) : "";
+      // setSelectedDate(formattedDate);
+
+      console.log(selectedDate);
     } else {
       console.log("No date selected.");
     }
@@ -23,6 +34,7 @@ function MyDatePickerComponent() {
         selected={selectedDate}
         onChange={handleDateChange}
         dateFormat="dd/MM/yyyy"
+        showTimeInput={false}
         placeholderText="search by date"
         className="border-none bg-transparent outline-none"
       />
