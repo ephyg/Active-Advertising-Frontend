@@ -60,10 +60,8 @@ function CustomerComponent({ allProformas }) {
         <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
       </div>
       <div className="flex justify-between mb-3">
-        <div className="hover:bg-blue_hover py-1 flex items-center justify-between gap-2 rounded-md cursor-pointer bg-blue px-6">
-          <Link to="/proforma/add">
-            <Button text="Add Order" icon={FaPlus} />
-          </Link>
+        <div className="">
+          
         </div>
         <InputField
           placeholder="Search"

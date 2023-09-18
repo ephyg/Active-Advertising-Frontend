@@ -33,7 +33,13 @@ function FreelancerOrder() {
   } = useQuery("FreelancerOrder-store", () =>
     apis.FreelancerOrderList(user.token, id)
   );
-
+  const {
+    data: SingleOrder,
+    isLoading: LoadingGetSingleOrder,
+    isError,
+  } = useQuery("GetSingleOrder-store", () =>
+    api.GetSingleOrder(user.token, number)
+  );
   const updateOrder = (StatusData) => {
     const response = api.UpdateOrderFreelancer(user.token, StatusData);
     return response;
@@ -77,7 +83,9 @@ function FreelancerOrder() {
   if (staffLoading) {
     return <h1>Loading</h1>;
   }
-  // console.log(FreelancerData);
+  if (LoadingGetSingleOrder) {
+    return <h1>Loading</h1>;
+  }
 
   return (
     <Layout>
@@ -88,7 +96,7 @@ function FreelancerOrder() {
         </div>
         <div className="flex justify-center mb-10 rounded-full h-40 ">
           <img
-            src={FreelancerData.user_image_url}
+            src={FreelancerData.data.user_image_url}
             alt=""
             className="w-40 flex flex-between rounded-full border-2 border-x-slate-500 border-y-red"
           />
@@ -96,40 +104,47 @@ function FreelancerOrder() {
         <div className="grid grid-cols-2  gap-x-10 gap-y-4 mb-7 items-center justify-center md:pr-0 md:gap-x-3 md:gap-y-3">
           <Card
             text="First Name"
-            information={FreelancerData.freelancer_first_name}
+            information={FreelancerData.data.freelancer_first_name}
           />
           <Card
             text="Last Name"
-            information={FreelancerData.freelancer_last_name}
+            information={FreelancerData.data.freelancer_last_name}
           />
           <Card
             text="Phone Number"
-            information={FreelancerData.freelancer_phone_number}
+            information={FreelancerData.data.freelancer_phone_number}
           />
-          <Card text="Email " information={FreelancerData.freelancer_email} />
+          <Card
+            text="Email "
+            information={FreelancerData.data.freelancer_email}
+          />
           <Card
             text="Address"
-            information={FreelancerData.freelancer_address}
+            information={FreelancerData.data.freelancer_address}
           />
           <Card
             text="Portfolio"
-            information={FreelancerData.freelancer_portfolio_link}
+            information={FreelancerData.data.freelancer_portfolio_link}
           />
-          <Card text="Status" information={FreelancerData.status} />
+          <Card text="Status" information={FreelancerData.data.status} />
         </div>
 
         <div className="flex justify-center gap-10 mb-10 md:gap-5">
           {/* {FreelancerData.status != "Allocated" && ( */}
-          <Button
-            onClick={handleAllocate}
-            text="Allocate"
-            className="text-center bg-blue rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
-          />
-          <Button
-            onClick={handleUnallocate}
-            text="Unallocate"
-            className="text-center bg-red rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
-          />
+          {SingleOrder[0].freelancer_id == FreelancerData.data.id ? (
+            <Button
+              onClick={handleUnallocate}
+              text="Unallocate"
+              className="text-center bg-red rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
+            />
+          ) : (
+            <Button
+              onClick={handleAllocate}
+              text="Allocate"
+              className="text-center bg-blue rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
+            />
+          )}
+
           {/* )} */}
         </div>
         <div className="mb-20">
@@ -162,7 +177,7 @@ function FreelancerOrder() {
             </thead>
 
             <tbody class="divide-y divide-gray-300">
-              {FreelancerOrder.map((items, index) => (
+              {FreelancerOrder.data.map((items, index) => (
                 <tr className="cursor-pointer hover:bg-slate-200">
                   <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
                     <li key={index} className="list-none">

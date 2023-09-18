@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import SideBar from "../../../components/admin/sideBar/SideBar";
 import Layout from "../../../components/Layout/Layout";
 import { useState } from "react";
-import MyDatePicker from "./datePicker";
 import "./report.css";
 import ProgressBar from "./ProgressBar";
 import axios from "axios";
@@ -15,11 +14,12 @@ import * as api from "../../../api/reportApi";
 
 // import PieChart from "./components/PieChart";
 // import { Revenue } from "./Data/Data3";
-import MyDatePickerComponent from "./datePicker";
 import { FaCar, FaCheck, FaRegCheckSquare, FaRegListAlt } from "react-icons/fa";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import useUserStore from "../../../store/userStore";
 import { useQuery } from "react-query";
+import { ToastContainer, toast } from "react-toastify";
+import Loading from "../../../assets/image/Loading.gif";
 
 function Report() {
   const { user, token } = useUserStore();
@@ -29,15 +29,30 @@ function Report() {
   const {
     data: ReportData,
     isLoading: ReportLoading,
-    isError: roleError,
-  } = useQuery(["Report-store", searchDate], () =>
-    api.GetReport(token, searchDate)
+    isError: ReportError,
+  } = useQuery(
+    ["Report-store", searchDate],
+    () => api.GetReport(token, searchDate),
+    { refetchOnMount: false, retry: 0 }
   );
   const handleSearch = () => {
     console.log(searchDate);
   };
   if (ReportLoading) {
-    return <h1>Return loading</h1>;
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
+  }
+  console.log(ReportData);
+  if (ReportError) {
+    setSearchDate(null);
+    toast.error("No report found for the specified day", {
+      position: "top-center",
+      toastId: "success3",
+    });
+    return <h1>Error</h1>;
   }
 
   // console.log(ReportData.daily_totals.friday_profit);
@@ -277,6 +292,7 @@ function Report() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </Layout>
   );
 }

@@ -7,20 +7,14 @@ import Button from "../../../components/common/button/Button";
 import useProformaStore from "../../../store/proformaStore";
 import * as api from "../../../api/proformaApi";
 import { useQuery, useQueryClient } from "react-query";
-import Loading from '../../../assets/image/Loading.gif'
+import Loading from "../../../assets/image/Loading.gif";
 import useUserStore from "../../../store/userStore";
 function OrderDetail() {
   const user = useUserStore();
-  // const queryClient = useQueryClient();
-  // queryClient.invalidateQueries("proformaDetail");
-  // queryClient.refetchQueries({
-  //   include: "active",
-  // });
+ 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // });
+  
   const { id } = useParams();
   const { setNumber, number } = useUserStore();
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
@@ -48,6 +42,7 @@ function OrderDetail() {
     if (OrderedEmployee[0].user_role) {
       navigate(`/staffs-order/${OrderedEmployee[0].id}`);
     } else {
+      console.log("hello");
       navigate(`/freelancer-order/${OrderedEmployee[0].id}`);
     }
   };

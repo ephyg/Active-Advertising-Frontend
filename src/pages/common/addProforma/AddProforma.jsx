@@ -131,11 +131,13 @@ function ProformaDetail() {
   let Tax = (tax / 100) * subTotal;
   Tax = parseFloat(Tax.toFixed(2));
   let grandtedTotal = Tax + subTotal;
+
+  // For Admin
   const handleVerifyProforma = (e) => {
     e.preventDefault();
     AllProformaData.status = "Verified";
     try {
-      console.log(AllProformaData);
+      // console.log(AllProformaData);
       if (AllOrders.length == 0) {
         toast.error("Atleast one order is needed", {
           position: "top-center",
@@ -147,7 +149,54 @@ function ProformaDetail() {
       }
     } catch (error) {}
   };
+
   const handleDownload = async (e) => {
+    e.preventDefault();
+    AllProformaData.status = "Verified";
+    try {
+      if (AllOrders.length == 0) {
+        toast.error("Atleast one order is needed", {
+          position: "top-center",
+          toastId: "erro1",
+        });
+      } else {
+        mutation.mutate(AllProformaData);
+        const element = document.getElementById("download-pdf");
+        const opt = {
+          margin: 10,
+          filename: "proforma.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: {
+            unit: "mm",
+            format: "a4",
+            orientation: "portrait",
+            fontSize: 10,
+          },
+        };
+        html2pdf().from(element).set(opt).save();
+        navigate("/proforma");
+      }
+    } catch (error) {
+      throw new error();
+    }
+  };
+  // For Account Manager
+  const SendProforma = (e) => {
+    e.preventDefault();
+    try {
+      if (AllOrders.length == 0) {
+        toast.error("Atleast one order is needed", {
+          position: "top-center",
+          toastId: "erro1",
+        });
+      } else {
+        mutation.mutate(AllProformaData);
+        navigate("/proforma");
+      }
+    } catch (error) {}
+  };
+  const SendAndDownloadProforma = async (e) => {
     e.preventDefault();
     try {
       if (AllOrders.length == 0) {
@@ -180,6 +229,7 @@ function ProformaDetail() {
   if (mutation.isLoading) {
     return <h1>Is loading</h1>;
   }
+
   return (
     <Layout>
       <form
@@ -525,20 +575,38 @@ function ProformaDetail() {
             </div>
           </div> */}
         </div>
-        <div className="flex justify-end mb-10 gap-4">
-          <Button
-            text="Verify"
-            type="submit"
-            onClick={(e) => handleVerifyProforma(e)}
-            className="text-white text-lg py-1  px-8 flex rounded-lg bg-blue hover:bg-blue_hover"
-          />
-          <Button
-            text="Verify & Download"
-            type="submit"
-            className="text-white text-lg  px-8 flex rounded-lg py-1 bg-green hover:bg-green"
-            onClick={(e) => handleDownload(e)}
-          />
-        </div>
+        {userData.user_role == "admin" && (
+          <div className="flex justify-end mb-10 gap-4">
+            <Button
+              text="Verify"
+              type="submit"
+              onClick={(e) => handleVerifyProforma(e)}
+              className="text-white text-lg py-1  px-8 flex rounded-lg bg-blue hover:bg-blue_hover"
+            />
+            <Button
+              text="Verify & Download"
+              type="submit"
+              className="text-white text-lg  px-8 flex rounded-lg py-1 bg-green hover:bg-green"
+              onClick={(e) => handleDownload(e)}
+            />
+          </div>
+        )}
+        {userData.user_role == "account-manager" && (
+          <div className="flex justify-end mb-10 gap-4">
+            <Button
+              text="Send"
+              type="submit"
+              onClick={(e) => SendProforma(e)}
+              className="text-white text-lg py-1  px-8 flex rounded-lg bg-blue hover:bg-blue_hover"
+            />
+            <Button
+              text="Send & Download"
+              type="submit"
+              className="text-white text-lg  px-8 flex rounded-lg py-1 bg-green hover:bg-green"
+              onClick={(e) => SendAndDownloadProforma(e)}
+            />
+          </div>
+        )}
       </form>
 
       <form className="hidden">

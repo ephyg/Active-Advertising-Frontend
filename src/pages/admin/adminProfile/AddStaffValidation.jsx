@@ -17,6 +17,6 @@ const AddStaffValidation = yup.object().shape({
   user_password: yup.string().min(6, "please enter minimum 6 characters"),
   user_confirm: yup
     .string()
-    .oneOf([yup.ref("user_password"), null], "Passwords must match"),
+    .oneOf([yup.ref("user_password")], "Passwords must match")
 });
 export default AddStaffValidation;

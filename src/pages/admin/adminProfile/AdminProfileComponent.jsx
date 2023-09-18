@@ -32,7 +32,7 @@ function AdminProfileComponent({ CurrentUserData }) {
       reader.readAsDataURL(selectedImage);
     }
   };
-  console.log(user.token);
+  console.log(CurrentUserData.id);
   const UpdateUser = (userdata) => {
     const response = api.UpdateUser(user.token, CurrentUserData.id, userdata);
     return response;
@@ -58,7 +58,7 @@ function AdminProfileComponent({ CurrentUserData }) {
         user_phone_number: values.phone_number,
         user_image_url: uploadedFileUrl,
         // user_password: `${values.first_name + "." + values.last_name}`,
-        user_password:values.user_password
+        user_password: values.user_password,
       };
       staffMutation.mutate(UserData);
       console.log("Done successfully", UserData);
@@ -100,12 +100,13 @@ function AdminProfileComponent({ CurrentUserData }) {
     useFormik({
       initialValues: {
         first_name: CurrentUserData.user_first_name,
-        last_name: CurrentUserData.user_first_name,
+        last_name: CurrentUserData.user_last_name,
         email: CurrentUserData.user_email,
         address: CurrentUserData.user_address,
         phone_number: CurrentUserData.user_phone_number,
         user_image_url: CurrentUserData.user_image,
         user_password: "",
+        user_confirm: "",
       },
       validationSchema: AddStaffValidation,
       onSubmit,
