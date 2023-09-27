@@ -114,11 +114,9 @@ function InventoryListComponent({ inventoryLists }) {
                 <tr
                   {...row.getRowProps()}
                   onClick={() => {
-                    // console.log(inventoryLists[index]);
                     const data = {
                       eachItem: inventoryLists[index],
                     };
-                    console.log(inventoryLists[index]);
                     setProformaDetail(data);
                     navigate(`/stock/${inventoryLists[index].id}`);
                   }}

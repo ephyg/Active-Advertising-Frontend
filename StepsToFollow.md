@@ -1,5 +1,19 @@
 1. first migrate the database
-    correct the .env variable and replace the the email and password with yours to check if the forgot password 
+    <!-- correct the .env variable and replace the the email and password only with yours to check if the forgot password 
+    
+    You can generate the password first make your gmail 2-step verification then in
+
+    MAIL_MAILER=smtp
+    MAIL_HOST=smtp.gmail.com
+    MAIL_PORT=587
+    ->MAIL_USERNAME=example@gmail.com
+    ->MAIL_PASSWORD=pvzenfbpkskziame
+    MAIL_ENCRYPTION=tls
+    ->MAIL_FROM_ADDRESS="example@gmail.com"
+    MAIL_FROM_NAME="${APP_NAME}"
+
+    NB: Don't use this email for admin because if you need to forgot the password it is impossible to send confirmation code to the same email so use different email -->
+
 2. Add admin manually with phpmyadmin by making
 use valid email that will exist
     {
@@ -36,5 +50,3 @@ use valid email that will exist
 
 5. Login Using Admin and add staffs by selecting the role you need
 6. NB when you add staff the password generated will be firstname.lastname that you have entered(eg. john.doe) the user can change it if he wanted
-
-7. 
