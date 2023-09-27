@@ -11,12 +11,7 @@ export const AddFreelancer = async (token, data) => {
     .then((response) => response.data);
   return addFreelancer;
 };
-// export const EditItem = async (id, data) => {
-//   const editItems = await axios
-//     .put(`${baseURL}/stock/${id}`, data)
-//     .then((response) => console.log(response, data));
-//   return editItems;
-// };
+
 export const SingleFreelancer = async (token, id) => {
   const addFreelancer = await axios
     .get(`${baseURL}/freelancer/${id}`, {

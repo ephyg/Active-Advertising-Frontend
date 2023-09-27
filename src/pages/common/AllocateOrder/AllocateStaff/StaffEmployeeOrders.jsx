@@ -49,7 +49,6 @@ function StaffEmployeeOrders() {
         include: "active",
       });
 
-      console.log("Success");
     },
   });
   const handleAllocate = () => {
@@ -77,7 +76,6 @@ function StaffEmployeeOrders() {
   if (LoadingGetSingleOrder) {
     return <h1>Loading</h1>;
   }
-  console.log(userData, SingleOrder);
   const StaffOrders = StaffOrder.data;
   return (
     <Layout>

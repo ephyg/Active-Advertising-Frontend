@@ -23,7 +23,6 @@ function AddItems() {
       //   position: "top-center",
       //   toastId: "successUser",
       // });
-      console.log(response);
       queryClient.invalidateQueries(["inventoryList"]);
       navigate("/stock");
     },

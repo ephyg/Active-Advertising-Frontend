@@ -2,47 +2,27 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../../components/Layout/Layout";
 import html2pdf from "html2pdf.js";
 import Logo from "../../../assets/image/logo.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import jsonData from "./Data.json";
 
 import { FiPlus } from "react-icons/fi"; // Import the FiPlus icon
 import { useTable } from "react-table";
+import { useQuery } from "react-query";
+import Loading from "../../../assets/image/Loading.gif";
+import useUserStore from "../../../store/userStore";
+import * as api from "../../../api/proformaApi";
 
 function DeliveryForm() {
   const [data, setData] = useState(jsonData);
-
-  const columns = React.useMemo(
-    () => [
-      { Header: "No", accessor: "col1" },
-      { Header: "Items description", accessor: "col2" },
-      { Header: "Size", accessor: "col3" },
-      { Header: "Quantity", accessor: "col4" },
-      { Header: "Unit price", accessor: "col5" },
-      { Header: "Total", accessor: "col6" },
-    ],
-    []
-  );
-
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
-
-  // Fetch data from the backend when the component mounts
-  useEffect(() => {
-    // Your code to fetch data from the backend goes here
-    // For example:
-    const fetchData = async () => {
-      try {
-        // Replace the URL below with your backend API endpoint
-        const response = await fetch("your_backend_api_endpoint");
-        const dataFromBackend = await response.json();
-        setData(dataFromBackend);
-      } catch (error) {
-      }
-    };
-
-    fetchData();
-  }, []);
+  const user = useUserStore();
+  const [delivery, setDelivery] = useState("");
+  const { id } = useParams();
+  const {
+    data: proformaDetail,
+    isLoading,
+    isError,
+  } = useQuery("proformaDetail", () => api.GetProforma(user.token, id));
 
   const handleDownload = () => {
     const element = document.getElementById("download-pdf");
@@ -60,45 +40,68 @@ function DeliveryForm() {
     };
     html2pdf().from(element).set(opt).save();
   };
-
+  if (isLoading) {
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
+  }
+  const Activecontact = String(proformaDetail.proforma[0].active_phone_number);
+  const ActivecontactArray = Activecontact.split(":");
+  const eachOrder = proformaDetail.order;
   return (
     <Layout className="">
       <div className="flex flex-col">
-        <div className="flex flex-col mx-auto">
+        <div className="flex flex-col mx-10">
           <div className="flex justify-center p-1">
-            <img src={Logo} alt="" className="w-20" />
+            <img src={Logo} alt="" className="w-40" />
           </div>
-          <div className="flex flex-col items-end mr-16 mt-8">
+          <div className="flex flex-col items-end mt-8">
             <div className="flex flex-col items-start">
-              <label className="text-sm">
-                <span className="text-blue">Contact</span>: +251 929 55 548
-              </label>
-              <label className="text-sm">
-                <span className="ml-16"></span>: +251 987 197 939
-              </label>
+              <div className="flex">
+                <span className="text-blue">Contact: </span>
+                <div className="flex flex-col">
+                  {ActivecontactArray.map((item, index) => (
+                    <h1 className="text-sm md:text-xxs " key={index}>
+                      {item}
+                    </h1>
+                  ))}
+                </div>
+              </div>
+
               <label className="text-sm">
                 <span className="text-blue">Email</span>:
-                info@activeadvertising.com
+                {proformaDetail.proforma[0].active_email}
               </label>
               <label className="text-sm">
-                <span className="text-blue">Tin No</span>: 0011036929
+                <span className="text-blue">Tin No</span>:{" "}
+                {proformaDetail.proforma[0].active_tin_nUmber}
               </label>
               <label className="mb-4 text-sm">
-                <span className="text-blue">Delivery Form</span>: AD00001/11/22
+                <span className="text-blue">Delivery Form</span>:{" "}
+                <input
+                  type="text"
+                  className="outline-none border-b border-black bg-transparent"
+                  value={delivery}
+                  onChange={(e) => setDelivery(e.target.value)}
+                />
               </label>
               <label className="text-sm">
                 <span className="text-blue">Name</span>:
-                info@activeadvertising.com
+                {proformaDetail.proforma[0].client_name}
               </label>
               <label className="text-sm">
-                <span className="text-blue">Phone No</span>: 0011036929
+                <span className="text-blue">Phone No</span>:
+                {proformaDetail.proforma[0].client_phone_number}
               </label>
               <label className="text-sm">
-                <span className="text-blue">Tin No</span>: 0011036929
+                <span className="text-blue">Tin No</span>:{" "}
+                {proformaDetail.proforma[0].client_tin_number}
               </label>
               <label className="text-sm">
                 <span className="text-blue">Item Invoice No</span>:
-                AD00001/11/22
+                {proformaDetail.proforma[0].payment_request_number}
               </label>
             </div>
           </div>
@@ -108,83 +111,82 @@ function DeliveryForm() {
             </h1>
           </div>
 
-          <div className="w-3/5 mx-auto">
-            <table
-              {...getTableProps()}
-              className="w-full table-auto text-left "
-            >
-              <thead>
-                {headerGroups.map((headerGroup, index) => (
+          <div className="">
+            <table class="mb-3 min-w-full">
+              <thead class="text-blue">
+                <tr className="">
+                  <th class="py-1 border-slate-200 border-2  px-4 text-xs md:text-xxs text-left">
+                    No.
+                  </th>
+                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Items Description
+                  </th>
+                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Size
+                  </th>
+
+                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Quantity
+                  </th>
+                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Unit Price
+                  </th>
+                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Total Price
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody class="divide-y divide-gray-300">
+                {eachOrder.map((items, index) => (
                   <tr
-                    key={index}
-                    {...headerGroup.getHeaderGroupProps()}
-                    className=""
+                    className="cursor-pointer hover:bg-slate-200"
+                    onClick={() => handleRowClick(eachOrder[index].id)}
                   >
-                    {headerGroup.headers.map((column, colIdx) => (
-                      <th
-                        key={colIdx}
-                        {...column.getHeaderProps()}
-                        className={`py-3 px-2 border text-base text-blue font-roboto font-bold ${
-                          colIdx === 0
-                            ? "w-1/12"
-                            : colIdx === 1
-                            ? "w-5/12"
-                            : "w-2/12"
-                        }`}
-                      >
-                        {column.render("Header")}
-                      </th>
-                    ))}
+                    <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
+                      <li key={index} className="list-none">
+                        {index + 1}
+                      </li>
+                    </td>
+                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.item_description}
+                    </td>
+                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.size}
+                    </td>
+
+                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.quantity}
+                    </td>
+                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.unit_price}
+                    </td>
+                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                      {Number(items.quantity) * Number(items.unit_price)}
+                    </td>
                   </tr>
                 ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {rows.map((row, rowIndex) => {
-                  prepareRow(row);
-                  return (
-                    <tr
-                      key={rowIndex}
-                      {...row.getRowProps()}
-                      //className="hover:bg-slate-200 cursor-pointer group"
-                    >
-                      {row.cells.map((cell, colIdx) => (
-                        <td
-                          key={colIdx}
-                          className={`px-2 py-1 border text-sm ${
-                            colIdx === 0
-                              ? "w-1/12"
-                              : colIdx === 1
-                              ? "w-5/12"
-                              : "w-2/12"
-                          }`}
-                        >
-                          {cell.value}
-                        </td>
-                      ))}
-                    </tr>
-                  );
-                })}
               </tbody>
             </table>
           </div>
 
-          <div className="flex justify-between mt-10 mx-72">
+          <div className="flex justify-between mt-10 mx-10">
             <div className="flex flex-col">
-              <h3 className="text-blue text-lg">Client representative</h3>
-              <label className="ml-8 font-bold">Name:____________</label>
-              <label className="ml-8 font-bold">signature:____________</label>
-              <label className="ml-8 font-bold">Date:_____________</label>
+              <h3 className="text-blue text-base">Client representative</h3>
+              <label className=" ">Name:________________</label>
+              <label className=" ">signature:____________</label>
+              <label className=" ">Date:_________________</label>
             </div>
             <div className="flex flex-col">
-              <h3 className="text-blue text-lg">
+              <h3 className="text-blue text-base">
                 Active Advertising representative
               </h3>
-              <label className="ml-8 font-bold">Name:____________</label>
-              <label className="ml-8 font-bold">signature:____________</label>
-              <label className="ml-8 font-bold">Date:_____________</label>
+              <label className=" ">Name:________________</label>
+              <label className=" ">signature:____________</label>
+              <label className=" ">Date:_________________</label>
             </div>
           </div>
-          <div className="mx-64 mt-10 mb-2">
+          <div className=" mt-10 mx-10 mb-2">
             <p className=" text-base">
               Note:This Delivery Form is to conform that Active Advertising has
               delivered the items listed above in good manner to the requested
@@ -196,51 +198,59 @@ function DeliveryForm() {
 
         {/* downloaded page that is invisible */}
 
-        <div className="flex justify-end mt-10 mr-56">
+        <div className="flex justify-center mt-10">
           <button
-            className="border border-blue hover:bg-blue_hover text-blue hover:text-white font-bold py-2 px-4 rounded w-32 mb-16"
+            className="border bg-blue border-blue hover:bg-blue_hover text-white hover:text-white font-bold py-2 px-4 rounded w-32 mb-16"
             onClick={handleDownload}
           >
             Download
           </button>
         </div>
       </div>
-      <div  className="hidden">
+      <div className="hidden">
         <div id="download-pdf" className="flex flex-col mx-auto">
           <div className="flex justify-center p-1">
-            <img src={Logo} alt="" className="w-20" />
+            <img src={Logo} alt="" className="w-40" />
           </div>
-          <div className="flex flex-col items-end mr-16 mt-8">
+          <div className="flex flex-col items-end mt-8">
             <div className="flex flex-col items-start">
-              <label className="text-sm">
-                <span className="text-blue">Contact</span>: +251 929 55 548
-              </label>
-              <label className="text-sm">
-                <span className="ml-16"></span>: +251 987 197 939
-              </label>
+              <div className="flex">
+                <span className="text-blue">Contact: </span>
+                <div className="flex flex-col">
+                  {ActivecontactArray.map((item, index) => (
+                    <h1 className="text-sm md:text-xxs " key={index}>
+                      {item}
+                    </h1>
+                  ))}
+                </div>
+              </div>
+
               <label className="text-sm">
                 <span className="text-blue">Email</span>:
-                info@activeadvertising.com
+                {proformaDetail.proforma[0].active_email}
               </label>
               <label className="text-sm">
-                <span className="text-blue">Tin No</span>: 0011036929
+                <span className="text-blue">Tin No</span>:{" "}
+                {proformaDetail.proforma[0].active_tin_nUmber}
               </label>
               <label className="mb-4 text-sm">
-                <span className="text-blue">Delivery Form</span>: AD00001/11/22
+                <span className="text-blue">Delivery Form</span>:{delivery}
               </label>
               <label className="text-sm">
                 <span className="text-blue">Name</span>:
-                info@activeadvertising.com
+                {proformaDetail.proforma[0].client_name}
               </label>
               <label className="text-sm">
-                <span className="text-blue">Phone No</span>: 0011036929
+                <span className="text-blue">Phone No</span>:
+                {proformaDetail.proforma[0].client_phone_number}
               </label>
               <label className="text-sm">
-                <span className="text-blue">Tin No</span>: 0011036929
+                <span className="text-blue">Tin No</span>:{" "}
+                {proformaDetail.proforma[0].client_tin_number}
               </label>
               <label className="text-sm">
                 <span className="text-blue">Item Invoice No</span>:
-                AD00001/11/22
+                {proformaDetail.proforma[0].payment_request_number}
               </label>
             </div>
           </div>
@@ -250,83 +260,82 @@ function DeliveryForm() {
             </h1>
           </div>
 
-          <div className="w-4/5 mx-auto">
-            <table
-              {...getTableProps()}
-              className="w-full table-auto text-left "
-            >
-              <thead>
-                {headerGroups.map((headerGroup, index) => (
+          <div className="mx-10">
+            <table class="min-w-full">
+              <thead class="text-blue">
+                <tr className="">
+                  <th class="pb-2 border-slate-200 border-2  px-4 text-xs md:text-xxs text-left">
+                    No.
+                  </th>
+                  <th class="pb-2 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Items Description
+                  </th>
+                  <th class="pb-2 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Size
+                  </th>
+
+                  <th class="pb-2 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Quantity
+                  </th>
+                  <th class="pb-2 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Unit Price
+                  </th>
+                  <th class="pb-2 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Total Price
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody class="divide-y divide-gray-300">
+                {eachOrder.map((items, index) => (
                   <tr
-                    key={index}
-                    {...headerGroup.getHeaderGroupProps()}
-                    className=""
+                    className="cursor-pointer hover:bg-slate-200"
+                    onClick={() => handleRowClick(eachOrder[index].id)}
                   >
-                    {headerGroup.headers.map((column, colIdx) => (
-                      <th
-                        key={colIdx}
-                        {...column.getHeaderProps()}
-                        className={`py-3 px-2 border text-base text-blue font-roboto font-bold ${
-                          colIdx === 0
-                            ? "w-1/12"
-                            : colIdx === 1
-                            ? "w-5/12"
-                            : "w-2/12"
-                        }`}
-                      >
-                        {column.render("Header")}
-                      </th>
-                    ))}
+                    <td class="pb-2 border-slate-200 border  text-xs md:text-xxs px-4">
+                      <li key={index} className="list-none">
+                        {index + 1}
+                      </li>
+                    </td>
+                    <td class="pb-2 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.item_description}
+                    </td>
+                    <td class="pb-2 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.size}
+                    </td>
+
+                    <td class="pb-2 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.quantity}
+                    </td>
+                    <td class="pb-2 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.unit_price}
+                    </td>
+                    <td class="pb-2 border-slate-200 border text-xs md:text-xxs px-4">
+                      {Number(items.quantity) * Number(items.unit_price)}
+                    </td>
                   </tr>
                 ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {rows.map((row, rowIndex) => {
-                  prepareRow(row);
-                  return (
-                    <tr
-                      key={rowIndex}
-                      {...row.getRowProps()}
-                      //className="hover:bg-slate-200 cursor-pointer group"
-                    >
-                      {row.cells.map((cell, colIdx) => (
-                        <td
-                          key={colIdx}
-                          className={`px-2 py-1 border text-sm ${
-                            colIdx === 0
-                              ? "w-1/12"
-                              : colIdx === 1
-                              ? "w-5/12"
-                              : "w-2/12"
-                          }`}
-                        >
-                          {cell.value}
-                        </td>
-                      ))}
-                    </tr>
-                  );
-                })}
               </tbody>
             </table>
           </div>
 
-          <div className="flex justify-between mt-10 mx-16">
+          <div className="flex justify-between mt-10 mx-10">
             <div className="flex flex-col">
-              <h3 className="text-blue text-lg">Client representative</h3>
-              <label className="ml-8 font-bold">Name:____________</label>
-              <label className="ml-8 font-bold">signature:____________</label>
-              <label className="ml-8 font-bold">Date:_____________</label>
+              <h3 className="text-blue text-base">Client representative</h3>
+              <label className=" ">Name:________________</label>
+              <label className=" ">signature:____________</label>
+              <label className=" ">Date:_________________</label>
             </div>
             <div className="flex flex-col">
-              <h3 className="text-blue text-lg">
+              <h3 className="text-blue text-base">
                 Active Advertising representative
               </h3>
-              <label className="ml-8 font-bold">Name:____________</label>
-              <label className="ml-8 font-bold">signature:____________</label>
-              <label className="ml-8 font-bold">Date:_____________</label>
+              <label className=" ">Name:________________</label>
+              <label className=" ">signature:____________</label>
+              <label className=" ">Date:_________________</label>
             </div>
           </div>
-          <div className="mx-16 mt-10 mb-2">
+          <div className=" mt-10 mx-10 mb-2">
             <p className=" text-base">
               Note:This Delivery Form is to conform that Active Advertising has
               delivered the items listed above in good manner to the requested

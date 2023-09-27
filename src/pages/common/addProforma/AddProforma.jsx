@@ -49,7 +49,6 @@ function ProformaDetail() {
       //   toastId: "successUser",
       // });
       queryClient.invalidateQueries(["proformaDetail"]);
-      console.log(response);
     },
   });
   const addProforma = (data) => {
@@ -137,7 +136,6 @@ function ProformaDetail() {
     e.preventDefault();
     AllProformaData.status = "Verified";
     try {
-      // console.log(AllProformaData);
       if (AllOrders.length == 0) {
         toast.error("Atleast one order is needed", {
           position: "top-center",

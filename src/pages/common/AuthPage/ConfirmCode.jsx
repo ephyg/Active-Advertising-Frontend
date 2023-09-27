@@ -140,7 +140,7 @@ const ConfirmCode = () => {
         ) : (
           <div className="">
             <button
-              type="submit"
+              type="button"
               className="text-sm text-center text-red mb-12 mt-1 bg-slate-200 font-roboto w-24 px-4 py-1 rounded-sm hover:bg-slate-300 cursor-pointer"
               onClick={handleResend}
             >
@@ -162,6 +162,7 @@ const ConfirmCode = () => {
           <Button
             className="py-2 px-16 w-full rounded-lg bg-blue hover:bg-blue_hover transition-all ease-in-out duration-300 mb-8"
             text="Verify"
+            type="submit"
           />
         )}
       </form>

@@ -21,7 +21,6 @@ function AddFreelancer() {
   const imageHandler = (event) => {
     const selectedImage = event.target.files ? event.target.files[0] : null;
     setImage(selectedImage);
-    console.log(selectedImage);
     if (selectedImage) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -41,7 +40,6 @@ function AddFreelancer() {
       //   position: "top-center",
       //   toastId: "successUser",
       // });
-      console.log("Done successfully", response);
       navigate("/freelancer");
     },
     onError: (response) => {
@@ -71,7 +69,6 @@ function AddFreelancer() {
     const CLOUDINARY_UPLOAD_PRESET = import.meta.env
       .VITE_CLOUDINARY_UPLOAD_PRESET;
     var bodyFormData = new FormData();
-    console.log(defaultProfileImage);
     if (img === null) {
       return callback(
         "https://res.cloudinary.com/drbvkt6rd/image/upload/v1692794747/gasweutssmb0ghn8sqrf.png"
@@ -94,7 +91,6 @@ function AddFreelancer() {
       .catch((error) => {
         // setError(error.message);
 
-        console.log(error);
       });
   };
   // if (FreelancerMutation.isLoading) {

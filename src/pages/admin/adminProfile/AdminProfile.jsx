@@ -4,9 +4,7 @@ import AdminProfileComponent from "./AdminProfileComponent";
 
 function AdminProfile() {
   const currentUserDatas = useUserData();
-  if (!currentUserDatas) {
-    console.log(currentUserDatas);
-  }
+
   return (
     <div>
       {currentUserDatas && (

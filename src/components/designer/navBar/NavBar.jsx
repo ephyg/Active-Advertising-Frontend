@@ -6,19 +6,19 @@ import Profile from "../../../assets/image/profile.jpeg";
 import Button from "../../common/button/Button";
 import useUserStore, { useUserData } from "../../../store/userStore";
 import { MdClose } from "react-icons/md";
-function NavBar() {
+function DesignerNavBar() {
   const [drop, setDrop] = useState(true);
   const location = useLocation();
-  const [popUp, setPopUp] = useState(false);
   const currentUserDatas = useUserData();
   const navigate = useNavigate();
+  const [popUp, setPopUp] = useState(false);
   const pathName = location.pathname;
   const handlePopUp = () => {
     useUserStore.getState().logout();
     navigate("/login");
   };
   const handleProfile = () => {
-    navigate("/account-manager/profile");
+    navigate("/profile");
   };
   return (
     <>
@@ -74,11 +74,11 @@ function NavBar() {
               </h1>
             </Link>
           ))}
-          <div className="relative ml-2 flex flex-col w-12 h-12 bg-blue rounded-full">
+          <div className="relative ml-2 flex flex-col w-16 h-16 bg-blue rounded-full">
             <img
               src={currentUserDatas.user_image_url}
               alt=""
-              className="rounded-full border-2 border-x-blue border-y-red "
+              className="rounded-full  w-16 h-16 object-fill border-2 border-x-blue border-y-red "
               onClick={() => setDrop(!drop)}
             />
             <div
@@ -112,4 +112,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default DesignerNavBar;

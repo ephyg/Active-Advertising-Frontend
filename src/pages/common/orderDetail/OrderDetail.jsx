@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../../../components/Layout/Layout";
 import Card from "../../../components/common/card/Card";
-import data from "../orderList/DATA.json";
 import Button from "../../../components/common/button/Button";
 import useProformaStore from "../../../store/proformaStore";
 import * as api from "../../../api/proformaApi";
@@ -11,10 +10,7 @@ import Loading from "../../../assets/image/Loading.gif";
 import useUserStore from "../../../store/userStore";
 function OrderDetail() {
   const user = useUserStore();
- 
   const navigate = useNavigate();
-
-  
   const { id } = useParams();
   const { setNumber, number } = useUserStore();
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
@@ -25,7 +21,6 @@ function OrderDetail() {
   } = useQuery("OrderedEmployee-store", () =>
     api.OrderedEmployee(user.token, id)
   );
-
   const filteredData = eachOrder.filter((item) => item.id == id);
   if (OrderedEmployeeLoading) {
     return (
@@ -34,27 +29,20 @@ function OrderDetail() {
       </div>
     );
   }
-  console.log("OrderedEmployee", OrderedEmployee);
-
   const handleEmployee = async () => {
     await setNumber(id);
-    // console.log(OrderedEmployee);
     if (OrderedEmployee[0].user_role) {
       navigate(`/staffs-order/${OrderedEmployee[0].id}`);
     } else {
-      console.log("hello");
       navigate(`/freelancer-order/${OrderedEmployee[0].id}`);
     }
   };
   const handleAllocateOrder = async () => {
     await setNumber(id);
-    console.log(number, id);
     navigate(`/allocate-order`);
   };
 
-  // if (OrderedEmployeeLoading) {
-  //   console.log(OrderedEmployee);
-  // }
+ 
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">

@@ -36,7 +36,6 @@ function Report() {
     { refetchOnMount: false, retry: 0 }
   );
   const handleSearch = () => {
-    console.log(searchDate);
   };
   if (ReportLoading) {
     return (
@@ -45,7 +44,6 @@ function Report() {
       </div>
     );
   }
-  console.log(ReportData);
   if (ReportError) {
     setSearchDate(null);
     toast.error("No report found for the specified day", {
@@ -55,7 +53,6 @@ function Report() {
     return <h1>Error</h1>;
   }
 
-  // console.log(ReportData.daily_totals.friday_profit);
   const Revenue = [
     {
       id: 1,

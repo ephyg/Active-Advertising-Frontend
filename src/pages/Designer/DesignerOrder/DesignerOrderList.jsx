@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import Layout from "../../../components/Layout/Layout";
 import {
   useTable,
   useSortBy,
@@ -20,17 +21,16 @@ import InputField from "../../../components/common/inputField/InputField";
 import useUserStore from "../../../store/userStore";
 import { useQuery } from "react-query";
 import useProformaStore from "../../../store/proformaStore";
-function StaffListComponent({ userLists }) {
+function DesignerOrderComponent({ orderlists }) {
   const roleType = useUserStore((state) => state.user_role);
   const User = useUserStore((state) => state.User);
   const user = useUserStore();
   const navigate = useNavigate();
-
+  const columns = useMemo(() => Columns, []);
+  const data = useMemo(() => orderlists, [orderlists]);
   const [id, setId] = useState();
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
 
-  const columns = useMemo(() => Columns, []);
-  const data = useMemo(() => Object.values(userLists), []);
   const tableInstance = useTable(
     {
       columns,
@@ -58,27 +58,37 @@ function StaffListComponent({ userLists }) {
     state: { globalFilter, pageIndex },
   } = tableInstance;
 
-  const handleRowClick = async (index, row) => {
-    const userId = row.original.id;
+  const handleRowClick = async (index) => {
+    const proformaId = orderlists[index].proforma_id;
+    setId(proformaId);
+    try {
+      const proformaDetailData = await api.GetProforma(user.token, proformaId);
 
-    setId(userId);
+      const order = proformaDetailData.order;
+      const proforma = proformaDetailData.proforma;
+      const DT = {
+        order: order,
+        proforma: proforma,
+      };
 
-    navigate(`${userId}`);
+      setProformaDetail(DT);
+    } catch (error) {
+      console.error("Error fetching proforma data:", error);
+    }
+    navigate(`${orderlists[index].id}`);
   };
-
+  const handleStatus = (index) => {
+  };
   return (
     <div className="w-full md:pr-0">
-      <div className="flex justify-between mb-3 md:grid md:grid-cols-2 md:gap-10 ">
-        <div className="hover:bg-blue_hover flex items-center justify-between gap-2 rounded-md cursor-pointer bg-blue px-6 md:px-3 md:py-0">
-          <Link to="/admin/add-staff">
-            <Button
-              text="Add Staff"
-              className="md:text-sm"
-              icon={FaPlus}
-              iconSize={12}
-            />
-          </Link>
+      <div className="w-full md:flex justify-center items-center">
+        <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
+          <span className="mb-2px">Order List</span>
+          <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
         </div>
+      </div>
+      <div className="flex justify-between mb-3 md:grid md:grid-cols-2 md:gap-10 ">
+        <div className=""></div>
         <InputField
           placeholder="Search"
           className="py-1"
@@ -119,21 +129,31 @@ function StaffListComponent({ userLists }) {
             {page.map((row, index) => {
               prepareRow(row);
               return (
-                <tr
-                  {...row.getRowProps()}
-                  className="hover:bg-slate-200 cursor-pointer group"
-                  onClick={() => handleRowClick(index, row)}
-                >
-                  {row.cells.map((cell, index) => (
-                    <td
-                      {...cell.getCellProps}
-                      key={index}
-                      className="border py-1 text-sm px-2 group-hover:border-slate-200"
-                    >
-                      {cell.render("Cell")}
+                <>
+                  <tr
+                    {...row.getRowProps()}
+                    className=" cursor-pointer group"
+                    //   onClick={() => handleRowClick(index)}
+                  >
+                    {row.cells.map((cell, index) => (
+                      <td
+                        {...cell.getCellProps}
+                        key={index}
+                        className="border py-1 text-sm px-2 "
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                    <td>
+                      <button
+                        onClick={handleStatus(index)}
+                        className="bg-green font-roboto px-3 text-white rounded-md hover:bg-lime-950"
+                      >
+                        Done
+                      </button>
                     </td>
-                  ))}
-                </tr>
+                  </tr>
+                </>
               );
             })}
           </tbody>
@@ -163,4 +183,4 @@ function StaffListComponent({ userLists }) {
   );
 }
 
-export default StaffListComponent;
+export default DesignerOrderComponent;

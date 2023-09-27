@@ -77,7 +77,6 @@ function StaffOrder() {
   if (LoadingGetSingleOrder) {
     return <h1>Loading</h1>;
   }
-  console.log(SingleOrder[0].user_id);
   const StaffOrders = StaffOrder.data;
   return (
     <Layout>

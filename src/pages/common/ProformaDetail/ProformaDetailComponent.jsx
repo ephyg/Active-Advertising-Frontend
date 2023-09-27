@@ -24,7 +24,6 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
     order: eachOrder,
     proforma: eachProforma,
   };
-  console.log(eachOrder);
   const proformaMutation = (statusData) => {
     const response = api.UpdateStatus(user.token, id, statusData);
     return response;
@@ -32,19 +31,16 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
   const verifyMutation = useMutation(proformaMutation, {
     onSuccess: (response) => {
       queryClient.invalidateQueries(["proformaDetail"]);
-      console.log(response);
     },
   });
   const declineMutation = useMutation(proformaMutation, {
     onSuccess: (response) => {
       queryClient.invalidateQueries(["proformaDetail"]);
-      console.log(response);
     },
   });
   const cancelMutation = useMutation(proformaMutation, {
     onSuccess: (response) => {
       queryClient.invalidateQueries(["proformaDetail"]);
-      console.log(response);
     },
   });
 
@@ -55,7 +51,6 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
     orderDetail();
   }, []);
 
-  // console.log();
   const contact = String(eachProforma[0].active_phone_number);
   const contactArray = contact.split(":");
   const bankAccount = String(eachProforma[0].active_account_number);
@@ -104,7 +99,9 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
     };
     cancelMutation.mutate(statusData);
   };
-  const handleDelivery = () => {};
+  const handleDelivery = () => {
+    navigate(`/delivery/${id}`);
+  };
   return (
     <Layout>
       <div className="flex relative flex-col mx-16 md:mr-0 md:ml-0 md:px-0">
@@ -413,17 +410,24 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
                     className="text-white text-lg  px-8 flex rounded-lg py-1 bg-red "
                     onClick={handleCancel}
                   />
-                ) : eachProforma[0].status == "Completed" ? (
-                  <Button
-                    text="Delivery"
-                    className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
-                    onClick={handleDelivery}
-                  />
                 ) : eachProforma[0].status == "Canceled" ? (
                   <Button
                     text="Verify"
                     className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
                     onClick={handleVerify}
+                  />
+                ) : (
+                  ""
+                )
+              ) : (
+                ""
+              )}
+              {userRole == "admin" || userRole == "account-manager" ? (
+                eachProforma[0].status == "Completed" ? (
+                  <Button
+                    text="Delivery"
+                    className="text-white text-lg  px-8 flex rounded-lg py-1 bg-blue hover:bg-blue_hover"
+                    onClick={handleDelivery}
                   />
                 ) : (
                   ""

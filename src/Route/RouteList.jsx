@@ -16,9 +16,8 @@ import AddProforma from "../pages/common/addProforma/AddProforma";
 import CustomerDetails from "../pages/common/customerDetail/CustomerDetails";
 import AdminProfile from "../pages/admin/adminProfile/AdminProfile";
 import AddStaff from "../pages/admin/addStaff/AddStaff";
-import useUserStore from "../store/userStore";
+import useUserStore, { useUser, useUserData } from "../store/userStore";
 import AddItems from "../pages/common/inventoryRegistration/AddItems";
-import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
 import ConfirmCode from "../pages/common/AuthPage/ConfirmCode";
 import NewPassword from "../pages/common/AuthPage/NewPassword";
 import DeliveryForm from "../pages/common/deliveryForm/DeliveryForm";
@@ -36,18 +35,29 @@ import StaffEmployeeOrders from "../pages/common/AllocateOrder/AllocateStaff/Sta
 import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
 import FreeelancerEmployeeOrders from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerEmployeeOrder";
 import FreelancerOrder from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerOrder";
+import DesignerOrder from "../pages/Designer/DesignerOrder/DesignerOrder";
+import DesignerProfile from "../pages/Designer/DesignerProfile/DesignerProfile";
+import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
 function RouteList() {
-  const user = useUserStore();
+  const user = useUserData();
   const navigate = useNavigate();
-  const roleType = "admin";
+  let roleType = null;
+
+  if (!!user) {
+    !user.user_role ? (roleType = null) : (roleType = user.user_role);
+  }
   return (
     <Routes>
       <Route element={<PrivateRouteAuth />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgot" element={<Forgot />} />
-        <Route path="/verify" element={<ConfirmCode />} />
-        <Route path="/new-password" element={<NewPassword />} />
-        <Route path="/" element={<Login />} />
+        {roleType == null && (
+          <>
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot" element={<Forgot />} />
+            <Route path="/verify" element={<ConfirmCode />} />
+            <Route path="/new-password" element={<NewPassword />} />
+            <Route path="/" element={<Login />} />
+          </>
+        )}
       </Route>
 
       <Route element={<PrivateRoutes />}>
@@ -90,7 +100,7 @@ function RouteList() {
             <Route path="/stock/:id" element={<EditItems />} />
             <Route path="/stock/additem" element={<AddItems />} />
             <Route path="/agreement" element={<AgreementForm />} />
-            <Route path="/delivery" element={<DeliveryForm />} />
+            <Route path="/delivery/:id" element={<DeliveryForm />} />
             <Route path="/allocate-order/" element={<AllocateOrderLayout />} />
             <Route
               path="/allocate-order/staff/:id"
@@ -100,14 +110,13 @@ function RouteList() {
               path="/allocate-order/freelancer/:id"
               element={<FreeelancerEmployeeOrders />}
             />
-         
           </>
         )}
         {/* Route for employees only*/}
         {roleType !== "account-manager" && roleType !== "admin" && (
           <>
-            {/* <Route path="/order" element={<OrderList />} /> */}
-            <Route path="/order/:id" element={<OrderDetail />} />
+            <Route path="/order" element={<DesignerOrder />} />
+            <Route path="/profile" element={<DesignerProfile />} />
           </>
         )}
       </Route>

@@ -45,7 +45,6 @@ function FreeelancerEmployeeOrders() {
   const UpdateOrderMutation = useMutation(updateOrder, {
     onSuccess: async (response) => {
       //   navigate("/staffs");
-      console.log(userData);
       await queryClient.invalidateQueries([
         "userData-store",
         "FreelancerOrder-store",
@@ -53,18 +52,15 @@ function FreeelancerEmployeeOrders() {
       await queryClient.refetchQueries({
         include: "active",
       });
-      console.log("Success");
-      console.log(response);
+
     },
   });
-  //   console.log(number);
   const handleAllocate = () => {
     const StatusData = {
       status: "Allocated",
       freelancer_id: Number(id),
       order_id: Number(number),
     };
-    // console.log(StatusData);
     UpdateOrderMutation.mutate(StatusData);
   };
   const handleUnallocate = () => {

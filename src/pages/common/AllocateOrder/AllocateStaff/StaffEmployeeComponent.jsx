@@ -59,8 +59,7 @@ function StaffEmployeeComponent({ employeeList }) {
 
   const handleRowClick = async (index, row) => {
     const userId = row.original.id;
-    // console.log("id", userId);
-    // console.log();
+
     setId(userId);
     navigate(`/allocate-order/staff/${userId}`);
   };

@@ -6,7 +6,6 @@ import {
   useGlobalFilter,
   usePagination,
 } from "react-table";
-import DATA from "./DATA.json";
 import { Columns } from "./Columns";
 import { Link, useNavigate } from "react-router-dom";
 import * as api from "../../../api/proformaApi";
@@ -28,7 +27,7 @@ function OrderListComponent({ orderlists }) {
   const user = useUserStore();
   const navigate = useNavigate();
   const columns = useMemo(() => Columns, []);
-  const data = useMemo(() => orderlists, [orderlists]);
+  const data = useMemo(() => orderlists, []);
   const [id, setId] = useState();
   const { setProformaDetail, eachOrder, eachProforma } = useProformaStore();
 
@@ -61,12 +60,9 @@ function OrderListComponent({ orderlists }) {
 
   const handleRowClick = async (index) => {
     const proformaId = orderlists[index].proforma_id;
-    console.log("id", proformaId);
     setId(proformaId);
-    // console.log("before loading...");
     try {
       const proformaDetailData = await api.GetProforma(user.token, proformaId);
-      console.log(proformaDetailData); // Check the fetched data
 
       const order = proformaDetailData.order;
       const proforma = proformaDetailData.proforma;

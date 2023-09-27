@@ -17,7 +17,6 @@ function InventoryList() {
     // staleTime: Infinity,
     // forceFetch: true,
   });
-  // console.log(orderlist);
   if (isLoading) {
     return (
       <div className="flex bg-transparent h-screen w-full justify-center items-center">
@@ -25,7 +24,6 @@ function InventoryList() {
       </div>
     );
   }
-  console.log(inventoryList);
 
   return (
     <Layout>
