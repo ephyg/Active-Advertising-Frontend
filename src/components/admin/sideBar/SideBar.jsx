@@ -28,10 +28,10 @@ function SideBar({ className, setIsOpen }) {
             <MdClose
               size={24}
               onClick={(e) => setPopUp(false)}
-              class="font-roboto font-bold cursor-pointer shrink-0 fill-black hover:fill-red-500 float-right"
+              class="font-roboto font-normal cursor-pointer shrink-0 fill-black hover:fill-red-500 float-right"
             />
             <div class="my-8 text-center">
-              <h4 class="text-base font-semibold mt-4">
+              <h4 class="text-base font-normal mt-4">
                 Are you sure you want to Logout?
               </h4>
             </div>
@@ -40,14 +40,14 @@ function SideBar({ className, setIsOpen }) {
               <button
                 type="button"
                 onClick={handlePopUp}
-                class="px-6 py-2 rounded text-white text-sm font-semibold border-none outline-none bg-red hover:bg-red-600 active:bg-red-500"
+                class="px-6 py-2 rounded text-white text-sm font-normal border-none outline-none bg-red hover:bg-red-600 active:bg-red-500"
               >
                 Yes
               </button>
               <button
                 type="button"
                 onClick={(e) => setPopUp(false)}
-                class="px-6 py-2 rounded text-black text-sm font-semibold border-none outline-none bg-gray-200 hover:bg-gray-300 active:bg-gray-200"
+                class="px-6 py-2 rounded text-black text-sm font-normal border-none outline-none bg-gray-200 hover:bg-gray-300 active:bg-gray-200"
               >
                 Cancel
               </button>
@@ -56,7 +56,7 @@ function SideBar({ className, setIsOpen }) {
         </div>
       )}
       <div
-        className={`h-screen fixed w-72 bg-blue flex flex-col items-center pt-5 px-5 2xl: ${className}`}
+        className={`h-screen fixed w-60 bg-blue flex flex-col items-center pt-5 px-5 2xl: ${className}`}
       >
         <BiMenu
           className="absolute top-2 right-2 cursor-pointer text-white hover:text-red 2xl:hidden md:flex"
@@ -70,7 +70,7 @@ function SideBar({ className, setIsOpen }) {
               className="rounded-full w-28 mb-2 border-2 border-blue_hover  h-28 bg-slate-400"
               alt=""
             />
-            <h1 className="text-lg font-roboto font-bold text-white ">
+            <h1 className="text-lg font-roboto font-normal text-white ">
               {UserData.user_first_name + " " + UserData.user_last_name}
             </h1>
           </div>
@@ -88,7 +88,7 @@ function SideBar({ className, setIsOpen }) {
                   size: 20,
                 })}
                 <h1
-                  className={`text-base font-roboto font-bold   hover:text-red ${
+                  className={`text-base font-roboto font-normal   hover:text-red ${
                     pathName == path ? `text-red` : "text-white"
                   }`}
                 >
@@ -100,7 +100,7 @@ function SideBar({ className, setIsOpen }) {
         </div>
         <div className="h-full flex items-end w-full pl-10 cursor-pointer">
           <div onClick={(e) => setPopUp(true)}>
-            <h1 className="text-base font-roboto font-bold   hover:text-red pb-7 text-white ">
+            <h1 className="text-base font-roboto font-normal   hover:text-red pb-7 text-white ">
               Logout
             </h1>
           </div>

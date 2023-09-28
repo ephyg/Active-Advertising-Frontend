@@ -42,7 +42,7 @@ function StaffDetail() {
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">
-        <div className=" relative w-full mb-6 text-red font-roboto font-bold text-xl md:items-center md:flex md:justify-center">
+        <div className=" relative w-full mb-6 text-red font-roboto font-normal text-2xl md:items-center md:flex md:justify-center">
           <span className="mb-2px">Staff Detail</span>
           <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
         </div>

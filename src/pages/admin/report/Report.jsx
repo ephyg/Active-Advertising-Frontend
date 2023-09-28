@@ -14,6 +14,9 @@ import * as api from "../../../api/reportApi";
 
 // import PieChart from "./components/PieChart";
 // import { Revenue } from "./Data/Data3";
+import {IoCloudDoneSharp} from  "react-icons/io5"
+import {TbTruckDelivery} from  "react-icons/tb"
+import {BsFillBoxSeamFill} from  "react-icons/bs"
 import { FaCar, FaCheck, FaRegCheckSquare, FaRegListAlt } from "react-icons/fa";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import useUserStore from "../../../store/userStore";
@@ -111,7 +114,7 @@ function Report() {
   return (
     <Layout>
       <div className="flex justify-between items-center mb-5">
-        <div className="text-red font-roboto font-bold text-xl md:items-center md:flex md:justify-center">
+        <div className="text-red font-roboto font-normal text-2xl md:items-center md:flex md:justify-center">
           Weekly Report
         </div>
         <div class="">
@@ -149,7 +152,7 @@ function Report() {
                 <FaRegCheckSquare color="white" size={25} />
               </div>
               <div className="flex flex-col justify-center items-center">
-                <h1 className="text-white font-roboto text-lg font-semibold">
+                <h1 className="text-white font-roboto text-lg font-normal">
                   Fresh Inventory
                 </h1>
                 <h1 className="text-white font-roboto text-base">
@@ -162,7 +165,7 @@ function Report() {
                 <HiOutlineUserGroup color="white" size={25} />
               </div>
               <div className="flex flex-col justify-center items-center">
-                <h1 className="text-white font-roboto text-lg font-semibold">
+                <h1 className="text-white font-roboto text-lg font-normal">
                   Customer
                 </h1>
                 <h1 className="text-white font-roboto text-base">
@@ -175,7 +178,7 @@ function Report() {
                 <FaCheck color="white" size={25} />
               </div>
               <div className="flex flex-col justify-center items-center">
-                <h1 className="text-white font-roboto text-lg font-semibold">
+                <h1 className="text-white font-roboto text-lg font-normal">
                   Approved Proformas
                 </h1>
                 <h1 className="text-white font-roboto text-base">
@@ -188,7 +191,7 @@ function Report() {
                 <FaRegListAlt color="white" size={25} />
               </div>
               <div className="flex flex-col justify-center items-center">
-                <h1 className="text-white font-roboto text-lg font-semibold">
+                <h1 className="text-white font-roboto text-lg font-normal">
                   Total Orders
                 </h1>
                 <h1 className="text-white font-roboto text-base">
@@ -219,7 +222,7 @@ function Report() {
               alt=""
             />
             <div className="flex flex-col gap-1">
-              <h4 className="text-sm">Total Revenue</h4>
+              <h4 className="text-md">Total Revenue</h4>
               <h1 className="text-3xl font-semibold dark:text-white">
                 {Number(ReportData.totalRevenue).toFixed(2)} Birr
               </h1>
@@ -232,7 +235,7 @@ function Report() {
               alt=""
             />
             <div className="flex flex-col gap-1">
-              <h4 className="text-sm">Total Cost</h4>
+              <h4 className="text-md">Total Cost</h4>
               <h1 className="text-3xl font-semibold dark:text-white">
                 {Number(ReportData.totalCost).toFixed(2)} Birr
               </h1>
@@ -245,7 +248,7 @@ function Report() {
               alt=""
             />
             <div className="flex flex-col gap-1">
-              <h4 className="text-sm">Total Profit</h4>
+              <h4 className="text-md">Total Profit</h4>
               <h1 className="text-3xl font-semibold dark:text-white">
                 {Number(ReportData.totalProfit).toFixed(2)} Birr
               </h1>
@@ -256,7 +259,7 @@ function Report() {
       </div>
       <div className="flex mt-10 justify-between gap-10 px-20">
         <div className="bg-blue flex justify-center gap-6 items-center rounded-md px-10">
-          <FaCar size={24} />
+          <TbTruckDelivery size={28} />
           <div className="flex flex-col">
             <h1 className="text-white font-roboto text-center">
               Delivered Order
@@ -267,7 +270,7 @@ function Report() {
           </div>
         </div>
         <div className="bg-blue flex justify-center gap-6 items-center rounded-md  px-10">
-          <FaCar size={24} />
+          <IoCloudDoneSharp size={26} />
           <div className="flex flex-col">
             <h1 className="text-white font-roboto text-center">
               Completed Order
@@ -278,7 +281,7 @@ function Report() {
           </div>
         </div>
         <div className="bg-blue flex justify-center gap-6 items-center rounded-md px-10">
-          <FaCar size={24} />
+          <BsFillBoxSeamFill size={24} />
           <div className="flex flex-col">
             <h1 className="text-white font-roboto text-center">
               Allocated Orders
