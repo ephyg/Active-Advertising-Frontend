@@ -34,11 +34,12 @@ function Report() {
     isLoading: ReportLoading,
     isError: ReportError,
   } = useQuery(
-    ["Report-store", searchDate],
-    () => api.GetReport(token, searchDate),
+    ["Report-store", selectedDate],
+    () => api.GetReport(token, selectedDate),
     { refetchOnMount: false, retry: 0 }
   );
   const handleSearch = () => {
+    setSelectedDate(searchDate);
   };
   if (ReportLoading) {
     return (
@@ -47,12 +48,12 @@ function Report() {
       </div>
     );
   }
-  if (ReportError) {
-    setSearchDate(null);
+  if (!ReportData) {
     toast.error("No report found for the specified day", {
       position: "top-center",
-      toastId: "success3",
+      // toastId: "success3",
     });
+    setSelectedDate(null);
     return <h1>Error</h1>;
   }
 
@@ -200,7 +201,7 @@ function Report() {
               </div>
             </div>
           </div>
-          <div className="flex bg-blue items-center justify-center rounded-lg h-20 flex-col w-full px-6 ">
+          {/* <div className="flex bg-blue items-center justify-center rounded-lg h-20 flex-col w-full px-6 ">
             <div className="bg-blue flex text-center w-full justify-between items-center">
               <p className="text-white font-roboto">Goal Completion</p>
               <p className="text-white font-roboto">60%</p>
@@ -208,7 +209,7 @@ function Report() {
             <div className="h-2 bg-white w-full rounded-b-md rounded-t-md mb-3 mt-1">
               <div className="h-2 w-3/4 bg-red rounded-b-md rounded-t-md"></div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="flex w-full bg-blue rounded-md px-5 py-2 flex-col gap-1 mt-10">

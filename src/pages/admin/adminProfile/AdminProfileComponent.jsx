@@ -60,7 +60,6 @@ function AdminProfileComponent({ CurrentUserData }) {
         // user_password: `${values.first_name + "." + values.last_name}`,
         user_password: values.user_password,
       };
-      console.log(UserData);
       staffMutation.mutate(UserData);
     });
   };
@@ -110,7 +109,6 @@ function AdminProfileComponent({ CurrentUserData }) {
   if (staffMutation.isLoading) {
     return <h1>Loading..</h1>;
   }
-  console.log(CurrentUserData);
   return (
     <Layout>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">

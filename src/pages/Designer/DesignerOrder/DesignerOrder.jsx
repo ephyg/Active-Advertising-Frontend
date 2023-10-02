@@ -13,7 +13,9 @@ function DesignerOrder() {
     data: orderlist,
     isLoading,
     isError,
-  } = useQuery("OrderList", () => api.staffOrderList(user.token, userData.id));
+  } = useQuery(["OrderList", userData.id], () =>
+    api.staffOrderList(user.token, userData.id)
+  );
   if (isLoading) {
     return <h1></h1>;
   }
@@ -23,5 +25,5 @@ function DesignerOrder() {
     </Layout>
   );
 }
-  
+
 export default DesignerOrder;

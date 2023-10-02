@@ -39,25 +39,26 @@ import DesignerOrder from "../pages/Designer/DesignerOrder/DesignerOrder";
 import DesignerProfile from "../pages/Designer/DesignerProfile/DesignerProfile";
 import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
 function RouteList() {
-  const user = useUserData();
+  const user= useUserData();
   const navigate = useNavigate();
   let roleType = null;
 
   if (!!user) {
     !user.user_role ? (roleType = null) : (roleType = user.user_role);
   }
+
   return (
     <Routes>
       <Route element={<PrivateRouteAuth />}>
-        {roleType == null && (
-          <>
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot" element={<Forgot />} />
-            <Route path="/verify" element={<ConfirmCode />} />
-            <Route path="/new-password" element={<NewPassword />} />
-            <Route path="/" element={<Login />} />
-          </>
-        )}
+        {/* {roleType == null && ( */}
+        <>
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot" element={<Forgot />} />
+          <Route path="/verify" element={<ConfirmCode />} />
+          <Route path="/new-password" element={<NewPassword />} />
+          <Route path="/" element={<Login />} />
+        </>
+        {/* )} */}
       </Route>
 
       <Route element={<PrivateRoutes />}>

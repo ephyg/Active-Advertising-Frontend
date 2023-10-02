@@ -48,7 +48,6 @@ function StaffEmployeeOrders() {
       await queryClient.refetchQueries({
         include: "active",
       });
-
     },
   });
   const handleAllocate = () => {
@@ -62,7 +61,6 @@ function StaffEmployeeOrders() {
   const handleUnallocate = () => {
     const StatusData = {
       status: "Unallocated",
-      user_id: null,
       order_id: Number(number),
     };
     UpdateOrderMutation.mutate(StatusData);
@@ -102,7 +100,6 @@ function StaffEmployeeOrders() {
         </div>
 
         <div className="flex justify-center gap-10 mb-10 md:gap-5">
-          {/* {userData.status != "Allocated" && ( */}
           {SingleOrder[0].user_id == id ? (
             <Button
               onClick={handleUnallocate}
@@ -116,8 +113,6 @@ function StaffEmployeeOrders() {
               className="text-center bg-blue rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
             />
           )}
-
-          {/* )} */}
         </div>
         <div className="mb-20">
           <div className="flex"></div>

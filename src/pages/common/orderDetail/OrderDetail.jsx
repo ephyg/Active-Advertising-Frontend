@@ -31,6 +31,7 @@ function OrderDetail() {
   }
   const handleEmployee = async () => {
     await setNumber(id);
+    console.log(OrderedEmployee)
     if (OrderedEmployee[0].user_role) {
       navigate(`/staffs-order/${OrderedEmployee[0].id}`);
     } else {
@@ -41,8 +42,6 @@ function OrderDetail() {
     await setNumber(id);
     navigate(`/allocate-order`);
   };
-
- 
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">

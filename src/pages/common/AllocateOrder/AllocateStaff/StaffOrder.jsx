@@ -7,14 +7,13 @@ import Card from "../../../../components/common/card/Card";
 import Button from "../../../../components/common/button/Button";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import useUserStore, { useUserData } from "../../../../store/userStore";
+import useProformaStore from "../../../../store/proformaStore";
 function StaffOrder() {
   const CurrentUserData = useUserData();
+  const { eachProforma } = useProformaStore();
   const { number } = useUserStore();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  //   useEffect(() => {
-  //     window.scrollTo(0, 0);
-  //   });
   const { id } = useParams();
   const user = useUserStore();
   const {
@@ -77,6 +76,7 @@ function StaffOrder() {
   if (LoadingGetSingleOrder) {
     return <h1>Loading</h1>;
   }
+  console.log(eachProforma[0].status);
   const StaffOrders = StaffOrder.data;
   return (
     <Layout>
@@ -101,79 +101,82 @@ function StaffOrder() {
           <Card text="Role" information={userData.user_role} />
         </div>
         <div className="flex gap-10 justify-center">
-          {SingleOrder[0].user_id == id ? (
-            <Button
-              onClick={handleUnallocated}
-              text="Unallocate"
-              className="text-center bg-red rounded-md px-14 py-1 mb-10 hover:bg-red_hover md:px-10 md:py-1 md:text-base"
-            />
-          ) : (
-            <Button
-              onClick={handleAllocate}
-              text="Allocate"
-              className="text-center bg-blue rounded-md px-14 py-1 mb-10 hover:bg-red_hover md:px-10 md:py-1 md:text-base"
-            />
-          )}
+          {eachProforma[0].status != "Completed" &&
+            (SingleOrder[0].user_id == id ? (
+              <Button
+                onClick={handleUnallocated}
+                text="Unallocate"
+                className="text-center bg-red rounded-md px-14 py-1 mb-10 hover:bg-red_hover md:px-10 md:py-1 md:text-base"
+              />
+            ) : (
+              <Button
+                onClick={handleAllocate}
+                text="Allocate"
+                className="text-center bg-blue rounded-md px-14 py-1 mb-10 hover:bg-red_hover md:px-10 md:py-1 md:text-base"
+              />
+            ))}
         </div>
-        <div className="flex justify-center gap-10 mb-20 md:gap-5">
-          <table class="mb-3 min-w-full">
-            <thead class="text-blue">
-              <tr className="">
-                <th class="py-1 border-slate-200 border-2  px-4 text-xs md:text-xxs text-left">
-                  No.
-                </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                  Items Description
-                </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                  Size
-                </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                  Vendor
-                </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                  Quantity
-                </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                  Unit Price
-                </th>
-                <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                  Total Price
-                </th>
-              </tr>
-            </thead>
-
-            <tbody class="divide-y divide-gray-300">
-              {StaffOrders.map((items, index) => (
-                <tr className="cursor-pointer hover:bg-slate-200">
-                  <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
-                    <li key={index} className="list-none">
-                      {index + 1}
-                    </li>
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {items.item_description}
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {items.size}
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {items.vendor_name}
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {items.quantity}
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {items.unit_price}
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {Number(items.quantity) * Number(items.unit_price)}
-                  </td>
+        {/* {eachProforma[0].status != "Completed" && ( */}
+          <div className="flex justify-center gap-10 mb-20 md:gap-5">
+            <table class="mb-3 min-w-full">
+              <thead class="text-blue">
+                <tr className="">
+                  <th class="py-1 border-slate-200 border-2  px-4 text-xs md:text-xxs text-left">
+                    No.
+                  </th>
+                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Items Description
+                  </th>
+                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Size
+                  </th>
+                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Vendor
+                  </th>
+                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Quantity
+                  </th>
+                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Unit Price
+                  </th>
+                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                    Total Price
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+
+              <tbody class="divide-y divide-gray-300">
+                {StaffOrders.map((items, index) => (
+                  <tr className="cursor-pointer hover:bg-slate-200">
+                    <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
+                      <li key={index} className="list-none">
+                        {index + 1}
+                      </li>
+                    </td>
+                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.item_description}
+                    </td>
+                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.size}
+                    </td>
+                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.vendor_name}
+                    </td>
+                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.quantity}
+                    </td>
+                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                      {items.unit_price}
+                    </td>
+                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                      {Number(items.quantity) * Number(items.unit_price)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        {/* )} */}
       </div>
     </Layout>
   );

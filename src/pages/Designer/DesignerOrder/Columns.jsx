@@ -22,6 +22,10 @@ export const Columns = [
   },
   {
     Header: "Order-Date",
-    accessor: "formatted_created_at",
+    accessor: "created_at",
+    Cell: ({ value }) => {
+      const dateObject = new Date(value);
+      return dateObject.toISOString().split("T")[0]; // Format the date
+    },
   },
 ];

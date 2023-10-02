@@ -103,13 +103,14 @@ export const useUserData = () => {
     data: authUserData,
     isError,
     isLoading,
-  } = useQuery("authUser", () => api.AuthenticatedUser(token), {
+  } = useQuery(["authUser", token], () => api.AuthenticatedUser(token), {
     retry: 0,
   });
   if (isLoading) {
     return <h1>loading</h1>;
   }
   // user.setUser(authUserData)
+
   return authUserData;
 };
 export default useUserStore;
