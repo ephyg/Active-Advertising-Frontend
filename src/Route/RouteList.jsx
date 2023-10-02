@@ -40,7 +40,7 @@ import DesignerProfile from "../pages/Designer/DesignerProfile/DesignerProfile";
 import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
 import FreelancerDetail from "../pages/common/freelancerDetail/FreelancerDetail";
 function RouteList() {
-  const user = useUserData();
+  const user= useUserData();
   const navigate = useNavigate();
   let roleType = null;
 
