@@ -52,7 +52,6 @@ function FreeelancerEmployeeOrders() {
       await queryClient.refetchQueries({
         include: "active",
       });
-
     },
   });
   const handleAllocate = () => {
@@ -156,6 +155,9 @@ function FreeelancerEmployeeOrders() {
                   Quantity
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                  Status
+                </th>
+                <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
                   Unit Price
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
@@ -183,6 +185,9 @@ function FreeelancerEmployeeOrders() {
                   </td>
                   <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.quantity}
+                  </td>
+                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                    {items.status}
                   </td>
                   <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.unit_price}

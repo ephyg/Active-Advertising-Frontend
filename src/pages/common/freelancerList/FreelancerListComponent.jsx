@@ -21,7 +21,7 @@ import InputField from "../../../components/common/inputField/InputField";
 import { useQuery } from "react-query";
 function FreelancerListComponent({ freelancerData }) {
   const navigate = useNavigate();
-  const { id, setId } = useState();
+  const [id, setId] = useState();
   const columns = useMemo(() => Columns, []);
   const data = useMemo(() => freelancerData, [freelancerData]);
 
@@ -51,6 +51,13 @@ function FreelancerListComponent({ freelancerData }) {
     previousPage,
     state: { globalFilter, pageIndex },
   } = tableInstance;
+  const handleRowClick = async (index, row) => {
+    const userId = row.original.id;
+
+    setId(userId);
+
+    navigate(`${userId}`);
+  };
 
   return (
     <div className="w-screen, overflow-auto">
@@ -101,13 +108,13 @@ function FreelancerListComponent({ freelancerData }) {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {page.map((row, index) => {
               prepareRow(row);
               return (
                 <tr
                   {...row.getRowProps()}
                   className="hover:bg-slate-200 cursor-pointer group"
-                 
+                  onClick={() => handleRowClick(index, row)}
                 >
                   {row.cells.map((cell, index) => (
                     <td

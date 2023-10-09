@@ -18,7 +18,7 @@ export const Columns = [
   },
   {
     Header: "Tin Number",
-    accessor: "active_tin_nUmber",
+    accessor: "client_tin_number",
   },
   {
     Header: "Status",

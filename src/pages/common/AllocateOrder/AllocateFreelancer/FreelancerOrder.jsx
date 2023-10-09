@@ -8,8 +8,10 @@ import Button from "../../../../components/common/button/Button";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import useUserStore, { useUserData } from "../../../../store/userStore";
 import Layout from "../../../../components/Layout/Layout";
+import useProformaStore from "../../../../store/proformaStore";
 function FreelancerOrder() {
   const CurrentUserData = useUserData();
+  const { eachProforma } = useProformaStore();
   const navigate = useNavigate();
   const { number } = useUserStore();
   const queryClient = useQueryClient();
@@ -54,7 +56,6 @@ function FreelancerOrder() {
       await queryClient.refetchQueries({
         include: "active",
       });
-
     },
   });
   const handleAllocate = () => {
@@ -82,7 +83,7 @@ function FreelancerOrder() {
   if (LoadingGetSingleOrder) {
     return <h1>Loading</h1>;
   }
-
+  console.log(eachProforma);
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">
@@ -126,20 +127,20 @@ function FreelancerOrder() {
         </div>
 
         <div className="flex justify-center gap-10 mb-10 md:gap-5">
-          {/* {FreelancerData.status != "Allocated" && ( */}
-          {SingleOrder[0].freelancer_id == FreelancerData.data.id ? (
-            <Button
-              onClick={handleUnallocate}
-              text="Unallocate"
-              className="text-center bg-red rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
-            />
-          ) : (
-            <Button
-              onClick={handleAllocate}
-              text="Allocate"
-              className="text-center bg-blue rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
-            />
-          )}
+          {eachProforma[0].status != "Completed" &&
+            (SingleOrder[0].freelancer_id == FreelancerData.data.id ? (
+              <Button
+                onClick={handleUnallocate}
+                text="Unallocate"
+                className="text-center bg-red rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
+              />
+            ) : (
+              <Button
+                onClick={handleAllocate}
+                text="Allocate"
+                className="text-center bg-blue rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
+              />
+            ))}
 
           {/* )} */}
         </div>
@@ -162,6 +163,9 @@ function FreelancerOrder() {
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
                   Quantity
+                </th>
+                <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                  Status
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
                   Unit Price
@@ -191,6 +195,9 @@ function FreelancerOrder() {
                   </td>
                   <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.quantity}
+                  </td>{" "}
+                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                    {items.status}
                   </td>
                   <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.unit_price}

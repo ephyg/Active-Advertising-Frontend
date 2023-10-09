@@ -39,6 +39,8 @@ const Login = () => {
       login(userData);
       userData.user.user_role === "admin"
         ? navigate("/report")
+        : userData.user.user_role === "account-manager"
+        ? navigate("/proforma")
         : navigate("/order");
     },
   });
@@ -132,7 +134,7 @@ const Login = () => {
               <FaEye
                 size={24}
                 onClick={handleEyeClick}
-                className="text-blue absolute right-3 bottom-4"
+                className="text-blue absolute right-3 bottom-8"
               />
             )}
           </div>

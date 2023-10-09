@@ -38,8 +38,9 @@ import FreelancerOrder from "../pages/common/AllocateOrder/AllocateFreelancer/Fr
 import DesignerOrder from "../pages/Designer/DesignerOrder/DesignerOrder";
 import DesignerProfile from "../pages/Designer/DesignerProfile/DesignerProfile";
 import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
+import FreelancerDetail from "../pages/common/freelancerDetail/FreelancerDetail";
 function RouteList() {
-  const user= useUserData();
+  const user = useUserData();
   const navigate = useNavigate();
   let roleType = null;
 
@@ -111,6 +112,7 @@ function RouteList() {
               path="/allocate-order/freelancer/:id"
               element={<FreeelancerEmployeeOrders />}
             />
+            <Route path="/freelancer/:id" element={<FreelancerDetail />} />
           </>
         )}
         {/* Route for employees only*/}

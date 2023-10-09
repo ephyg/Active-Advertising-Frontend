@@ -96,6 +96,10 @@ function DesignerOrderComponent({ orderlists }) {
     };
     DoneOrder.mutate(StatusData);
     setPopUp(false);
+    await queryClient.invalidateQueries(["OrderList"]);
+    await queryClient.refetchQueries({
+      include: "active",
+    });
     console.log("clicked");
   };
   const handleStatus = (data) => {
@@ -114,16 +118,18 @@ function DesignerOrderComponent({ orderlists }) {
             />
             <div class="my-8">
               <h4 class="text-base text-[#333] font-semibold mt-4">
-                Sure you want to accept?
+                Have you successfully completed your task?
               </h4>
               <p class="text-sm text-gray-400 mt-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                auctor auctor arcu, at fermentum dui. Maecenas
+                Once you click the 'Yes' button, there's no turning back. Please
+                ensure that your task is truly complete before proceeding.
               </p>
             </div>
             <div class="text-right space-x-4">
               <button
-                onClick={(e) => setPopUp(false)}
+                onClick={(e) => {
+                  setPopUp(false);
+                }}
                 type="button"
                 class="px-6 py-2 min-w-[150px] rounded text-[#333] text-sm font-semibold border-none outline-none bg-gray-200 hover:bg-gray-300 active:bg-gray-200"
               >

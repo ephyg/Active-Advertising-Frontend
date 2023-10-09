@@ -61,6 +61,7 @@ function StaffEmployeeOrders() {
   const handleUnallocate = () => {
     const StatusData = {
       status: "Unallocated",
+      user_id: null,
       order_id: Number(number),
     };
     UpdateOrderMutation.mutate(StatusData);
@@ -133,6 +134,9 @@ function StaffEmployeeOrders() {
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
                   Quantity
+                </th>{" "}
+                <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                  Status
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
                   Unit Price
@@ -162,6 +166,9 @@ function StaffEmployeeOrders() {
                   </td>
                   <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.quantity}
+                  </td>{" "}
+                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                    {items.status}
                   </td>
                   <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.unit_price}

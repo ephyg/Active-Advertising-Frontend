@@ -6,7 +6,7 @@ import InputField from "../../../components/common/inputField/InputField";
 import { useFormik } from "formik";
 import * as api from "../../../api/staffApi";
 import AddStaffValidation from "./AddStaffValidation";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { AddProforma } from "../../../api/proformaApi";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
@@ -17,6 +17,7 @@ function AddStaff() {
   const [profile_picture_url, setProfile_picture_url] = useState("");
   const [img, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(defaultProfileImage);
+  const queryClient = useQueryClient();
   const user = useUserStore();
   const {
     data: userRole,
@@ -41,7 +42,11 @@ function AddStaff() {
     return response;
   };
   const staffMutation = useMutation(addUser, {
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
+      await queryClient.invalidateQueries(["userList", "all"]);
+      await queryClient.refetchQueries({
+        include: "active",
+      });
       navigate("/staffs");
     },
     onError: (response) => {
@@ -52,7 +57,7 @@ function AddStaff() {
     },
   });
   const onSubmit = () => {
-    upload((uploadedFileUrl) => {
+    upload(async (uploadedFileUrl) => {
       const UserData = {
         user_first_name: values.first_name,
         user_last_name: values.last_name,
@@ -63,6 +68,7 @@ function AddStaff() {
         user_image_url: uploadedFileUrl,
         user_password: `${values.first_name + "." + values.last_name}`,
       };
+
       staffMutation.mutate(UserData);
     });
   };

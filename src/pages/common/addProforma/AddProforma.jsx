@@ -494,7 +494,7 @@ function ProformaDetail() {
             </div>
             <div className="flex gap-1 items-end">
               <h1 className="font-roboto text-base text-blue md:text-xs">
-                Grandted Total:
+                Granted Total:
               </h1>
               <div className="md:text-xxs">{grandtedTotal}</div>
             </div>
@@ -783,7 +783,7 @@ function ProformaDetail() {
               </div>
               <div className="flex gap-1 items-end">
                 <h1 className="font-roboto text-base text-blue ">
-                  Grandted Total:
+                  Granted Total:
                 </h1>
                 <div className="">{grandtedTotal}</div>
               </div>
