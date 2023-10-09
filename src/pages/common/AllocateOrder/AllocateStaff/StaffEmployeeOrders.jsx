@@ -61,6 +61,7 @@ function StaffEmployeeOrders() {
   const handleUnallocate = () => {
     const StatusData = {
       status: "Unallocated",
+      user_id: null,
       order_id: Number(number),
     };
     UpdateOrderMutation.mutate(StatusData);
