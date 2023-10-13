@@ -117,10 +117,7 @@ function StaffOrder() {
             ))}
         </div>
         {/* {eachProforma[0].status != "Completed" && ( */}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0ac4fa7 (delete functionality and done freelancer button)
+
         <div className="flex justify-center gap-10 mb-20 md:gap-5">
           <table class="mb-3 min-w-full">
             <thead class="text-blue">
@@ -151,7 +148,6 @@ function StaffOrder() {
                 </th>
               </tr>
             </thead>
-<<<<<<< HEAD
 
             <tbody class="divide-y divide-gray-300">
               {StaffOrders.map((items, index) => (
@@ -187,105 +183,6 @@ function StaffOrder() {
             </tbody>
           </table>
         </div>
-=======
-          <div className="flex justify-center gap-10 mb-20 md:gap-5">
-            <table class="mb-3 min-w-full">
-              <thead class="text-blue">
-                <tr className="">
-                  <th class="py-1 border-slate-200 border-2  px-4 text-xs md:text-xxs text-left">
-                    No.
-                  </th>
-                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                    Items Description
-                  </th>
-                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                    Size
-                  </th>
-                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                    Vendor
-                  </th>
-                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                    Quantity
-                  </th>
-                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                    Unit Price
-                  </th>
-                  <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
-                    Total Price
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody class="divide-y divide-gray-300">
-                {StaffOrders.map((items, index) => (
-                  <tr className="cursor-pointer hover:bg-slate-200">
-                    <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
-                      <li key={index} className="list-none">
-                        {index + 1}
-                      </li>
-                    </td>
-                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                      {items.item_description}
-                    </td>
-                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                      {items.size}
-                    </td>
-                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                      {items.vendor_name}
-                    </td>
-                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                      {items.quantity}
-                    </td>
-                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                      {items.unit_price}
-                    </td>
-                    <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                      {Number(items.quantity) * Number(items.unit_price)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
->>>>>>> 3a8c87c (feature designer done button and popup)
-=======
-
-            <tbody class="divide-y divide-gray-300">
-              {StaffOrders.map((items, index) => (
-                <tr className="cursor-pointer hover:bg-slate-200">
-                  <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
-                    <li key={index} className="list-none">
-                      {index + 1}
-                    </li>
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {items.item_description}
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {items.size}
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {items.vendor_name}
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {items.quantity}
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {items.status}
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {items.unit_price}
-                  </td>
-                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
-                    {Number(items.quantity) * Number(items.unit_price)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
->>>>>>> 0ac4fa7 (delete functionality and done freelancer button)
-        {/* )} */}
       </div>
     </Layout>
   );
