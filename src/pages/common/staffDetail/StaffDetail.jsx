@@ -4,7 +4,7 @@ import Layout from "../../../components/Layout/Layout";
 import * as api from "../../../api/userApi";
 import Card from "../../../components/common/card/Card";
 import Button from "../../../components/common/button/Button";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import Loading from "../../../assets/image/Loading.gif";
 import useUserStore, { useUserData } from "../../../store/userStore";
 import { MdClose } from "react-icons/md";
@@ -12,6 +12,7 @@ function StaffDetail() {
   const CurrentUserData = useUserData();
   const [DeletePopUp, setDeletePopUp] = useState();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { id } = useParams();
   const user = useUserStore();
@@ -30,15 +31,20 @@ function StaffDetail() {
     return response;
   };
   const deleteStaffMutation = useMutation(deleteStaff, {
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
+      await queryClient.invalidateQueries(["userList", "all"]);
+      await queryClient.refetchQueries({
+        include: "active",
+      });
       navigate("/staffs");
+
     },
   });
- 
+
   const handleDelete = () => {
     setDeletePopUp(true);
   };
-  const handleDeletePopUp = () => {
+  const handleDeletePopUp = async () => {
     deleteStaffMutation.mutate(id);
   };
   if (userLoading) {
