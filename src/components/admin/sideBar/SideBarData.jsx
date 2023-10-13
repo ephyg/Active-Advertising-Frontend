@@ -33,13 +33,14 @@ export const SideBarData = [
     title: "Staff",
   },
   {
-    path: "/agreement",
-    icon: FaHandshake,
-    title: "Agreement",
+    path: "/form",
+    icon: LuPackageSearch,
+    title: "Forms",
   },
   {
     path: "/stock",
     icon: LuPackageSearch,
     title: "Stock",
   },
+
 ];

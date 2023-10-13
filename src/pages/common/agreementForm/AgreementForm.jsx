@@ -93,7 +93,7 @@ function AgreementForm() {
   };
 
   return (
-    <Layout className="">
+    <>
       <div className="">
         <div id="" className="flex flex-col mx-auto w-594">
           <div className="flex justify-end p-1">
@@ -303,7 +303,7 @@ function AgreementForm() {
           </button>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
 

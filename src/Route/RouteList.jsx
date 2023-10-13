@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Form, Route, Routes, useNavigate } from "react-router-dom";
 import Login from "../pages/common/AuthPage/Login";
 import Forgot from "../pages/common/AuthPage/Forgot";
 import OrderList from "../pages/common/orderList/OrderList";
@@ -39,6 +39,7 @@ import DesignerOrder from "../pages/Designer/DesignerOrder/DesignerOrder";
 import DesignerProfile from "../pages/Designer/DesignerProfile/DesignerProfile";
 import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
 import FreelancerDetail from "../pages/common/freelancerDetail/FreelancerDetail";
+import Forms from "../components/admin/sideBar/Forms";
 function RouteList() {
   const user = useUserData();
   const navigate = useNavigate();
@@ -87,6 +88,7 @@ function RouteList() {
         {(roleType == "account-manager" || roleType == "admin") && (
           <>
             <Route path="/staffs-order/:id" element={<StaffOrder />} />
+            <Route path="/form" element={<Forms />}></Route>
             <Route path="/freelancer-order/:id" element={<FreelancerOrder />} />
             <Route path="/order" element={<OrderList />} />
             <Route path="/proforma" element={<ProformaList />} />
@@ -101,7 +103,6 @@ function RouteList() {
             <Route path="/stock" element={<InventoryList />} />
             <Route path="/stock/:id" element={<EditItems />} />
             <Route path="/stock/additem" element={<AddItems />} />
-            <Route path="/agreement" element={<AgreementForm />} />
             <Route path="/delivery/:id" element={<DeliveryForm />} />
             <Route path="/allocate-order/" element={<AllocateOrderLayout />} />
             <Route

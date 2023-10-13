@@ -16,8 +16,8 @@ export const NavBarData = [
   //   title: "Employee",
   // },
   {
-    path: "/agreement",
-    title: "Agreement",
+    path: "/form",
+    title: "Form",
   },
   {
     path: "/stock",
