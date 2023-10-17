@@ -9,6 +9,7 @@ import AddStaffValidation from "./AddStaffValidation";
 import { useMutation, useQuery } from "react-query";
 import { AddProforma } from "../../../api/proformaApi";
 import { ToastContainer, toast } from "react-toastify";
+import Loading from "../../../assets/image/Loading.gif";
 import axios from "axios";
 import useUserStore from "../../../store/userStore";
 import { useNavigate } from "react-router-dom";
@@ -111,7 +112,11 @@ function AddFreelancer() {
       onSubmit,
     });
   if (FreelancerMutation.isLoading) {
-    return <h1>Loading..</h1>;
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
 
   return (

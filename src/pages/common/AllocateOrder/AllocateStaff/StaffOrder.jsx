@@ -5,6 +5,7 @@ import * as api from "../../../../api/userApi";
 import * as apis from "../../../../api/proformaApi";
 import Card from "../../../../components/common/card/Card";
 import Button from "../../../../components/common/button/Button";
+import Loading from "../../../../assets/image/Loading.gif";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import useUserStore, { useUserData } from "../../../../store/userStore";
 import useProformaStore from "../../../../store/proformaStore";
@@ -68,13 +69,25 @@ function StaffOrder() {
   };
 
   if (userLoading) {
-    return <h1>loading</h1>;
+     return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   if (staffLoading) {
-    return <h1>Loading</h1>;
+     return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   if (LoadingGetSingleOrder) {
-    return <h1>Loading</h1>;
+     return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   console.log(eachProforma[0].status);
   const StaffOrders = StaffOrder.data;

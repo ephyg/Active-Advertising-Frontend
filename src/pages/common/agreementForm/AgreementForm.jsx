@@ -63,9 +63,7 @@ function AgreementForm() {
   //   isLoading: basicInfoLoading,
   //   isError,
   // } = useQuery("basicInfo-store", () => api.GetProformaBasicInfo(token));
-  // if (basicInfoLoading) {
-  //   return <h1>Loading ...</h1>;
-  // }
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });

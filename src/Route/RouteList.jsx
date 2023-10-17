@@ -40,6 +40,7 @@ import DesignerProfile from "../pages/Designer/DesignerProfile/DesignerProfile";
 import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
 import FreelancerDetail from "../pages/common/freelancerDetail/FreelancerDetail";
 import Forms from "../components/admin/sideBar/Forms";
+import AddRole from "../pages/admin/addRole/AddRole";
 function RouteList() {
   const user = useUserData();
   const navigate = useNavigate();
@@ -68,6 +69,8 @@ function RouteList() {
         {roleType == "admin" && (
           <>
             <Route path="/account-manager" element={<AccountManagerList />} />
+
+            <Route path="/role" element={<AddRole />} />
             <Route path="/report" element={<Report />} />
             <Route path="/admin/profile" element={<AdminProfile />} />
             <Route path="/admin/add-staff" element={<AddStaff />} />

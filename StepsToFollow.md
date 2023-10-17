@@ -1,13 +1,7 @@
 1. first migrate the database
-<<<<<<< HEAD
     <!-- correct the .env variable and replace the the email and password with yours to get the "forgot password" functionality  
     
     note that there is an email already setted up for this purpose. the email is in the .env file 
-=======
-    <!-- correct the .env variable and replace the the email and password only with yours to check if the forgot password 
-    
-    You can generate the password first make your gmail 2-step verification then in
->>>>>>> 33fa4f4 (last commit- no change)
 
     MAIL_MAILER=smtp
     MAIL_HOST=smtp.gmail.com
