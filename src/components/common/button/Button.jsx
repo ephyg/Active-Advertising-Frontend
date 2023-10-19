@@ -15,7 +15,7 @@ const Button = ({
     <div className="flex items-stretch justify-center">
       <button
         type={type}
-        className={`font-roboto font-bold text-lg text-white items-stretch flex justify-center ${className}`}
+        className={`font-roboto font-normal text-lg text-white items-stretch flex justify-center ${className}`}
         onClick={onClick}
         disabled={disabled}
       >

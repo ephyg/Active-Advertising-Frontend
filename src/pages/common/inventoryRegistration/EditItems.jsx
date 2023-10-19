@@ -49,12 +49,10 @@ function EditItems() {
     try {
       await deleteMutation.mutateAsync(id);
     } catch (error) {
-      console.log(error);
     }
   };
   const onSubmit = async () => {
     try {
-      console.log("clicked");
       const ItemData = {
         item_description: values.item_description,
         quantity: values.quantity,
@@ -65,10 +63,8 @@ function EditItems() {
         expire_date: values.expire_date,
         dealer_name: values.dealer_name,
       };
-      // console.log(id, ItemData);
       await updateMutation.mutateAsync({ id: id, ItemData: ItemData });
     } catch (error) {
-      console.log(error);
     }
   };
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =

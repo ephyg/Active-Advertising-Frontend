@@ -61,7 +61,7 @@ function ProformaComponent({ allProformas }) {
   return (
     <div className=" w-full md:pr-0 mb-8">
       <div className="w-full md:flex justify-center items-center">
-        <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
+        <div className=" relative w-fit mb-6 text-red font-roboto font-medium text-2xl ">
           <span className="mb-2px">Proforma List</span>
           <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
         </div>
@@ -71,7 +71,7 @@ function ProformaComponent({ allProformas }) {
           <Link to="/proforma/add">
             <Button
               text="Add Order"
-              className="md:text-sm"
+              className="md:text-sm font-normal"
               icon={FaPlus}
               iconSize={12}
             />
@@ -94,7 +94,7 @@ function ProformaComponent({ allProformas }) {
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className="py-3 px-2 border text-sm text-blue font-roboto font-bold"
+                    className="py-3 px-2 border text-base text-blue font-roboto font-normal"
                   >
                     <span className="flex items-center justify-between">
                       {column.render("Header")}
@@ -126,7 +126,7 @@ function ProformaComponent({ allProformas }) {
                     <td
                       key={index}
                       {...cell.getCellProps()}
-                      className={`border py-1 text-xs px-2 group-hover:border-slate-200 ${
+                      className={`border py-1 text-md px-2 group-hover:border-slate-200 ${
                         cell.column.Header === "Status"
                           ? cell.value === "Canceled"
                             ? "text-red font-roboto"

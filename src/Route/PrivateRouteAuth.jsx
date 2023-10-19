@@ -5,7 +5,6 @@ import useUserStore, { useNoUser, useUser } from "../store/userStore";
 function PrivateRouteAuth() {
   
   const user = useNoUser();
-  const navigate = useNavigate();
   return <Outlet />;
 }
 

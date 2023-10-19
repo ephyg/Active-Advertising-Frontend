@@ -21,7 +21,7 @@ function StaffList() {
     data: userList,
     isLoading: userlistLoading,
     isError: userListError,
-  } = useQuery(["userList",uRole], () => api.AllStaffs(user.token, uRole), {
+  } = useQuery(["userList", uRole], () => api.AllStaffs(user.token, uRole), {
     // refetchOnWindowFocus: true,
   });
   // useEffect(() => {
@@ -35,7 +35,6 @@ function StaffList() {
       </div>
     );
   }
-  console.log(userRole);
   if (userlistLoading) {
     return (
       <div className="flex bg-transparent h-screen w-full justify-center items-center">
@@ -43,16 +42,11 @@ function StaffList() {
       </div>
     );
   }
-  // if (roleError && userListError) {
-  //   console.log(roleError, userListError);
-  // }
 
-  // console.log(uRole);
-  // console.log(userList);
   return (
     <Layout>
       <div className="w-full md:flex  items-center flex justify-between">
-        <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
+        <div className=" relative w-fit mb-6 text-red font-roboto font-normal text-2xl ">
           <span className="mb-2px">Staff List</span>
           <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
         </div>
@@ -64,7 +58,6 @@ function StaffList() {
           value={uRole}
           onChange={async (e) => {
             setURole(e.target.value);
-         
           }}
         >
           <option value="all" className="">

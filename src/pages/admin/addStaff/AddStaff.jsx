@@ -6,7 +6,7 @@ import InputField from "../../../components/common/inputField/InputField";
 import { useFormik } from "formik";
 import * as api from "../../../api/staffApi";
 import AddStaffValidation from "./AddStaffValidation";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { AddProforma } from "../../../api/proformaApi";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
@@ -17,6 +17,7 @@ function AddStaff() {
   const [profile_picture_url, setProfile_picture_url] = useState("");
   const [img, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(defaultProfileImage);
+  const queryClient = useQueryClient();
   const user = useUserStore();
   const {
     data: userRole,
@@ -27,7 +28,6 @@ function AddStaff() {
   const imageHandler = (event) => {
     const selectedImage = event.target.files ? event.target.files[0] : null;
     setImage(selectedImage);
-    console.log(selectedImage);
     if (selectedImage) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -42,8 +42,11 @@ function AddStaff() {
     return response;
   };
   const staffMutation = useMutation(addUser, {
-    onSuccess: (response) => {
-     
+    onSuccess: async (response) => {
+      await queryClient.invalidateQueries(["userList", "all"]);
+      await queryClient.refetchQueries({
+        include: "active",
+      });
       navigate("/staffs");
     },
     onError: (response) => {
@@ -54,7 +57,7 @@ function AddStaff() {
     },
   });
   const onSubmit = () => {
-    upload((uploadedFileUrl) => {
+    upload(async (uploadedFileUrl) => {
       const UserData = {
         user_first_name: values.first_name,
         user_last_name: values.last_name,
@@ -65,15 +68,14 @@ function AddStaff() {
         user_image_url: uploadedFileUrl,
         user_password: `${values.first_name + "." + values.last_name}`,
       };
+
       staffMutation.mutate(UserData);
-      console.log("Done successfully", UserData);
     });
   };
   const upload = (callback) => {
     const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
     const CLOUDINARY_UPLOAD_PRESET = import.meta.env
       .VITE_CLOUDINARY_UPLOAD_PRESET;
-    console.log(defaultProfileImage);
     if (img === null) {
       return callback(
         "https://res.cloudinary.com/drbvkt6rd/image/upload/v1692794747/gasweutssmb0ghn8sqrf.png"
@@ -96,8 +98,6 @@ function AddStaff() {
       })
       .catch((error) => {
         // setError(error.message);
-
-        console.log(error);
       });
   };
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
@@ -119,7 +119,6 @@ function AddStaff() {
   if (roleLoading) {
     return <h1>loading...</h1>;
   }
-  // console.log(userRole);
   return (
     <Layout>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
@@ -230,11 +229,14 @@ function AddStaff() {
                 <option value="" className="">
                   Select User Role
                 </option>
-                {userRole.map((item, index) => (
-                  <option value={item.role} className="">
-                    {item.role}
-                  </option>
-                ))}
+                {userRole.map(
+                  (item, index) =>
+                    item.role !== "admin" && (
+                      <option value={item.role} className="">
+                        {item.role}
+                      </option>
+                    )
+                )}
               </select>
               <h1 className="text-sm text-red">
                 {errors.role && touched.role ? errors.role : ""}

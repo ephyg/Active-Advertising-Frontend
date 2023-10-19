@@ -23,7 +23,6 @@ function AddItems() {
       //   position: "top-center",
       //   toastId: "successUser",
       // });
-      console.log(response);
       queryClient.invalidateQueries(["inventoryList"]);
       navigate("/stock");
     },
@@ -60,7 +59,7 @@ function AddItems() {
   return (
     <Layout>
       <form onSubmit={handleSubmit} className="flex flex-col px px-20">
-        <div className=" relative w-fit mb-6 text-red font-roboto font-bold text-xl ">
+        <div className=" relative w-fit mb-6 text-red font-roboto font-normal text-2xl ">
           <span className="mb-2px">Add Items</span>
           <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
         </div>

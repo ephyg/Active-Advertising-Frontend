@@ -1,23 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../../components/Layout/Layout";
 import defaultProfileImage from "../../../assets/image/users.png";
 import Button from "../../../components/common/button/Button";
 import InputField from "../../../components/common/inputField/InputField";
 import { useFormik } from "formik";
-import * as api from "../../../api/freelancerApi";
+import * as api from "../../../api/staffApi";
 import AddStaffValidation from "./AddStaffValidation";
 import { useMutation, useQuery } from "react-query";
 import { AddProforma } from "../../../api/proformaApi";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import useUserStore from "../../../store/userStore";
+import useUserStore, { useUserData } from "../../../store/userStore";
 import { useNavigate } from "react-router-dom";
-function AddFreelancer() {
-  const user = useUserStore();
+function DesignerProfileComponent({ CurrentUserData }) {
+  const navigate = useNavigate();
+
   const [profile_picture_url, setProfile_picture_url] = useState("");
   const [img, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(defaultProfileImage);
-  const navigate = useNavigate();
+  const [imagePreview, setImagePreview] = useState(
+    CurrentUserData.user_image_url
+  );
+  const user = useUserStore();
+
   const imageHandler = (event) => {
     const selectedImage = event.target.files ? event.target.files[0] : null;
     setImage(selectedImage);
@@ -29,18 +33,13 @@ function AddFreelancer() {
       reader.readAsDataURL(selectedImage);
     }
   };
-
-  const addFreelancer = (userdata) => {
-    const response = api.AddFreelancer(user.token, userdata);
+  const UpdateUser = (userdata) => {
+    const response = api.UpdateUser(user.token, CurrentUserData.id, userdata);
     return response;
   };
-  const FreelancerMutation = useMutation(addFreelancer, {
+  const staffMutation = useMutation(UpdateUser, {
     onSuccess: (response) => {
-      // toast.success("Freelancer Registered Successfully ", {
-      //   position: "top-center",
-      //   toastId: "successUser",
-      // });
-      navigate("/freelancer");
+      navigate("/order");
     },
     onError: (response) => {
       toast.error(response.response.data.message, {
@@ -52,28 +51,26 @@ function AddFreelancer() {
   const onSubmit = () => {
     upload((uploadedFileUrl) => {
       const UserData = {
-        freelancer_first_name: values.first_name,
-        freelancer_last_name: values.last_name,
-        freelancer_email: values.email,
-        freelancer_address: values.address,
-        freelancer_phone_number: values.phone_number,
-        freelancer_portfolio_link: values.portfolio_link,
-        freelancer_image_url: uploadedFileUrl,
+        user_first_name: values.first_name,
+        user_last_name: values.last_name,
+        user_email: values.email,
+        user_address: values.address,
+        user_phone_number: values.phone_number,
+        user_image_url: uploadedFileUrl,
+        // user_password: `${values.first_name + "." + values.last_name}`,
+        user_password: values.user_password,
       };
-      FreelancerMutation.mutate(UserData);
+      staffMutation.mutate(UserData);
     });
   };
-
   const upload = (callback) => {
     const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
     const CLOUDINARY_UPLOAD_PRESET = import.meta.env
       .VITE_CLOUDINARY_UPLOAD_PRESET;
-    var bodyFormData = new FormData();
     if (img === null) {
-      return callback(
-        "https://res.cloudinary.com/drbvkt6rd/image/upload/v1692794747/gasweutssmb0ghn8sqrf.png"
-      );
+      return callback(CurrentUserData.user_image_url);
     }
+    var bodyFormData = new FormData();
     bodyFormData.append("file", img);
     bodyFormData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
     axios
@@ -90,27 +87,26 @@ function AddFreelancer() {
       })
       .catch((error) => {
         // setError(error.message);
-
       });
   };
-  // if (FreelancerMutation.isLoading) {
-  //   return <h1>Please Loading</h1>;
-  // }
+
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        address: "",
-        phone_number: "",
-        role: "",
-        portfolio_link: "",
+        first_name: CurrentUserData.user_first_name,
+        last_name: CurrentUserData.user_last_name,
+        email: CurrentUserData.user_email,
+        address: CurrentUserData.user_address,
+        phone_number: CurrentUserData.user_phone_number,
+        user_image_url: CurrentUserData.user_image_url,
+        user_password: "",
+        user_confirm: "",
       },
       validationSchema: AddStaffValidation,
       onSubmit,
     });
-  if (FreelancerMutation.isLoading) {
+
+  if (staffMutation.isLoading) {
     return <h1>Loading..</h1>;
   }
 
@@ -143,7 +139,6 @@ function AddFreelancer() {
             <InputField
               label="First Name"
               className="py-2 text-lg"
-              placeholder="John"
               type="text"
               id="first_name"
               name="first_name"
@@ -158,7 +153,6 @@ function AddFreelancer() {
               label="Last Name"
               id="last_name"
               name="last_name"
-              placeholder="Doe"
               className="py-2 text-lg"
               value={values.last_name}
               onChange={handleChange}
@@ -172,18 +166,17 @@ function AddFreelancer() {
               type="email"
               id="email"
               name="email"
-              placeholder="johndoe@gmail.com"
               className="py-2 text-lg"
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
               error={errors.email && touched.email ? errors.email : ""}
+              disabled={true}
             />
             <InputField
               label="Address"
               id="address"
               name="address"
-              placeholder="Addis Ababa, Bole"
               className="py-2 text-lg"
               value={values.address}
               onChange={handleChange}
@@ -194,7 +187,6 @@ function AddFreelancer() {
               label="Phone Number"
               id="phone_number"
               name="phone_number"
-              placeholder="0908985812"
               className="py-2 text-lg"
               value={values.phone_number}
               onChange={handleChange}
@@ -205,28 +197,50 @@ function AddFreelancer() {
                   : ""
               }
             />
-            <InputField
-              label="Portfolio Link"
-              id="portfolio_link"
-              name="portfolio_link"
-              placeholder="http://"
-              className="py-2 text-lg"
-              value={values.portfolio_link}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={
-                errors.portfolio_link && touched.portfolio_link
-                  ? errors.portfolio_link
-                  : ""
-              }
-            />
+          </div>
+          <div className="flex flex-col w-full">
+            <h2 className="text-lg font-roboto text-red w-full text-start font-bold mb-3">
+              Security Question
+            </h2>
+            <div className="grid grid-cols-2 gap-x-16 gap-y-4 w-full">
+              <InputField
+                className="py-2"
+                label="Password"
+                type="password"
+                id="user_password"
+                name="user_password"
+                value={values.user_password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={
+                  errors.user_password && touched.user_password
+                    ? errors.user_password
+                    : ""
+                }
+              />
+              <InputField
+                className="py-2"
+                label="Confirm"
+                type="password"
+                id="user_confirm"
+                name="user_confirm"
+                value={values.user_confirm}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={
+                  errors.user_confirm && touched.user_confirm
+                    ? errors.user_confirm
+                    : ""
+                }
+              />
+            </div>
           </div>
         </div>
         <div className="flex mb-6 w-full justify-center">
           <Button
             type="submit"
-            // onClick={handleSubmit}
-            text="Register"
+            onClick={handleSubmit}
+            text="Update Profile"
             className=" bg-blue px-14 hover:bg-blue_hover py-2 rounded-md"
           />
         </div>
@@ -236,4 +250,4 @@ function AddFreelancer() {
   );
 }
 
-export default AddFreelancer;
+export default DesignerProfileComponent;

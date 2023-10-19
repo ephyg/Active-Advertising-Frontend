@@ -22,6 +22,6 @@ export const Columns = [
   },
   {
     Header: "Status",
-    accessor: "freelancer_order_status",
+    accessor: "status",
   },
 ];

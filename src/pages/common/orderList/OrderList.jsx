@@ -11,16 +11,15 @@ function OrderList() {
     isLoading,
     isError,
     isFetching,
-  } = useQuery("OrderList",()=> api.GetOrder(user.token), {
-    refetchOnWindowFocus: true,
+  } = useQuery("OrderList", () => api.GetOrder(user.token), {
   });
-  // console.log(orderlist);1
+
   if (isLoading) {
     return <h1></h1>;
   }
   return (
     <Layout>
-      {orderlist && <OrderListComponent orderlists={orderlist} />}
+      {orderlist && <OrderListComponent orderlists={orderlist.data} />}
     </Layout>
   );
 }

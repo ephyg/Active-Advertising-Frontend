@@ -7,6 +7,8 @@ import { HiUserGroup } from "react-icons/hi";
 import { SiDesignernews } from "react-icons/si";
 import { LuPackageSearch } from "react-icons/lu";
 import {AiFillFileAdd } from "react-icons/ai";
+import {PiNotePencilDuotone } from "react-icons/pi";
+
 export const SideBarData = [
   {
     path: "/report",
@@ -34,18 +36,14 @@ export const SideBarData = [
     title: "Staff",
   },
   {
-    path: "/agreement",
-    icon: FaHandshake,
-    title: "Agreement",
+    path: "/form",
+    icon: PiNotePencilDuotone,
+    title: "Forms",
   },
   {
     path: "/stock",
     icon: LuPackageSearch,
     title: "Stock",
   },
-  {
-    path:"/",
-    icon: AiFillFileAdd,
-    title: "basic info",
-  },
+
 ];

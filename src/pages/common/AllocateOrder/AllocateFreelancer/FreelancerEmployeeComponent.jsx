@@ -54,8 +54,6 @@ function FreelancerEmployeeComponent({ employeeFreelancerList }) {
   } = tableInstance;
   const handleRowClick = async (index, row) => {
     const userId = row.original.id;
-    // console.log("id", userId);
-    // console.log();
     setId(userId);
     navigate(`/allocate-order/freelancer/${userId}`);
   };

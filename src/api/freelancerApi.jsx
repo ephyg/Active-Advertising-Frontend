@@ -11,12 +11,7 @@ export const AddFreelancer = async (token, data) => {
     .then((response) => response.data);
   return addFreelancer;
 };
-// export const EditItem = async (id, data) => {
-//   const editItems = await axios
-//     .put(`${baseURL}/stock/${id}`, data)
-//     .then((response) => console.log(response, data));
-//   return editItems;
-// };
+
 export const SingleFreelancer = async (token, id) => {
   const addFreelancer = await axios
     .get(`${baseURL}/freelancer/${id}`, {
@@ -26,7 +21,6 @@ export const SingleFreelancer = async (token, id) => {
     })
     .then((response) => response.data);
   return addFreelancer;
-  
 };
 export const FreelancerOrderList = async (token, id) => {
   const freelancerOrder = await axios
@@ -48,7 +42,16 @@ export const GetAllFreelancer = async (token) => {
     .then((response) => response.data);
   return getAllFrrelancer;
 };
-
+export const DeleteFreelancer = async (token, id) => {
+  const deleteFreelancer = await axios
+    .delete(`${baseURL}/freelancer/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return deleteFreelancer;
+};
 // export const DeleteItems = async (id) => {
 //   const deleteItems = await axios
 //     .delete(`${baseURL}/stock/${id}`)

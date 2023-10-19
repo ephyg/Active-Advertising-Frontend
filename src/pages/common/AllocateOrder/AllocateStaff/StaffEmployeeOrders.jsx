@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import Layout from "../../../../components/Layout/Layout";
 import * as api from "../../../../api/proformaApi";
 import * as apis from "../../../../api/userApi";
 import Card from "../../../../components/common/card/Card";
@@ -13,9 +12,7 @@ function StaffEmployeeOrders() {
   const navigate = useNavigate();
   const { number } = useUserStore();
   const queryClient = useQueryClient();
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // });
+
   const { id } = useParams();
   const user = useUserStore();
   const {
@@ -25,13 +22,18 @@ function StaffEmployeeOrders() {
   } = useQuery("userData-store", () => apis.SingleStaff(user.token, id), {
     retry: false,
   });
-
+  const {
+    data: SingleOrder,
+    isLoading: LoadingGetSingleOrder,
+    isError,
+  } = useQuery("GetSingleOrder-store", () =>
+    api.GetSingleOrder(user.token, number)
+  );
   const {
     data: StaffOrder,
     isLoading: staffLoading,
     isError: staffError,
   } = useQuery("StaffOrder-store", () => apis.staffOrderList(user.token, id));
-  console.log(userData);
   const updateOrder = (StatusData) => {
     const response = api.UpdateOrder(user.token, StatusData);
     return response;
@@ -46,18 +48,14 @@ function StaffEmployeeOrders() {
       await queryClient.refetchQueries({
         include: "active",
       });
-
-      console.log("Success");
     },
   });
-  console.log(number);
   const handleAllocate = () => {
     const StatusData = {
       status: "Allocated",
       user_id: Number(id),
       order_id: Number(number),
     };
-    console.log(StatusData);
     UpdateOrderMutation.mutate(StatusData);
   };
   const handleUnallocate = () => {
@@ -74,6 +72,10 @@ function StaffEmployeeOrders() {
   if (staffLoading) {
     return <h1>Loading</h1>;
   }
+  if (LoadingGetSingleOrder) {
+    return <h1>Loading</h1>;
+  }
+  const StaffOrders = StaffOrder.data;
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">
@@ -99,18 +101,19 @@ function StaffEmployeeOrders() {
         </div>
 
         <div className="flex justify-center gap-10 mb-10 md:gap-5">
-          {/* {userData.status != "Allocated" && ( */}
-          <Button
-            onClick={handleAllocate}
-            text="Allocate"
-            className="text-center bg-blue rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
-          />
-          <Button
-            onClick={handleUnallocate}
-            text="Unallocate"
-            className="text-center bg-red rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
-          />
-          {/* )} */}
+          {SingleOrder[0].user_id == id ? (
+            <Button
+              onClick={handleUnallocate}
+              text="Unallocate"
+              className="text-center bg-red rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
+            />
+          ) : (
+            <Button
+              onClick={handleAllocate}
+              text="Allocate"
+              className="text-center bg-blue rounded-md px-14 py-1  hover:bg-red_hover md:px-10 md:py-1 md:text-base"
+            />
+          )}
         </div>
         <div className="mb-20">
           <div className="flex"></div>
@@ -131,6 +134,9 @@ function StaffEmployeeOrders() {
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
                   Quantity
+                </th>{" "}
+                <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                  Status
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
                   Unit Price
@@ -142,7 +148,7 @@ function StaffEmployeeOrders() {
             </thead>
 
             <tbody class="divide-y divide-gray-300">
-              {StaffOrder.map((items, index) => (
+              {StaffOrders.map((items, index) => (
                 <tr className="cursor-pointer hover:bg-slate-200">
                   <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
                     <li key={index} className="list-none">
@@ -160,6 +166,9 @@ function StaffEmployeeOrders() {
                   </td>
                   <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.quantity}
+                  </td>{" "}
+                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                    {items.status}
                   </td>
                   <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.unit_price}

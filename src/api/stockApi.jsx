@@ -18,7 +18,7 @@ export const EditItem = async (token, id, data) => {
         Authorization: `Bearer ${token}`,
       },
     })
-    .then((response) => console.log(response, data));
+    .then((response) => (response, data));
   return editItems;
 };
 export const GetAllItems = async (token) => {

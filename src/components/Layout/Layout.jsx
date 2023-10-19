@@ -6,18 +6,13 @@ import { BiMenu } from "react-icons/bi";
 import * as api from "../../api/userApi";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import DesignerNavBar from "../designer/navBar/NavBar";
 function Layout({ children }) {
-<<<<<<< HEAD
-  // const roleType = "account-manager";
-  // const roleType = "admin";
-  const roleType = "admin";
-=======
->>>>>>> ff7a58b02ddd6d6cd60565eca2cbad547f846532
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-    const user = useUser();
+  const user = useUser();
 
-  if (!user ) {
+  if (!user) {
     return <div></div>;
   }
 
@@ -45,6 +40,12 @@ function Layout({ children }) {
       {roleType == "account-manager" && (
         <>
           <NavBar />
+          <div className=" px-10 pt-28">{children}</div>
+        </>
+      )}
+      {roleType !== "admin" && roleType !== "account-manager" && (
+        <>
+          <DesignerNavBar />
           <div className=" px-10 pt-28">{children}</div>
         </>
       )}

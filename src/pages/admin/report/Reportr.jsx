@@ -49,7 +49,7 @@ function Report() {
   return <Layout><section style={{ gap: "8px" }}>
   <div className="display flex ">
     <div className="mb-2px">
-      <h1 className="relative w-fit mb-6 text-red font-roboto font-bold text text-2xl">
+      <h1 className=" w-fit mb-6 text-red font-roboto font-normal text text-2xl">
         Weekly Report{" "}
       </h1>
     </div>
@@ -76,7 +76,7 @@ function Report() {
         className="   border rounded-3xl p-4 bg-blue  shadow-md "
         style={{ width: "1150px", height: "180px" }}
       >
-        <h1 className="-mt-2 text-lg font-semibold dark:text-white">
+        <h1 className="-mt-2 text-lg font-normal dark:text-white">
           Goals Completion{" "}
         </h1>
         <div class="line"></div>
@@ -144,11 +144,11 @@ function Report() {
           </svg>
         </div>
         <div className="pl-16  ">
-          <h1 className="-mt-4 -ml-10 text-2xl font-semibold dark:text-white ">
+          <h1 className="-mt-4 -ml-10 text-2xl font-normal dark:text-white ">
             Fresh Inventory
           </h1>
         </div>
-        <span className="pt-4 -ml-24 text-medium font-medium dark:text-white ">
+        <span className="pt-4 -ml-24 text-medium font-normal dark:text-white ">
           23
         </span>
       </div>

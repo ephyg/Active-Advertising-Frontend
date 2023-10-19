@@ -7,14 +7,13 @@ import Card from "../../../../components/common/card/Card";
 import Button from "../../../../components/common/button/Button";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import useUserStore, { useUserData } from "../../../../store/userStore";
+import useProformaStore from "../../../../store/proformaStore";
 function StaffOrder() {
   const CurrentUserData = useUserData();
+  const { eachProforma } = useProformaStore();
   const { number } = useUserStore();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-//   useEffect(() => {
-//     window.scrollTo(0, 0);
-//   });
   const { id } = useParams();
   const user = useUserStore();
   const {
@@ -27,7 +26,13 @@ function StaffOrder() {
     isLoading: staffLoading,
     isError: staffError,
   } = useQuery("StaffOrder-store", () => api.staffOrderList(user.token, id));
-
+  const {
+    data: SingleOrder,
+    isLoading: LoadingGetSingleOrder,
+    isError,
+  } = useQuery("GetSingleOrder-store", () =>
+    apis.GetSingleOrder(user.token, number)
+  );
   const updateOrder = (userdata) => {
     const response = apis.UpdateOrder(user.token, userdata);
     return response;
@@ -44,11 +49,11 @@ function StaffOrder() {
       });
     },
   });
-  
+
   const handleUnallocated = () => {
     const StatusData = {
       status: "Unallocated",
-      user_id: Number(id),
+      user_id: null,
       order_id: Number(number),
     };
     UnallocateOrder.mutate(StatusData);
@@ -61,17 +66,23 @@ function StaffOrder() {
     };
     UnallocateOrder.mutate(StatusData);
   };
+
   if (userLoading) {
     return <h1>loading</h1>;
   }
   if (staffLoading) {
     return <h1>Loading</h1>;
   }
+  if (LoadingGetSingleOrder) {
+    return <h1>Loading</h1>;
+  }
+  console.log(eachProforma[0].status);
+  const StaffOrders = StaffOrder.data;
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">
         <div className=" relative w-full mb-6 text-red font-roboto font-bold text-xl md:items-center md:flex md:justify-center">
-          <span className="mb-2px">Staff Detail</span>
+          <span className="mb-2px">Employee Order Detail</span>
           <div className="absolute h-2px -bottom-1 left-0 w-1/2 bg-blue"></div>
         </div>
         <div className="flex justify-center mb-10 rounded-full h-40 ">
@@ -90,17 +101,23 @@ function StaffOrder() {
           <Card text="Role" information={userData.user_role} />
         </div>
         <div className="flex gap-10 justify-center">
-          <Button
-            onClick={handleUnallocated}
-            text="Unallocate"
-            className="text-center bg-red rounded-md px-14 py-1 mb-10 hover:bg-red_hover md:px-10 md:py-1 md:text-base"
-          />
-          <Button
-            onClick={handleAllocate}
-            text="Allocate"
-            className="text-center bg-blue rounded-md px-14 py-1 mb-10 hover:bg-red_hover md:px-10 md:py-1 md:text-base"
-          />
+          {eachProforma[0].status != "Completed" &&
+            (SingleOrder[0].user_id == id ? (
+              <Button
+                onClick={handleUnallocated}
+                text="Unallocate"
+                className="text-center bg-red rounded-md px-14 py-1 mb-10 hover:bg-red_hover md:px-10 md:py-1 md:text-base"
+              />
+            ) : (
+              <Button
+                onClick={handleAllocate}
+                text="Allocate"
+                className="text-center bg-blue rounded-md px-14 py-1 mb-10 hover:bg-red_hover md:px-10 md:py-1 md:text-base"
+              />
+            ))}
         </div>
+        {/* {eachProforma[0].status != "Completed" && ( */}
+
         <div className="flex justify-center gap-10 mb-20 md:gap-5">
           <table class="mb-3 min-w-full">
             <thead class="text-blue">
@@ -121,6 +138,9 @@ function StaffOrder() {
                   Quantity
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
+                  Status
+                </th>
+                <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
                   Unit Price
                 </th>
                 <th class="py-1 border-slate-200 border-2 px-4 text-xs md:text-xxs text-left">
@@ -130,7 +150,7 @@ function StaffOrder() {
             </thead>
 
             <tbody class="divide-y divide-gray-300">
-              {StaffOrder.map((items, index) => (
+              {StaffOrders.map((items, index) => (
                 <tr className="cursor-pointer hover:bg-slate-200">
                   <td class="py-1 border-slate-200 border  text-xs md:text-xxs px-4">
                     <li key={index} className="list-none">
@@ -148,6 +168,9 @@ function StaffOrder() {
                   </td>
                   <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.quantity}
+                  </td>
+                  <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
+                    {items.status}
                   </td>
                   <td class="py-1 border-slate-200 border text-xs md:text-xxs px-4">
                     {items.unit_price}

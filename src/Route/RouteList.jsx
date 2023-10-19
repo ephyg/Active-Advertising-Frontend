@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Form, Route, Routes, useNavigate } from "react-router-dom";
 import Login from "../pages/common/AuthPage/Login";
 import Forgot from "../pages/common/AuthPage/Forgot";
 import OrderList from "../pages/common/orderList/OrderList";
@@ -16,38 +16,39 @@ import AddProforma from "../pages/common/addProforma/AddProforma";
 import CustomerDetails from "../pages/common/customerDetail/CustomerDetails";
 import AdminProfile from "../pages/admin/adminProfile/AdminProfile";
 import AddStaff from "../pages/admin/addStaff/AddStaff";
-import useUserStore from "../store/userStore";
+import useUserStore, { useUser, useUserData } from "../store/userStore";
 import AddItems from "../pages/common/inventoryRegistration/AddItems";
-import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
 import ConfirmCode from "../pages/common/AuthPage/ConfirmCode";
 import NewPassword from "../pages/common/AuthPage/NewPassword";
 import DeliveryForm from "../pages/common/deliveryForm/DeliveryForm";
 import PrivateRoutes from "./PrivateRoutes";
 import PrivateRouteAuth from "./PrivateRouteAuth";
 import ProformaDetail from "../pages/common/ProformaDetail/ProformaDetail";
-<<<<<<< HEAD
-import BasicInfo from "../pages/admin/basicInfo/basic_info";
-=======
 import EditItems from "../pages/common/inventoryRegistration/EditItems";
 import AddFreelancer from "../pages/common/freelancerRegistration/AddFreelancer";
 import { useQuery } from "react-query";
 import * as api from "../api/userApi";
 import StaffList from "../pages/admin/staffList/StaffList";
 import StaffDetail from "../pages/common/staffDetail/StaffDetail";
-// import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
-// import StaffEmployeeOrders from "../pages/common/AllocateOrder/AllocateToStaff/StaffEmployeeOrders";
 import StaffOrder from "../pages/common/AllocateOrder/AllocateStaff/StaffOrder";
 import StaffEmployeeOrders from "../pages/common/AllocateOrder/AllocateStaff/StaffEmployeeOrders";
-
 import AllocateOrderLayout from "../pages/common/AllocateOrder/AllocateOrderLayout";
 import FreeelancerEmployeeOrders from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerEmployeeOrder";
 import FreelancerOrder from "../pages/common/AllocateOrder/AllocateFreelancer/FreelancerOrder";
-// import Repo from "../pages/admin/report/Repo";
->>>>>>> ff7a58b02ddd6d6cd60565eca2cbad547f846532
+import DesignerOrder from "../pages/Designer/DesignerOrder/DesignerOrder";
+import DesignerProfile from "../pages/Designer/DesignerProfile/DesignerProfile";
+import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
+import FreelancerDetail from "../pages/common/freelancerDetail/FreelancerDetail";
+import Forms from "../pages/common/Forms/Forms";
 function RouteList() {
-  const user = useUserStore();
+  const user = useUserData();
   const navigate = useNavigate();
-  const roleType = "admin";
+  let roleType = null;
+
+  if (!!user) {
+    !user.user_role ? (roleType = null) : (roleType = user.user_role);
+  }
+
   return (
     <Routes>
       <Route element={<PrivateRouteAuth />}>
@@ -55,10 +56,7 @@ function RouteList() {
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/verify" element={<ConfirmCode />} />
         <Route path="/new-password" element={<NewPassword />} />
-        
-        <Route path="/r" element={<Login />} /> 
-        
-        <Route path="/" element={<BasicInfo/>}/>
+        <Route path="/" element={<Login />} />
       </Route>
 
       <Route element={<PrivateRoutes />}>
@@ -86,6 +84,7 @@ function RouteList() {
         {(roleType == "account-manager" || roleType == "admin") && (
           <>
             <Route path="/staffs-order/:id" element={<StaffOrder />} />
+            <Route path="/form" element={<Forms />}></Route>
             <Route path="/freelancer-order/:id" element={<FreelancerOrder />} />
             <Route path="/order" element={<OrderList />} />
             <Route path="/proforma" element={<ProformaList />} />
@@ -100,8 +99,7 @@ function RouteList() {
             <Route path="/stock" element={<InventoryList />} />
             <Route path="/stock/:id" element={<EditItems />} />
             <Route path="/stock/additem" element={<AddItems />} />
-            <Route path="/agreement" element={<AgreementForm />} />
-            <Route path="/delivery" element={<DeliveryForm />} />
+            <Route path="/delivery/:id" element={<DeliveryForm />} />
             <Route path="/allocate-order/" element={<AllocateOrderLayout />} />
             <Route
               path="/allocate-order/staff/:id"
@@ -111,14 +109,14 @@ function RouteList() {
               path="/allocate-order/freelancer/:id"
               element={<FreeelancerEmployeeOrders />}
             />
-         
+            <Route path="/freelancer/:id" element={<FreelancerDetail />} />
           </>
         )}
         {/* Route for employees only*/}
         {roleType !== "account-manager" && roleType !== "admin" && (
           <>
-            {/* <Route path="/order" element={<OrderList />} /> */}
-            <Route path="/order/:id" element={<OrderDetail />} />
+            <Route path="/order" element={<DesignerOrder />} />
+            <Route path="/profile" element={<DesignerProfile />} />
           </>
         )}
       </Route>

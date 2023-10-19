@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import * as api from "../api/userApi";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { useNavigate } from "react-router-dom";
+import useProformaStore from "./proformaStore";
 const useUserStore = create(
   persist(
     (set) => ({
@@ -20,7 +21,15 @@ const useUserStore = create(
         set({ token });
       },
       logout: () => {
-        set({ token: null, user: null, user_role: null });
+        // localStorage.clear();
+        set({
+          token: null,
+        });
+        //   user: null,
+        //   user_role: null,
+        //   useProformaStore: null,
+        //   eachProforma: null,
+        // });
       },
     }),
     {
@@ -29,13 +38,7 @@ const useUserStore = create(
     }
   )
 );
-// export const useUserInformation = create((set) => ({
-//   User: null,
-//   setUser: (userData) => {
-//     const { User } = userData;
-//     set({ User });
-//   },
-// }));
+
 export const useUser = () => {
   const { token } = useUserStore();
   const navigate = useNavigate();
@@ -59,26 +62,31 @@ export const useUser = () => {
       navigate("/login");
     }
   }, [isLoading, isError]);
-
+  if (isLoading) {
+    return <h1>loading</h1>;
+  }
   return authUserData;
 };
 
 export const useNoUser = () => {
   const { token } = useUserStore();
   const navigate = useNavigate();
-
+  const userQuery = useQueryClient();
   const {
     data: authUserData,
     isError,
     isLoading,
-  } = useQuery("authUser", () => api.AuthenticatedUser(token), {
+  } = useQuery(["authUser", token], () => api.AuthenticatedUser(token), {
     retry: 0,
   });
 
   useEffect(() => {
     if (token && !isLoading && !isError && authUserData) {
+      // userQuery.invalidateQueries({ queryKey: ["authUser"] });
       authUserData.user_role == "admin"
         ? navigate("/report")
+        : authUserData.user_role == "account-manager"
+        ? navigate("/proforma")
         : navigate("/order");
     }
   }, [isLoading, isError, token, authUserData]);
@@ -90,17 +98,19 @@ export const useUserData = () => {
   const { token } = useUserStore();
   const navigate = useNavigate();
   // const user=useUserInformation()
+
   const {
     data: authUserData,
     isError,
     isLoading,
-  } = useQuery("authUser", () => api.AuthenticatedUser(token), {
+  } = useQuery(["authUser", token], () => api.AuthenticatedUser(token), {
     retry: 0,
   });
   if (isLoading) {
     return <h1>loading</h1>;
   }
   // user.setUser(authUserData)
+
   return authUserData;
 };
 export default useUserStore;

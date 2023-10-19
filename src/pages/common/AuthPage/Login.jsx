@@ -37,9 +37,10 @@ const Login = () => {
   const mutation = useMutation(loginUser, {
     onSuccess: (userData) => {
       login(userData);
-      console.log(userData);
       userData.user.user_role === "admin"
         ? navigate("/report")
+        : userData.user.user_role === "account-manager"
+        ? navigate("/proforma")
         : navigate("/order");
     },
   });
@@ -72,7 +73,7 @@ const Login = () => {
   };
   return (
     <div className="grid grid-cols-2 min-h-screen bg-white_blue md:grid-cols-1">
-      <div className="flex justify-end items-center max-h-screen bg-login bg-cover bg-no-repeat md:hidden">
+      <div className="flex justify-end items-center h-screen bg-login bg-cover bg-no-repeat md:hidden">
         <img src={Logo} alt="" className="w-562 mb-32 md:w-400" />
       </div>
       <form
@@ -96,7 +97,13 @@ const Login = () => {
             value={values.email}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={errors.email && touched.email ? errors.email : ""}
+            error={
+              errors.email && touched.email ? (
+                errors.email
+              ) : (
+                <p className="text-white">.</p>
+              )
+            }
           />
           <div className="relative">
             <InputField
@@ -105,23 +112,29 @@ const Login = () => {
               id="password"
               name="password"
               placeholder="******"
-              className="py-2 text-lg "
+              className="py-2 text-lg"
               value={values.password}
               onBlur={handleBlur}
               onChange={handleChange}
-              error={errors.password && touched.password ? errors.password : ""}
+              error={
+                errors.password && touched.password ? (
+                  errors.password
+                ) : (
+                  <p className="text-white">.</p>
+                )
+              }
             />
             {toggle == "password" ? (
               <FaEyeSlash
                 size={24}
                 onClick={handleEyeClick}
-                className="text-blue absolute right-3 bottom-4"
+                className="text-blue absolute right-3 bottom-8"
               />
             ) : (
               <FaEye
                 size={24}
                 onClick={handleEyeClick}
-                className="text-blue absolute right-3 bottom-4"
+                className="text-blue absolute right-3 bottom-8"
               />
             )}
           </div>

@@ -17,13 +17,14 @@ function AdminProfileComponent({ CurrentUserData }) {
 
   const [profile_picture_url, setProfile_picture_url] = useState("");
   const [img, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(defaultProfileImage);
+  const [imagePreview, setImagePreview] = useState(
+    CurrentUserData.user_image_url
+  );
   const user = useUserStore();
 
   const imageHandler = (event) => {
     const selectedImage = event.target.files ? event.target.files[0] : null;
     setImage(selectedImage);
-    console.log(selectedImage);
     if (selectedImage) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -32,7 +33,6 @@ function AdminProfileComponent({ CurrentUserData }) {
       reader.readAsDataURL(selectedImage);
     }
   };
-  console.log(user.token);
   const UpdateUser = (userdata) => {
     const response = api.UpdateUser(user.token, CurrentUserData.id, userdata);
     return response;
@@ -58,26 +58,22 @@ function AdminProfileComponent({ CurrentUserData }) {
         user_phone_number: values.phone_number,
         user_image_url: uploadedFileUrl,
         // user_password: `${values.first_name + "." + values.last_name}`,
-        user_password:values.user_password
+        user_password: values.user_password,
       };
       staffMutation.mutate(UserData);
-      console.log("Done successfully", UserData);
     });
   };
-  const upload = (callback) => {
+  const upload = async (callback) => {
     const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
     const CLOUDINARY_UPLOAD_PRESET = import.meta.env
       .VITE_CLOUDINARY_UPLOAD_PRESET;
-    console.log(defaultProfileImage);
     if (img === null) {
-      return callback(
-        "https://res.cloudinary.com/drbvkt6rd/image/upload/v1692794747/gasweutssmb0ghn8sqrf.png"
-      );
+      return callback(CurrentUserData.user_image_url);
     }
     var bodyFormData = new FormData();
     bodyFormData.append("file", img);
     bodyFormData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-    axios
+    await axios
       .post(
         `http://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
         bodyFormData
@@ -91,8 +87,6 @@ function AdminProfileComponent({ CurrentUserData }) {
       })
       .catch((error) => {
         // setError(error.message);
-
-        console.log(error);
       });
   };
 
@@ -100,25 +94,21 @@ function AdminProfileComponent({ CurrentUserData }) {
     useFormik({
       initialValues: {
         first_name: CurrentUserData.user_first_name,
-        last_name: CurrentUserData.user_first_name,
+        last_name: CurrentUserData.user_last_name,
         email: CurrentUserData.user_email,
         address: CurrentUserData.user_address,
         phone_number: CurrentUserData.user_phone_number,
-        user_image_url: CurrentUserData.user_image,
+        user_image_url: CurrentUserData.user_image_url,
         user_password: "",
+        user_confirm: "",
       },
       validationSchema: AddStaffValidation,
       onSubmit,
     });
-  // console.log(CurrentUserData);
-  // if (!CurrentUserData) {
-  //   return <h1></h1>;
-  // }
+
   if (staffMutation.isLoading) {
     return <h1>Loading..</h1>;
   }
-
-  // console.log(userRole);
   return (
     <Layout>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
