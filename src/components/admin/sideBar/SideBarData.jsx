@@ -7,6 +7,7 @@ import { SiDesignernews, SiReacthookform } from "react-icons/si";
 import { LuPackageSearch } from "react-icons/lu";
 import {AiFillFileAdd } from "react-icons/ai";
 import {PiNotePencilDuotone } from "react-icons/pi";
+import {TiBusinessCard } from "react-icons/ti";
 
 export const SideBarData = [
   {
@@ -36,7 +37,7 @@ export const SideBarData = [
   },
   {
     path: "/form",
-    icon: SiReacthookform,
+    icon: PiNotePencilDuotone,
     title: "Forms",
   },
   {
@@ -46,7 +47,7 @@ export const SideBarData = [
   },
   {
     path: "/role",
-    icon: LuPackageSearch,
+    icon: TiBusinessCard,
     title: "Add Role",
   },
 ];
