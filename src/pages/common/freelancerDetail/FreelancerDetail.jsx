@@ -42,7 +42,6 @@ function FreelancerDetail() {
       await queryClient.refetchQueries({
         include: "active",
       });
-      console.log("Success");
     },
   });
   const deleteStaff = () => {
@@ -56,7 +55,7 @@ function FreelancerDetail() {
       await queryClient.refetchQueries({
         include: "active",
       });
-      console.log("Success");
+  
     },
   });
   const handleDelete = () => {
@@ -87,7 +86,6 @@ function FreelancerDetail() {
     }
   };
   const handlePopUpButton = async () => {
-    console.log(currentData);
     const StatusData = {
       status: "Done",
       order_id: currentData.id,

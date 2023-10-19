@@ -83,7 +83,6 @@ function DesignerOrderComponent({ orderlists }) {
       await queryClient.refetchQueries({
         include: "active",
       });
-      console.log("Success");
     },
   });
   const handlePopUpButton = async () => {
@@ -102,7 +101,6 @@ function DesignerOrderComponent({ orderlists }) {
       include: "active",
     });
 
-    console.log("clicked");
   };
   const handleStatus = (data) => {
     setPopUp(true);

@@ -73,7 +73,6 @@ function OrderListComponent({ orderlists }) {
 
       setProformaDetail(DT);
     } catch (error) {
-      console.error("Error fetching proforma data:", error);
     }
     navigate(`${orderlists[index].id}`);
   };

@@ -96,7 +96,6 @@ function FreelancerOrder() {
       </div>
     );
   }
-  console.log(eachProforma);
   return (
     <Layout>
       <div className="flex flex-col px-20 md:px-3 z-10">

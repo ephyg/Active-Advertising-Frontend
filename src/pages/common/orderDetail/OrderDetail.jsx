@@ -31,7 +31,6 @@ function OrderDetail() {
   }
   const handleEmployee = async () => {
     await setNumber(id);
-    console.log(OrderedEmployee)
     if (OrderedEmployee[0].user_role) {
       navigate(`/staffs-order/${OrderedEmployee[0].id}`);
     } else {

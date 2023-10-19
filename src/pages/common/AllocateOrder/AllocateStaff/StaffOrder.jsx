@@ -89,7 +89,6 @@ function StaffOrder() {
       </div>
     );
   }
-  console.log(eachProforma[0].status);
   const StaffOrders = StaffOrder.data;
   return (
     <Layout>
