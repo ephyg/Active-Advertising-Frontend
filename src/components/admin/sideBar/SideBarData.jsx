@@ -1,10 +1,9 @@
 import { GoGraph } from "react-icons/go";
 import { CgNotes } from "react-icons/cg";
-import { MdBorderColor } from "react-icons/md";
 import { BiSolidUserDetail } from "react-icons/bi";
 import { FaUserAlt, FaHandshake } from "react-icons/fa";
 import { HiUserGroup } from "react-icons/hi";
-import { SiDesignernews } from "react-icons/si";
+import { SiDesignernews, SiReacthookform } from "react-icons/si";
 import { LuPackageSearch } from "react-icons/lu";
 export const SideBarData = [
   {
@@ -34,7 +33,7 @@ export const SideBarData = [
   },
   {
     path: "/form",
-    icon: LuPackageSearch,
+    icon: SiReacthookform,
     title: "Forms",
   },
   {
@@ -42,5 +41,9 @@ export const SideBarData = [
     icon: LuPackageSearch,
     title: "Stock",
   },
-
+  {
+    path: "/role",
+    icon: LuPackageSearch,
+    title: "Add Role",
+  },
 ];

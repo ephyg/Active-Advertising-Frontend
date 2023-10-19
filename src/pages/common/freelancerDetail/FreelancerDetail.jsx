@@ -79,6 +79,7 @@ function FreelancerDetail() {
       </div>
     );
   }
+
   const handlePopUp = (datas) => {
     setCurrentData(datas);
     if (datas.status == "Allocated") {

@@ -9,6 +9,7 @@ import AddStaffValidation from "./AddStaffValidation";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { AddProforma } from "../../../api/proformaApi";
 import { ToastContainer, toast } from "react-toastify";
+import Loading from "../../../assets/image/Loading.gif";
 import axios from "axios";
 import useUserStore from "../../../store/userStore";
 import { useNavigate } from "react-router-dom";
@@ -41,6 +42,7 @@ function AddStaff() {
     const response = api.AddUser(user.token, userdata);
     return response;
   };
+  
   const staffMutation = useMutation(addUser, {
     onSuccess: async (response) => {
       await queryClient.invalidateQueries(["userList", "all"]);
@@ -114,10 +116,18 @@ function AddStaff() {
       onSubmit,
     });
   if (staffMutation.isLoading) {
-    return <h1>Loading..</h1>;
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   if (roleLoading) {
-    return <h1>loading...</h1>;
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   return (
     <Layout>

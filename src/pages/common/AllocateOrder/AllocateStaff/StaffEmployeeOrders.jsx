@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../../../../api/proformaApi";
+import Loading from "../../../../assets/image/Loading.gif";
 import * as apis from "../../../../api/userApi";
 import Card from "../../../../components/common/card/Card";
 import Button from "../../../../components/common/button/Button";
@@ -67,13 +68,25 @@ function StaffEmployeeOrders() {
     UpdateOrderMutation.mutate(StatusData);
   };
   if (userLoading) {
-    return <h1>loading</h1>;
+     return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   if (staffLoading) {
-    return <h1>Loading</h1>;
+     return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   if (LoadingGetSingleOrder) {
-    return <h1>Loading</h1>;
+     return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   const StaffOrders = StaffOrder.data;
   return (
