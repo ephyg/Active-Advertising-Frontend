@@ -1,2 +1,2 @@
-const baseURL = "http://localhost:8000/api";
+const baseURL = "https://active-backend.artseb.studio/api";
 export default baseURL;
