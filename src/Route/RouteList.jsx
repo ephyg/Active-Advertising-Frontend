@@ -39,7 +39,7 @@ import DesignerOrder from "../pages/Designer/DesignerOrder/DesignerOrder";
 import DesignerProfile from "../pages/Designer/DesignerProfile/DesignerProfile";
 import AccountManagerProfile from "../pages/accountManager/accountManagerProfile/AccountManagerProfile";
 import FreelancerDetail from "../pages/common/freelancerDetail/FreelancerDetail";
-import Forms from "../components/admin/sideBar/Forms";
+import Forms from "../pages/common/Forms/Forms";
 import AddRole from "../pages/admin/addRole/AddRole";
 function RouteList() {
   const user = useUserData();
@@ -53,15 +53,11 @@ function RouteList() {
   return (
     <Routes>
       <Route element={<PrivateRouteAuth />}>
-        {/* {roleType == null && ( */}
-        <>
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot" element={<Forgot />} />
-          <Route path="/verify" element={<ConfirmCode />} />
-          <Route path="/new-password" element={<NewPassword />} />
-          <Route path="/" element={<Login />} />
-        </>
-        {/* )} */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/verify" element={<ConfirmCode />} />
+        <Route path="/new-password" element={<NewPassword />} />
+        <Route path="/" element={<Login />} />
       </Route>
 
       <Route element={<PrivateRoutes />}>

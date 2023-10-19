@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Layout from "../../Layout/Layout";
-import AgreementForm from "../../../pages/common/agreementForm/AgreementForm";
-import PaymentRequest from "../../../pages/common/PaymentRequestForm/PaymentRequestForm";
-import DeliveryForm from "../../../pages/common/deliveryForm/DeliveryForm";
-import PaymentRequestForm from "../../../pages/common/PaymentRequestForm/PaymentRequestForm";
+import Layout from "../../../components/Layout/Layout";
+import AgreementForm from "../agreementForm/AgreementForm";
+import PaymentRequest from "../PaymentRequestForm/PaymentRequestForm";
+import DeliveryForm from "../deliveryForm/DeliveryForm";
+import PaymentRequestForm from "../PaymentRequestForm/PaymentRequestForm";
 function Forms() {
   const [toggle, setToggle] = useState("agreement");
   const handleAgreement = () => {

@@ -93,9 +93,9 @@ function AgreementForm() {
   return (
     <>
       <div className="">
-        <div id="" className="flex flex-col mx-auto w-594">
-          <div className="flex justify-end p-1">
-            <img src={Logo} alt="" className="w-20" />
+        <div id="" className="flex flex-col mx-auto md:w-594">
+          <div className="flex justify-end  p-2">
+            <img src={Logo} alt="" className="w-40" />
           </div>
 
           <div className="flex flex-col items-end mb-10">
@@ -219,7 +219,7 @@ function AgreementForm() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center mt-16 mb-16">
+        <div className="flex justify-center mt-16 mb-2">
           <button
             className="border bg-blue hover:bg-blue_hover text-white hover:text-white font-bold py-2 px-4 rounded w-32"
             onClick={handleDownload}
@@ -231,7 +231,7 @@ function AgreementForm() {
       <div className="hidden">
         <div id="download-pdf" className="flex flex-col mx-auto w-594">
           <div className="flex justify-end p-1">
-            <img src={Logo} alt="" className="w-20" />
+            <img src={Logo} alt="" className="w-40" />
           </div>
 
           <div className="flex flex-col items-end mb-10">
