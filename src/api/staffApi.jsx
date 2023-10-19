@@ -11,6 +11,17 @@ export const GetRole = async (token) => {
     .then((response) => response.data);
   return getRole;
 };
+export const AddRole = async (token, data) => {
+  const addRole = await axios
+    .post(`${baseURL}/role/add`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => response.data);
+  return addRole;
+};
+
 export const AddUser = async (token, data) => {
   const addUser = await axios
     .post(`${baseURL}/user`, data, {

@@ -8,6 +8,7 @@ import * as api from "../../../api/staffApi";
 import AddStaffValidation from "./AddStaffValidation";
 import { useMutation, useQuery } from "react-query";
 import { AddProforma } from "../../../api/proformaApi";
+import Loading from "../../../assets/image/Loading.gif";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import useUserStore, { useUserData } from "../../../store/userStore";
@@ -107,7 +108,11 @@ function AdminProfileComponent({ CurrentUserData }) {
     });
 
   if (staffMutation.isLoading) {
-    return <h1>Loading..</h1>;
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   return (
     <Layout>

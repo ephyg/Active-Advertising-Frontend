@@ -6,6 +6,7 @@ import { FaEdit } from "react-icons/fa";
 import { TiDelete } from "react-icons/ti";
 import Button from "../../../components/common/button/Button";
 import AddPopUp from "./AddPopUp";
+import Loading from "../../../assets/image/Loading.gif";
 import UpdatePopUp from "./UpdatePopUp";
 import html2pdf from "html2pdf.js";
 import * as api from "../../../api/proformaApi";
@@ -71,7 +72,11 @@ function ProformaDetail() {
     isError,
   } = useQuery("basicInfo-store", () => api.GetProformaBasicInfo(token));
   if (basicInfoLoading) {
-    return <h1>Loading ...</h1>;
+    return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   const contact = String(basicInfo[0].active_phone_number);
   const contactArray = contact.split(":");

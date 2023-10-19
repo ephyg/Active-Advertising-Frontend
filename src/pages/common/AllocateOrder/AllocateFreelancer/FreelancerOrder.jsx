@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as api from "../../../../api/proformaApi";
 import * as apis from "../../../../api/freelancerApi";
 import Card from "../../../../components/common/card/Card";
+import Loading from "../../../..//assets/image/Loading.gif";
 import Button from "../../../../components/common/button/Button";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import useUserStore, { useUserData } from "../../../../store/userStore";
@@ -75,13 +76,25 @@ function FreelancerOrder() {
     UpdateOrderMutation.mutate(StatusData);
   };
   if (userLoading) {
-    return <h1>loading</h1>;
+      return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   if (staffLoading) {
-    return <h1>Loading</h1>;
+      return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   if (LoadingGetSingleOrder) {
-    return <h1>Loading</h1>;
+      return (
+      <div className="flex bg-transparent h-screen w-full justify-center items-center">
+        <img src={Loading} className="w-24 " alt="Loading..." />
+      </div>
+    );
   }
   console.log(eachProforma);
   return (
