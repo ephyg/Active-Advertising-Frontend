@@ -108,7 +108,7 @@ function PaymentRequestForm() {
   return (
     <>
       <div className="">
-        <div id="" className="flex flex-col mx-auto w-max md:w-594">
+        <div id="" className="flex flex-col mx-auto w-full md:w-594">
           <div className="flex justify-end p-1">
             <img src={Logo} alt="" className=" w-40" />
           </div>
@@ -226,7 +226,7 @@ function PaymentRequestForm() {
           </div>
           
           <div class="mt-36 translate-y-8 mx-auto w-594 h-1 bg-gradient-to-r from-blue to-red  border-b">
-            <p className="mt-3  text-xs text-blue"><label className="font-bold">Address:</label> Ghion Hotel | Stadium, Ras Desta Damtew Street, Addis Ababa</p>
+            <p className="mt-3  text-xs text-blue"><label className="font-bold">Address:</label> Addis Ababa | Bisrate Gebreal | Tennis Club building | 3rd Floor, 302 </p>
             <p className="text-xs text-blue"><label className="font-bold">Telephone:</label> +251 929296548 <label className="font-bold">Email:</label> tsionee75@gmail.com <label className="font-bold">Web:</label> activeadvertising.net</p>
           </div>
           
@@ -305,7 +305,7 @@ function PaymentRequestForm() {
           
           <div class=" mt-36 mx-auto w-562 h-1 bg-gradient-to-r from-blue to-red  border-b"></div>
            <div className="mx-auto h-16 -translate-x-5">
-            <p className=" mt-1 text-xs text-blue"><label className="font-bold">Address:</label> Ghion Hotel | Stadium, Ras Desta Damtew Street, Addis Ababa</p>
+            <p className=" mt-1 text-xs text-blue"><label className="font-bold">Address:</label> Addis Ababa | Bisrate Gebreal | Tennis Club building | 3rd Floor, 302 </p>
             <p className="text-xs text-blue"><label className="font-bold">Telephone:</label> +251 929296548 <label className="font-bold">Email:</label> tsionee75@gmail.com <label className="font-bold">Web:</label> activeadvertising.net</p>
            </div>
            
