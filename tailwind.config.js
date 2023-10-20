@@ -13,7 +13,7 @@ export default {
         full: "100%",
       },
       backgroundImage: (theme) => ({
-        login: "url('./src/assets/image/loginBackground.png')",
+        login: "url('./assets/image/loginBackground.png')",
       }),
       colors: {
         red: "#E92035",
