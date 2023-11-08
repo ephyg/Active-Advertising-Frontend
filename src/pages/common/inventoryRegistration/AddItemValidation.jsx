@@ -22,10 +22,7 @@ const AddItemValidation = () => {
       .required('Required')
       .typeError('Invalid date format')
       .max(new Date(), 'Purchase date cannot be in the future'),
-    expire_date: yup.date()
-      .required('Required')
-      .typeError('Invalid date format')
-      .min(new Date(), 'Expire date must be after today'),
+    
   });
 };
 

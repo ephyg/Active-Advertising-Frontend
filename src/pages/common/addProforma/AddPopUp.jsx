@@ -18,7 +18,10 @@ function AddPopUp({ Open, onClick, len }) {
       quantity: values.quantity,
       unitPrice: values.unitPrice,
       totalPrice: Number(values.quantity) * Number(values.unitPrice),
-      profitPrice: values.profitPrice,
+      profitPrice:
+        Number(values.quantity) *
+        Number(values.unitPrice) *
+        (values.profitPrice / 100),
     };
     index++;
     onClick(Order);
@@ -120,8 +123,8 @@ function AddPopUp({ Open, onClick, len }) {
             error={errors.vendor && touched.vendor ? errors.vendor : ""}
           />
           <InputField
-            label="Profit"
-            placeholder="$0"
+            label="Profit Percentage"
+            placeholder="0.0%"
             className="py-1 md:h-8 md:text-sm"
             id="profitPrice"
             name="profitPrice"

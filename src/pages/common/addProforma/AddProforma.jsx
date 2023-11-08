@@ -100,6 +100,7 @@ function ProformaDetail() {
   for (let index = 0; index < dataArray.length; index++) {
     subTotal += dataArray[index]["totalPrice"];
     totalProfit += dataArray[index]["profitPrice"];
+    subTotal += dataArray[index]["profitPrice"];
     const order = {
       item_description: dataArray[index].itemDecription,
       size: dataArray[index].size,
@@ -111,7 +112,7 @@ function ProformaDetail() {
   }
   const AllProformaData = {
     invoice_date: today,
-    payment_request_number: paymentRequest,
+    payment_request_number: paymentRequest == "" ? "-" : paymentRequest,
     active_tin_nUmber: basicInfo[0].active_tin_number,
     active_account_number: basicInfo[0].active_account_number,
     active_vat: basicInfo[0].active_vat,
@@ -677,18 +678,21 @@ function ProformaDetail() {
             PROFORMA INVOICE
           </div>
           <div className="flex flex-col mb-10">
-            <div className="flex gap-1 items-center">
-              <h1 className="font-roboto text-sm text-blue ">
-                Payment Request No.:
-              </h1>
-              <div
-                className={`border-black text-sm align-text-bottom pl-1 pr-1 pb-1 ${
-                  paymentRequest === "" ? "w-48 border-b" : "border-b"
-                }`}
-              >
-                {paymentRequest === "" ? "\u00A0" : paymentRequest}
+            {paymentRequest && (
+              <div className="flex gap-1 items-center">
+                <h1 className="font-roboto text-sm text-blue ">
+                  Payment Request No.:
+                </h1>
+                <div
+                  className={`border-black text-sm align-text-bottom pl-1 pr-1 pb-1 ${
+                    paymentRequest === "" ? "w-48 border-b" : "border-b"
+                  }`}
+                >
+                  {paymentRequest === "" ? "\u00A0" : paymentRequest}
+                </div>
               </div>
-            </div>
+            )}
+
             <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue ">Client Name:</h1>
               <div className="">
@@ -739,7 +743,7 @@ function ProformaDetail() {
                     Quantity
                   </th>
                   <th class="py-1 pb-3 border-slate-200 border px-4 text-sm text-left">
-                    Price
+                    Unit Price
                   </th>
                   <th class="py-1 pb-3 border-slate-200 border px-4 text-sm text-left">
                     Total Price
@@ -765,7 +769,7 @@ function ProformaDetail() {
                       {item["quantity"]}
                     </td>
                     <td class="py-1 pb-3 border-slate-200 border text-sm px-4">
-                      {item["price"]}
+                      {item["unitPrice"]}
                     </td>
                     <td class="py-1 pb-3 border-slate-200 border text-sm px-4">
                       {item["totalPrice"]}

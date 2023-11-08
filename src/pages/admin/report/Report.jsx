@@ -14,9 +14,9 @@ import * as api from "../../../api/reportApi";
 
 // import PieChart from "./components/PieChart";
 // import { Revenue } from "./Data/Data3";
-import {IoCloudDoneSharp} from  "react-icons/io5"
-import {TbTruckDelivery} from  "react-icons/tb"
-import {BsFillBoxSeamFill} from  "react-icons/bs"
+import { IoCloudDoneSharp } from "react-icons/io5";
+import { TbTruckDelivery } from "react-icons/tb";
+import { BsFillBoxSeamFill } from "react-icons/bs";
 import { FaCar, FaCheck, FaRegCheckSquare, FaRegListAlt } from "react-icons/fa";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import useUserStore from "../../../store/userStore";
@@ -215,7 +215,7 @@ function Report() {
       <div className="flex w-full bg-blue rounded-md px-5 py-2 flex-col gap-1 mt-10">
         <h1 className="text-white font-roboto">Goal Completions</h1>
         <div className="flex h-1 w-full bg-red mb-1"></div>
-        <div className="flex justify-between">
+        <div className="flex justify-between md:flex-col">
           <div className="flex gap-2 justify-center items-center">
             <img
               class="w-12"
@@ -258,8 +258,8 @@ function Report() {
         </div>
         <div className="flex h-1 w-full bg-red mt-1 mb-3"></div>
       </div>
-      <div className="flex mt-10 justify-between gap-10 px-20">
-        <div className="bg-blue flex justify-center gap-6 items-center rounded-md px-10">
+      <div className="flex mt-10 justify-between gap-10 px-20 md:grid md:grid-cols-2 md:px-0 md:gap-3 md:mb-5">
+        <div className="bg-blue flex justify-center gap-6 items-center rounded-md px-10 md:gap-1 md:px-2">
           <TbTruckDelivery size={28} />
           <div className="flex flex-col">
             <h1 className="text-white font-roboto text-center">
@@ -270,7 +270,7 @@ function Report() {
             </h1>
           </div>
         </div>
-        <div className="bg-blue flex justify-center gap-6 items-center rounded-md  px-10">
+        <div className="bg-blue flex justify-center gap-6 items-center rounded-md  px-10 md:gap-1 md:px-2">
           <IoCloudDoneSharp size={26} />
           <div className="flex flex-col">
             <h1 className="text-white font-roboto text-center">
@@ -281,7 +281,7 @@ function Report() {
             </h1>
           </div>
         </div>
-        <div className="bg-blue flex justify-center gap-6 items-center rounded-md px-10">
+        <div className="bg-blue flex justify-center gap-6 items-center rounded-md px-10 md:gap-1 md:px-2">
           <BsFillBoxSeamFill size={24} />
           <div className="flex flex-col">
             <h1 className="text-white font-roboto text-center">

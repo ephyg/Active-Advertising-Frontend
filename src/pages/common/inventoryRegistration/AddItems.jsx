@@ -36,7 +36,8 @@ function AddItems() {
       total_price: values.total_price,
       unit_measurement: values.unit_measurement,
       purchase_date: values.purchase_date,
-      expire_date: values.expire_date,
+      expire_date:"0001-01-01",
+
       dealer_name: values.dealer_name,
     };
     mutation.mutate(ItemData);
@@ -51,7 +52,6 @@ function AddItems() {
         unit_measurement: "",
         dealer_name: "",
         purchase_date: "",
-        expire_date: "",
       },
       validationSchema: AddItemValidation,
       onSubmit,
@@ -154,21 +154,6 @@ function AddItems() {
             error={
               errors.purchase_date && touched.purchase_date
                 ? errors.purchase_date
-                : ""
-            }
-          />
-          <InputField
-            className="py-2"
-            label="Expire Date"
-            type="date"
-            id="expire_date"
-            name="expire_date"
-            value={values.expire_date}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={
-              errors.expire_date && touched.expire_date
-                ? errors.expire_date
                 : ""
             }
           />

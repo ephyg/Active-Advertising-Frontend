@@ -102,6 +102,7 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
   const handleDelivery = () => {
     navigate(`/delivery/${id}`);
   };
+  console.log(eachProforma[0].payment_request_number === "-");
   return (
     <Layout>
       <div className="flex relative flex-col mx-16 md:mr-0 md:ml-0 md:px-0">
@@ -168,16 +169,21 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
           PROFORMA INVOICE
         </div>
         <div className="flex flex-col mb-10">
-          <div className="flex gap-1 items-end">
-            <h1 className="font-roboto text-sm md:text-xxs text-blue">
-              Payment Request No.:
-            </h1>
-            <div className="text-end">
-              <h1 className="text-end text-sm border-b border-black">
-                {eachProforma[0].payment_request_number}
+          {eachProforma[0].payment_request_number !== "-" ? (
+            <div className="flex gap-1 items-end">
+              <h1 className="font-roboto text-sm md:text-xxs text-blue">
+                Payment Request No.:
               </h1>
+              <div className="text-end">
+                <h1 className="text-end text-sm border-b border-black">
+                  {eachProforma[0].payment_request_number}
+                </h1>
+              </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
+
           <div className="flex gap-1 items-end">
             <h1 className="font-roboto text-sm md:text-xxs text-blue ">
               Client Name:
@@ -511,16 +517,21 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
             PROFORMA INVOICE
           </div>
           <div className="flex flex-col mb-10">
-            <div className="flex gap-1 items-center">
-              <h1 className="font-roboto text-sm text-blue ">
-                Payment Request No.:
-              </h1>
-              <div className="text-end">
-                <h1 className="text-end text-sm border-b pb-1 border-black">
-                  {eachProforma[0].payment_request_number}
+            {eachProforma[0].payment_request_number !== "-" ? (
+              <div className="flex gap-1 items-center">
+                <h1 className="font-roboto text-sm text-blue ">
+                  Payment Request No.:
                 </h1>
+                <div className="text-end">
+                  <h1 className="text-end text-sm border-b pb-1 border-black">
+                    {eachProforma[0].payment_request_number}
+                  </h1>
+                </div>
               </div>
-            </div>
+            ) : (
+              ""
+            )}
+
             <div className="flex gap-1 items-center">
               <h1 className="font-roboto text-sm text-blue ">Client Name:</h1>
               <div className="">
@@ -560,7 +571,9 @@ function ProformaDetailComponent({ eachOrder, eachProforma }) {
                   <th class="py-1 pb-3 border px-4 text-sm text-left">
                     Quantity
                   </th>
-                  <th class="py-1 pb-3 border px-4 text-sm text-left">Price</th>
+                  <th class="py-1 pb-3 border px-4 text-sm text-left">
+                    Unit Price
+                  </th>
                   <th class="py-1 pb-3 border px-4 text-sm text-left">
                     Total Price
                   </th>

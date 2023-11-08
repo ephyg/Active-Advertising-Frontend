@@ -25,7 +25,10 @@ function UpdatePopUp({ Open, id, data, onClick }) {
       quantity: values.quantity,
       unitPrice: values.unitPrice,
       totalPrice: Number(values.quantity) * Number(values.unitPrice),
-      profitPrice: values.profitPrice,
+      profitPrice:
+        Number(values.quantity) *
+        Number(values.unitPrice) *
+        (values.profitPrice / 100),
     };
     data[id] = updatedData;
     onClick(data);
@@ -40,7 +43,7 @@ function UpdatePopUp({ Open, id, data, onClick }) {
         quantity: data[id].quantity,
         unitPrice: data[id].unitPrice,
         totalPrice: data[id].totalPrice,
-        profitPrice: data[id].profitPrice,
+        profitPrice: (100 * data[id].profitPrice) / data[id].totalPrice,
       },
       validationSchema: UpdateValidation,
       onSubmit,
@@ -115,7 +118,7 @@ function UpdatePopUp({ Open, id, data, onClick }) {
           error={errors.vendor && touched.vendor ? errors.vendor : ""}
         />
         <InputField
-          label="Profit"
+          label="Profit Percentage"
           className="py-1 md:h-8 md:text-sm"
           id="profitPrice"
           name="profitPrice"

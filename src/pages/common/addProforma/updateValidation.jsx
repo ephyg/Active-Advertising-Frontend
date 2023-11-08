@@ -1,7 +1,7 @@
 import * as yup from "yup";
 const UpdateValidation = yup.object().shape({
   itemDescription: yup.string().required("Item description is required"),
-  size: yup.string().required("Size is required"),
+  // size: yup.string().required("Size is required"),
   vendor: yup.string().required("Vendor is required"),
   quantity: yup
     .number()

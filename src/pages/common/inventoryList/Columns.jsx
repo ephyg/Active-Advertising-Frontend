@@ -29,10 +29,7 @@ export const Columns = [
     Header: "Purchase-date",
     accessor: "purchase_date",
   },
-  {
-    Header: "Expire-date",
-    accessor: "expire_date",
-  },
+
   {
     Header: "Dealer-Name",
     accessor: "dealer_name",

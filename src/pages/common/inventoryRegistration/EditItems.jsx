@@ -60,7 +60,7 @@ function EditItems() {
         total_price: values.total_price,
         unit_measurement: values.unit_measurement,
         purchase_date: values.purchase_date,
-        expire_date: values.expire_date,
+        expire_date:"0001-01-01",
         dealer_name: values.dealer_name,
       };
       await updateMutation.mutateAsync({ id: id, ItemData: ItemData });
@@ -77,7 +77,6 @@ function EditItems() {
         unit_measurement: eachItem.unit_measurement,
         dealer_name: eachItem.dealer_name,
         purchase_date: eachItem.purchase_date,
-        expire_date: eachItem.expire_date,
       },
       validationSchema: AddItemValidation,
       onSubmit,
@@ -183,21 +182,7 @@ function EditItems() {
                 : ""
             }
           />
-          <InputField
-            className="py-2"
-            label="Expire Date"
-            type="date"
-            id="expire_date"
-            name="expire_date"
-            value={values.expire_date}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={
-              errors.expire_date && touched.expire_date
-                ? errors.expire_date
-                : ""
-            }
-          />
+          
         </div>
         <div className="flex justify-center mt-10 gap-10 w-full">
           <Button
